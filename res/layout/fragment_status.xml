@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+        >
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Message Placeholder"
+            android:id="@+id/status_message"
+            style="@android:style/TextAppearance.DeviceDefault.Large"
+            tools:ignore="HardcodedText"/>
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            >
+
+
+        <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:autoText="true"
+                android:id="@+id/status_scrollview"
+                android:layout_weight="1">
+
+            <TextView
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:id="@+id/status_logmessages"/>
+        </ScrollView>
+
+        <Button
+                android:drawableLeft="@drawable/cancel"
+                android:text="Cancel"
+                android:id="@+id/status_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                />
+
+    </LinearLayout>
+</LinearLayout>

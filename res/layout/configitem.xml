@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/configitem_layout_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/configitem_text_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="name der verbindung"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/configitem_text_topdomain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="xxx.topdomain.org"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/configitem_btn_manage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/ic_bt_config"
+        android:contentDescription="@string/configitem_description_manage" />
+
+</LinearLayout>

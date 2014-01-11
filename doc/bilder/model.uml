@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_8Kr3wJ1_EeKdgaaT-l6UWg" name="model">
+  <ownedComment xmi:id="_WRsuMJ3TEeKUheNxQxhLXg" annotatedElement="_MjAxEJ2AEeKdgaaT-l6UWg">
+    <body> action.MAIN</body>
+  </ownedComment>
+  <packagedElement xmi:type="uml:Package" xmi:id="_GCWgcJ2AEeKdgaaT-l6UWg" name="org.xapek.andiodine">
+    <packagedElement xmi:type="uml:Class" xmi:id="_MjAxEJ2AEeKdgaaT-l6UWg" name="IodineMain" clientDependency="_aSTyoJ2AEeKdgaaT-l6UWg _amFNwJ2BEeKdgaaT-l6UWg">
+      <ownedAttribute xmi:id="_0KBo0J3TEeKUheNxQxhLXg" name="pref" type="_U9GogJ2AEeKdgaaT-l6UWg" association="_0KC28J3TEeKUheNxQxhLXg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_0KBo0Z3TEeKUheNxQxhLXg" value="*"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0KBo0p3TEeKUheNxQxhLXg"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_U9GogJ2AEeKdgaaT-l6UWg" name="IodinePref"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_aSTyoJ2AEeKdgaaT-l6UWg" name="Dependency1" supplier="_U9GogJ2AEeKdgaaT-l6UWg" client="_MjAxEJ2AEeKdgaaT-l6UWg"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_JS09QJ2BEeKdgaaT-l6UWg" name="IodineVpnService" clientDependency="_YEmIcJ2BEeKdgaaT-l6UWg _d6At8J3UEeKUheNxQxhLXg">
+      <ownedAttribute xmi:id="_18Y-UJ3TEeKUheNxQxhLXg" name="IodineClient" type="_OkmY4J2BEeKdgaaT-l6UWg" association="_18aMcJ3TEeKUheNxQxhLXg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_18Y-UZ3TEeKUheNxQxhLXg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_18Y-Up3TEeKUheNxQxhLXg" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_OkmY4J2BEeKdgaaT-l6UWg" name="IodineClient"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_YEmIcJ2BEeKdgaaT-l6UWg" name="" supplier="_OkmY4J2BEeKdgaaT-l6UWg" client="_JS09QJ2BEeKdgaaT-l6UWg"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_amFNwJ2BEeKdgaaT-l6UWg" name="CONTROL_*" supplier="_JS09QJ2BEeKdgaaT-l6UWg" client="_MjAxEJ2AEeKdgaaT-l6UWg"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_0KC28J3TEeKUheNxQxhLXg" name="preferences" visibility="private" memberEnd="_0KC28Z3TEeKUheNxQxhLXg _0KBo0J3TEeKUheNxQxhLXg">
+      <ownedEnd xmi:id="_0KC28Z3TEeKUheNxQxhLXg" name="main" type="_MjAxEJ2AEeKdgaaT-l6UWg" association="_0KC28J3TEeKUheNxQxhLXg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_0KC28p3TEeKUheNxQxhLXg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0KC2853TEeKUheNxQxhLXg" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_18aMcJ3TEeKUheNxQxhLXg" name="Client" memberEnd="_18aMcZ3TEeKUheNxQxhLXg _18Y-UJ3TEeKUheNxQxhLXg">
+      <ownedEnd xmi:id="_18aMcZ3TEeKUheNxQxhLXg" name="service" type="_JS09QJ2BEeKdgaaT-l6UWg" association="_18aMcJ3TEeKUheNxQxhLXg">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_18aMcp3TEeKUheNxQxhLXg" value="1"/>
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_18aMc53TEeKUheNxQxhLXg" value="1"/>
+      </ownedEnd>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_d6At8J3UEeKUheNxQxhLXg" name="STATUS_*" supplier="_MjAxEJ2AEeKdgaaT-l6UWg" client="_JS09QJ2BEeKdgaaT-l6UWg"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Component" xmi:id="_ewh08J2BEeKdgaaT-l6UWg" name="JNI/C-Code" clientDependency="_g9FMEJ2BEeKdgaaT-l6UWg"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_g9FMEJ2BEeKdgaaT-l6UWg" name="Verwendet JNI" supplier="_OkmY4J2BEeKdgaaT-l6UWg" client="_ewh08J2BEeKdgaaT-l6UWg"/>
+  <packagedElement xmi:type="uml:Signal" xmi:id="_tMcTAJ3QEeKUheNxQxhLXg" name="STATUS_CONNECT"/>
+</uml:Model>

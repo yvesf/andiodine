@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="pref_text_password_label">Passwort</string>
+    <string name="pref_text_topdomain_label">Tunnel Toplevel Domain</string>
+    <string name="pref_text_tunnel_nameserver_label">Tunnel Nameserver</string>
+    <string name="pref_text_nameserver_mode_label">Nameserver Modus</string>
+    <string name="pref_text_nameserver_address_label">Nameserver Adresse</string>
+    <string name="pref_text_name_label">Profil Name</string>
+    <string name="pref_text_use_default_nameserver">Verwende standard Nameserver</string>
+    <string name="pref_help_name">Name für diese Verbindungskonfiguration</string>
+    <string name="pref_help_topdomain">Der DNS Traffic wird als Anfragen für subdomains unterhalb dieser Topdomain gesendert. Dies ist gewöhnlich eine Domain die Dir gehört. Verwende eine kurze Domain um mehr Durchsatz zu erzielen. Diese Einstellung muss am Server und am Client gleich sein</string>
+    <string name="pref_help_lazy">Verwende lazy mode für bessere performance und niedrigere latenzzeiten. Eine kleine Minderheit an DNS Relays scheinen damit nicht klarzukommen was darin resultiert dass keine oder fast keine Daten übertragen werden. Der Client wird dies aber in der Regel feststellen und den Lazy mode ausschalten. Falls nicht verwende diese Option</string>
+    <string name="pref_help_raw">Falls gesetzt wird iodine versuchen die öffentliche IP-Adresse des iodined Server aufzulösen und testen ob er direkt erreichbar ist. Falls ja, wird er den Traffic direkt an den Server senden anstatt an ein DNS relay</string>
+    <string name="pref_help_tunnel_nameserver">Der Nameserver/DNS Relay der verwendet wird um mit iodined zu kommunizieren.  Dieses Feld ist optional und wenn es nicht gesetzt ist wird der im System hinterlegte DNS Server verwendet</string>
+    <string name="pref_help_password">Dieses Feld ist optional. Es werden nur die ersten 32 Zeichen verwendet.</string>
+    <string name="pref_help_nameserver_mode">Legt fest wie der Nameserver gesetzt werden soll nachdem der Tunnel aufgebaut wurde</string>
+    <string name="pref_help_nameserver">IP-Adresse eine speziellen Nameserver der gesetzt werden soll wenn Nameserver Modus = Custom ist.</string>
+    <string name="pref_help_request_type">Typ der DNS Abfragen. Standardmäßig wird die beste Request type automatisch ausgewählt.</string>
+    <string name="pref_help_default_route">Legt fest ob die Default Route gesetzt wird nachdem die Verbindung aufgebaut wurde</string>
+    <string name="enable">Aktivieren</string>
+    <string name="vpnservice_error_configuration_incomplete">Konfiguration ist unvollständig</string>
+    <string name="vpnservice_error_already_running">Kann das VPN nicht starten, es läuft bereits.</string>
+    <string name="vpnservice_error_thread_exited">VPN Thread hat sich unerwartet beendet.</string>
+    <string name="vpnservice_error_cant_open_dnssocket">Kann den DNS Socket nicht öffnen</string>
+    <string name="vpnservice_error_handshake_failed">Handshake fehlgeschlagen</string>
+    <string name="vpnservice_error_unknown_error_code">Unbekannter Fehler. Kode %d</string>
+    <string name="vpnservice_error_unknown_error_string">Unbekannter Fehler. Grund: %s</string>
+    <string name="idle">Leerlauf</string>
+    <string name="warning">Warnung</string>
+    <string name="configitem_description_manage">Konfiguriere dieses Verbindungsprofil</string>
+    <string name="pref_title">Verbindungseinstellungen</string>
+
+</resources>

@@ -1,0 +1,1070 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.7" />
+<title>Android Iodine Anwenderdokumentation</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+tt {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+.monospaced {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+}
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install(2);
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>Android Iodine Anwenderdokumentation</h1>
+<span id="author">Yves Fischer</span><br />
+<span id="revdate">April 2013</span>
+<div id="toc">
+  <div id="toctitle">Inhaltsverzeichnis</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="quoteblock">
+<div class="content">
+<div class="paragraph"><p>Die Dokumentation ist zweigeteilt. Dieser Teil enthält eine Beschreibung des Programs
+und einen Überblick über die Funktionsweise von DNS-Tunnel. Zur technischen Beschreibung
+des Programs siehe <em>Entwicklerdokumentation</em>.</p></div>
+<div class="paragraph"><p>Ein DNS Tunnel ermöglicht regulären IP Verkehr durch den Internet
+Namensauflösungsdienst DNS zu tunneln. Damit ist es möglich, in Netzen
+die keine normales Internet Routing unterstützen, Daten auszutauschen.
+Voraussetzung ist, dass das Netz gewöhnliche DNS-Auflösung unterstützt.
+Die Datenpakete werden in DNS-Anfragen kodiert, die durch die hierarchische
+Struktur an einen speziellen (i.d.R. third-level) Nameserver weitergeleitet werden.</p></div>
+<div class="paragraph"><p>Die Software <a href="#iodine">[iodine]</a> ist eine Implementierung eines DNS Tunnel für Linux,
+Mac OS X, FreeBSD, NetBSD, OpenBSD and Windows. Diese Dokumentation beschreibt
+die Portierung auf Android mit einer angepassten Benutzeroberfläche.</p></div>
+</div>
+<div class="attribution">
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_android_systemanforderungen">Android Systemanforderungen</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Durch die Verwendung des Android VPN Framework ist mindestens Android
+4.0 (API Level 14) erforderlich.</p></div>
+<div class="paragraph"><p>Für Android vor 4.0 besteht bei vorhandenem Root Zugriff die Möglichkeit
+das tun.ko Kernelmodul zu laden und ein
+<a href="http://code.kryo.se/iodine/iodine-latest-android.zip">cross-kompiliertes
+iodine</a> auszuführen.</p></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_funktionsweise_eines_dns_tunnel">Funktionsweise eines DNS-Tunnel</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Das Domain-Name-System (DNS) wird eingesetzt um Namen (wie
+"example.com") in IP-Adressen (wie "194.71.107.50" oder
+"2001:db8:85a3:8d3:1319:8a2e:370:7347") zu übersetzen. DNS wurde in den
+1980er Jahren ursprünglich mit dem Ziel entwickelt lokale <tt>hosts</tt> Datei
+im Internet abzulösen. Inzwischen werden auch andere Informationen als
+die reine Adressauflösung über DNS ausgetauscht.</p></div>
+<div class="paragraph"><p>Als DNS Tunnel bezeichnet man eine Verbindung die in der Lage ist über
+das DNS Protokoll als Transportmedium generischen IP-Verkehr zu übertragen.</p></div>
+<div class="sect2">
+<h3 id="_einbetten_von_beliebigen_daten">Einbetten von beliebigen Daten</h3>
+<div class="paragraph"><p>Im folgenden ist der Datenverkehr zur Auflösung des Namens "bla.de" dekodiert dargestellt.
+Das erste Paket ist die Anfrage des A-Record zu "bla.de". Das zweite Paket die Antwort des DNS Relay.</p></div>
+<div class="paragraph"><p>Das DNS-Relay antwortet "bla.de A IN 217.160.95.28", diese Angabe soll "5 hours, 39 minutes,
+47 seconds" gültig sein. <tt>217.160.95.28</tt> wurde direkt binär übertragen als  <tt>d9 a0  5f 1c</tt>.</p></div>
+<div class="paragraph"><p>Nichts hält einen DNS Server davon ab andere Daten als IP-Adressen in der Antwort zu verschicken und
+nichts kann einen Client davon abhalten beliebige Daten in subdomains (hallowelt.bla.de) zu kodieren.</p></div>
+<div class="paragraph"><p>Aufgrund der hierarchischen Architektur von DNS kann der Inhaber einer Domains die Auflösung von
+Subdomains übernehmen. Nach RFC1035 ist die maximale Länge eines auflösbaren Namens 255 Zeichen.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>Time         Source      Destination  Protocol Info
+<span style="color: #993399">2.425301000</span>  <span style="color: #993399">10.1</span><span style="color: #990000">.</span><span style="color: #993399">1.145</span>  <span style="color: #993399">10.1</span><span style="color: #990000">.</span><span style="color: #993399">0.1</span>     DNS      Standard query <span style="color: #993399">0x5e9e</span> <span style="color: #008080">A</span> bla<span style="color: #990000">.</span>de
+
+Internet Protocol Version <span style="color: #993399">4</span><span style="color: #990000">,</span> Src<span style="color: #990000">:</span> <span style="color: #993399">10.1</span><span style="color: #990000">.</span><span style="color: #993399">1.145</span> <span style="color: #990000">(</span><span style="color: #993399">10.1</span><span style="color: #990000">.</span><span style="color: #993399">1.145</span><span style="color: #990000">),</span> Dst<span style="color: #990000">:</span> <span style="color: #993399">10.1</span><span style="color: #990000">.</span><span style="color: #993399">0.1</span> <span style="color: #990000">(</span><span style="color: #993399">10.1</span><span style="color: #990000">.</span><span style="color: #993399">0.1</span><span style="color: #990000">)</span>
+User <span style="color: #008080">Datagram</span> Protocol<span style="color: #990000">,</span> <span style="color: #008080">Src</span> Port<span style="color: #990000">:</span> <span style="color: #993399">52963</span> <span style="color: #990000">(</span><span style="color: #993399">52963</span><span style="color: #990000">),</span> <span style="color: #008080">Dst</span> Port<span style="color: #990000">:</span> <span style="font-weight: bold"><span style="color: #000000">domain</span></span> <span style="color: #990000">(</span><span style="color: #993399">53</span><span style="color: #990000">)</span>
+Domain <span style="color: #008080">Name</span> <span style="font-weight: bold"><span style="color: #000000">System</span></span> <span style="color: #990000">(</span>query<span style="color: #990000">)</span>
+    <span style="color: #990000">[</span><span style="color: #008080">Response</span> In<span style="color: #990000">:</span> <span style="color: #993399">16</span><span style="color: #990000">]</span>
+    <span style="color: #008080">Transaction</span> ID<span style="color: #990000">:</span> <span style="color: #993399">0x5e9e</span>
+    Flags<span style="color: #990000">:</span> <span style="color: #993399">0x0100</span> Standard query
+    Questions<span style="color: #990000">:</span> <span style="color: #993399">1</span>
+    <span style="color: #008080">Answer</span> RRs<span style="color: #990000">:</span> <span style="color: #993399">0</span>
+    <span style="color: #008080">Authority</span> RRs<span style="color: #990000">:</span> <span style="color: #993399">0</span>
+    <span style="color: #008080">Additional</span> RRs<span style="color: #990000">:</span> <span style="color: #993399">0</span>
+    Queries
+        bla<span style="color: #990000">.</span>de<span style="color: #990000">:</span> <span style="color: #008080">type</span> A<span style="color: #990000">,</span> class IN
+            Name<span style="color: #990000">:</span> bla<span style="color: #990000">.</span>de
+            Type<span style="color: #990000">:</span> <span style="font-weight: bold"><span style="color: #000000">A</span></span> <span style="color: #990000">(</span><span style="color: #008080">Host</span> address<span style="color: #990000">)</span>
+            Class<span style="color: #990000">:</span> <span style="font-weight: bold"><span style="color: #000000">IN</span></span> <span style="color: #990000">(</span><span style="color: #993399">0x0001</span><span style="color: #990000">)</span>
+
+<span style="color: #993399">0030</span>  <span style="color: #993399">00</span> <span style="color: #993399">00</span> <span style="color: #993399">00</span> <span style="color: #993399">00</span> <span style="color: #993399">00</span> <span style="color: #993399">00</span> <span style="color: #993399">03</span> <span style="color: #993399">62</span> 6c <span style="color: #993399">61</span> <span style="color: #993399">02</span> <span style="color: #993399">64</span> <span style="color: #993399">65</span> <span style="color: #993399">00</span> <span style="color: #993399">00</span> <span style="color: #993399">01</span>   <span style="color: #990000">.......</span>bla<span style="color: #990000">.</span>de<span style="color: #990000">...</span>
+<span style="color: #993399">0040</span>  <span style="color: #993399">00</span> <span style="color: #993399">01</span>                                             <span style="color: #990000">..</span>
+
+Time         Source    Destination  Protocol Info
+<span style="color: #993399">2.493068000</span>  <span style="color: #993399">10.1</span><span style="color: #990000">.</span><span style="color: #993399">0.1</span>  <span style="color: #993399">10.1</span><span style="color: #990000">.</span><span style="color: #993399">1.145</span>   DNS      Standard query response <span style="color: #993399">0x5e9e</span> A <span style="color: #993399">217.160</span><span style="color: #990000">.</span><span style="color: #993399">95.28</span>
+
+Internet Protocol Version <span style="color: #993399">4</span><span style="color: #990000">,</span> Src<span style="color: #990000">:</span> <span style="color: #993399">10.1</span><span style="color: #990000">.</span><span style="color: #993399">0.1</span> <span style="color: #990000">(</span><span style="color: #993399">10.1</span><span style="color: #990000">.</span><span style="color: #993399">0.1</span><span style="color: #990000">),</span> Dst<span style="color: #990000">:</span> <span style="color: #993399">10.1</span><span style="color: #990000">.</span><span style="color: #993399">1.145</span> <span style="color: #990000">(</span><span style="color: #993399">10.1</span><span style="color: #990000">.</span><span style="color: #993399">1.145</span><span style="color: #990000">)</span>
+User <span style="color: #008080">Datagram</span> Protocol<span style="color: #990000">,</span> <span style="color: #008080">Src</span> Port<span style="color: #990000">:</span> <span style="font-weight: bold"><span style="color: #000000">domain</span></span> <span style="color: #990000">(</span><span style="color: #993399">53</span><span style="color: #990000">),</span> <span style="color: #008080">Dst</span> Port<span style="color: #990000">:</span> <span style="color: #993399">52963</span> <span style="color: #990000">(</span><span style="color: #993399">52963</span><span style="color: #990000">)</span>
+Domain <span style="color: #008080">Name</span> <span style="font-weight: bold"><span style="color: #000000">System</span></span> <span style="color: #990000">(</span>response<span style="color: #990000">)</span>
+    <span style="color: #990000">[</span><span style="color: #008080">Request</span> In<span style="color: #990000">:</span> <span style="color: #993399">15</span><span style="color: #990000">]</span>
+    <span style="color: #990000">[</span>Time<span style="color: #990000">:</span> <span style="color: #993399">0.067767000</span> seconds<span style="color: #990000">]</span>
+    <span style="color: #008080">Transaction</span> ID<span style="color: #990000">:</span> <span style="color: #993399">0x5e9e</span>
+    Flags<span style="color: #990000">:</span> <span style="color: #993399">0x8180</span> Standard <span style="color: #008080">query</span> response<span style="color: #990000">,</span> No error
+    Questions<span style="color: #990000">:</span> <span style="color: #993399">1</span>
+    <span style="color: #008080">Answer</span> RRs<span style="color: #990000">:</span> <span style="color: #993399">1</span>
+    <span style="color: #008080">Authority</span> RRs<span style="color: #990000">:</span> <span style="color: #993399">0</span>
+    <span style="color: #008080">Additional</span> RRs<span style="color: #990000">:</span> <span style="color: #993399">0</span>
+    Queries
+        bla<span style="color: #990000">.</span>de<span style="color: #990000">:</span> <span style="color: #008080">type</span> A<span style="color: #990000">,</span> class IN
+            Name<span style="color: #990000">:</span> bla<span style="color: #990000">.</span>de
+            Type<span style="color: #990000">:</span> <span style="font-weight: bold"><span style="color: #000000">A</span></span> <span style="color: #990000">(</span><span style="color: #008080">Host</span> address<span style="color: #990000">)</span>
+            Class<span style="color: #990000">:</span> <span style="font-weight: bold"><span style="color: #000000">IN</span></span> <span style="color: #990000">(</span><span style="color: #993399">0x0001</span><span style="color: #990000">)</span>
+    Answers
+        bla<span style="color: #990000">.</span>de<span style="color: #990000">:</span> <span style="color: #008080">type</span> A<span style="color: #990000">,</span> <span style="color: #008080">class</span> IN<span style="color: #990000">,</span> addr <span style="color: #993399">217.160</span><span style="color: #990000">.</span><span style="color: #993399">95.28</span>
+            Name<span style="color: #990000">:</span> bla<span style="color: #990000">.</span>de
+            Type<span style="color: #990000">:</span> <span style="font-weight: bold"><span style="color: #000000">A</span></span> <span style="color: #990000">(</span><span style="color: #008080">Host</span> address<span style="color: #990000">)</span>
+            Class<span style="color: #990000">:</span> <span style="font-weight: bold"><span style="color: #000000">IN</span></span> <span style="color: #990000">(</span><span style="color: #993399">0x0001</span><span style="color: #990000">)</span>
+            Time <span style="color: #008080">to</span> live<span style="color: #990000">:</span> <span style="color: #993399">5</span> hours<span style="color: #990000">,</span> <span style="color: #993399">39</span> minutes<span style="color: #990000">,</span> <span style="color: #993399">47</span> seconds
+            <span style="color: #008080">Data</span> length<span style="color: #990000">:</span> <span style="color: #993399">4</span>
+            Addr<span style="color: #990000">:</span> <span style="color: #993399">217.160</span><span style="color: #990000">.</span><span style="color: #993399">95.28</span> <span style="color: #990000">(</span><span style="color: #993399">217.160</span><span style="color: #990000">.</span><span style="color: #993399">95.28</span><span style="color: #990000">)</span>
+
+<span style="color: #993399">0030</span>  <span style="color: #993399">00</span> <span style="color: #993399">01</span> <span style="color: #993399">00</span> <span style="color: #993399">00</span> <span style="color: #993399">00</span> <span style="color: #993399">00</span> <span style="color: #993399">03</span> <span style="color: #993399">62</span> 6c <span style="color: #993399">61</span> <span style="color: #993399">02</span> <span style="color: #993399">64</span> <span style="color: #993399">65</span> <span style="color: #993399">00</span> <span style="color: #993399">00</span> <span style="color: #993399">01</span>   <span style="color: #990000">.......</span>bla<span style="color: #990000">.</span>de<span style="color: #990000">...</span>
+<span style="color: #993399">0040</span>  <span style="color: #993399">00</span> <span style="color: #993399">01</span> c0 0c <span style="color: #993399">00</span> <span style="color: #993399">01</span> <span style="color: #993399">00</span> <span style="color: #993399">01</span> <span style="color: #993399">00</span> <span style="color: #993399">00</span> 4f a3 <span style="color: #993399">00</span> <span style="color: #993399">04</span> <span style="color: #008080">d9</span> a0   <span style="color: #990000">..........</span>O<span style="color: #990000">.....</span>
+<span style="color: #993399">0050</span>  5f 1<span style="color: #008080">c</span>                                             _<span style="color: #990000">.</span></tt></pre></div></div>
+</div>
+<div class="sect2">
+<h3 id="gegenmasnahmen">Gegenmaßnahmen</h3>
+<div class="paragraph"><p>Die von einem idealen DNS Tunnel gestellten Anfragen sind gültig und unterscheiden sich
+in erster Linie nicht von denen einer gewöhnlichen Anwendung von DNS. Um Tunnel
+aufzuspüren wären daher statistische Verfahren nötig die Kriterien wie Anzahl,
+Größe und Inhalt der Pakete betrachten. Aufgrund der Fehleranfälligkeit ist
+es damit aber auch möglich legitime Anwendungen zu blockieren.</p></div>
+<div class="paragraph"><p>Möchte man lediglich iodine als konkrete Implementierung blockieren ist dies sehr einfach möglich.
+Der vom iodine Client Verwendete "ping" Aufruf kann sehr einfach erkannt werden, es könnte jeder Client
+der regelmäßíg eine Subdomain mit dem Anfangsbuchstaben "p" der gleichen Restdomain erfragt geblockt werden.</p></div>
+<div class="paragraph"><p>In einem durch Proxy Server sowieso schon stark eingeschränkten Netzwerk ist es denkbar, dass auf die Auflösung von
+Namen ausserhalb der lokalen Domain durch den DNS Server allgemein verzichtet wird.
+Sowohl ein HTTP-Proxyserver als auch ein SOCKS Server kann dies für
+den Client übernehmen.</p></div>
+<div class="paragraph"><p>In einer Konfiguration für einen Internet Hotspot mit Autorisation der Benutzer (z.B. nach Bezahlvorgang) ist
+es unbedingt sinnvoll die Autoriserungsregeln auch auf den DNS Server anzuwenden, sodass für den nicht autorisierten
+Benutzer nur das Loginformular aufrufbar ist. Dies in vielen öffentlichen Hotspots momentan nicht umgesetzt.
+Für weitere Informationen zum Blockieren von DNS Tunneln siehe <a href="#schillinger11">[schillinger11]</a>.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bedienung">Bedienung</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Im folgenden wird die Bedienung der Android Oberfläche beschrieben. Die Anwendungen
+teilt sich für den Benutzer in zwei Bereiche: Die Steuerung der Tunnel und die
+Verbindungskonfiguration.</p></div>
+<div class="sect2">
+<h3 id="_hauptbildschirm">Hauptbildschirm</h3>
+<div style="clear:both;"></div>
+<div class="imageblock" style="float:left;">
+<div class="content">
+<img src="bilder/screen_main.png" alt="bilder/screen_main.png" width="300px" />
+</div>
+</div>
+<div class="paragraph"><p>Der Hauptbildschirm zeigt die konfigurierten Verbindungsprofile. Eine Verbindung wird
+mit Auswahl des Eintrags gestartet.</p></div>
+<div class="paragraph"><p>Mit dem Einstellungsbutton <span class="image">
+<img src="../res/drawable/ic_bt_config.png" alt="../res/drawable/ic_bt_config.png" width="32px" />
+</span> können
+die Verbindungsparameter geändert werden.</p></div>
+<div class="paragraph"><p>Mit dem Button <span class="image">
+<img src="../res/drawable/device_access_new_account.png" alt="../res/drawable/device_access_new_account.png" width="32px" />
+</span> in der ActionBar
+wird ein neues Verbindungsprofil angelegt.</p></div>
+<div style="clear:both;"></div>
+</div>
+<div class="sect2">
+<h3 id="_verbindungskonfiguration">Verbindungskonfiguration</h3>
+<div style="clear:both;"></div>
+<div class="imageblock" style="float:left;">
+<div class="content">
+<img src="bilder/screen_pref.png" alt="bilder/screen_pref.png" width="300px" />
+</div>
+</div>
+<div class="paragraph"><p>In der Verbindungskonfiguration werden Parameter festgelegt die beim Starten
+des Tunnels gesetzt werden. Die Änderungen werden sofort übernommen.</p></div>
+<div class="paragraph"><p>Zu jeder Einstellung kann mit Drücken des Hilfebuttons die Hilfe aus der Nachfolgenden
+Tabelle aufgerufen werden.</p></div>
+<div class="paragraph"><p>Mit mit der Auswahl von <span class="image">
+<img src="../res/drawable/delete.png" alt="../res/drawable/delete.png" width="32px" />
+</span> wird
+die aktuell geöffnete Konfiguration gelöscht.</p></div>
+<div style="clear:both;"></div>
+<div class="tableblock">
+<table rules="all"
+width="100%"
+frame="border"
+cellspacing="0" cellpadding="4">
+<caption class="title">Tabelle 1. Parameter</caption>
+<col width="50%" />
+<col width="50%" />
+<thead>
+<tr>
+<th align="left" valign="top">Parameter            </th>
+<th align="left" valign="top"> Beschreibung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" valign="top"><p class="table">Name</p></td>
+<td align="left" valign="top"><p class="table">Name für diese Verbindungskonfiguration&lt;</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Lazy-Mode</p></td>
+<td align="left" valign="top"><p class="table">Lazy mode erhöht den Durchsatz und senkt die Reaktionszeit.
+                        Eine kleine Minderheit an DNS Relays scheint damit nicht klarzukommen was
+                        darin resultiert dass keine oder fast keine Daten übertragen werden.
+                        Der Client wird dies aber in der Regel feststellen und den Lazy mode ausschalten.
+                        Falls nicht, kann lazy-mode mit dieser Option ausgeschaltet werden.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Tunnel Nameserver</p></td>
+<td align="left" valign="top"><p class="table">Der Nameserver/DNS Relay, der verwendet wird um mit iodined zu kommunizieren.
+                        Dieses Feld ist optional und wenn es nicht gesetzt ist wird der im System hinterlegte
+                        DNS Server verwendet</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Nameserver-Mode</p></td>
+<td align="left" valign="top"><p class="table">Legt fest wie der Nameserver gesetzt werden soll nachdem der Tunnel aufgebaut wurde</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Nameserver</p></td>
+<td align="left" valign="top"><p class="table">IP-Adresse eine speziellen Nameserver der gesetzt werden soll
+                        wenn Nameserver Modus = Custom ist.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Password</p></td>
+<td align="left" valign="top"><p class="table">Dieses Feld ist optional. Es werden nur die ersten 32 Zeichen verwendet.
+                        pwasswo cont</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Raw-Mode</p></td>
+<td align="left" valign="top"><p class="table">Falls gesetzt wird iodine versuchen die öffentliche IP-Adresse des iodined Server
+                        aufzulösen und testen ob er direkt erreichbar ist. Falls ja, wird er den Traffic
+                        direkt an den Server senden anstatt an ein DNS relay</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Request-Type</p></td>
+<td align="left" valign="top"><p class="table">Typ der DNS Abfragen. Standardmäßig wird die beste Request type automatisch ausgewählt.</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Top-Domain</p></td>
+<td align="left" valign="top"><p class="table">Der DNS Traffic wird als Anfragen für subdomains unterhalb dieser Topdomain gesendert.
+                        Dies ist gewöhnlich eine Domain die Dir gehört. Verwende eine kurze
+                        Domain um mehr Durchsatz zu erzielen.
+                        Diese Einstellung muss am Server und am Client gleich sein</p></td>
+</tr>
+<tr>
+<td align="left" valign="top"><p class="table">Default Route</p></td>
+<td align="left" valign="top"><p class="table">Legt fest ob die Default Route gesetzt wird nachdem die Verbindung aufgebaut wurde</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_einrichtung_eines_iodine_server">Einrichtung eines iodine Server</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Vorraussetzung für den Betrieb eines Iodine Server ist eine öffentlich erreichbare IP-Adresse und
+ein freier Port 53/dns.</p></div>
+<div class="paragraph"><p>Es muss ein NS-Record für diese IP-Adresse eingerichtet werden. Angenommen die Tunnel Toplevel Domain
+soll "t.example.com" sein und der Server hat die IP-Adresse 192.0.43.10, dann lautet der Eintrag:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>t.example.com.       8192    IN  NS    192.0.43.10</tt></pre>
+</div></div>
+<div class="paragraph"><p>Die Konfiguration der IP-Adressen erfolgt nicht über DHCP oder statisch, sondern diese werden den Clients
+vom iodine Server, aus einem IP Subnetz das beim Start festgelegt wird, zugewiesen.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>iodined -c -P PASSWORD 192.168.0.1/24 t.example.com</tt></pre>
+</div></div>
+<div class="paragraph"><p>Die Option <tt>-c</tt> ist nicht immer erforderlich. Sie bewirkt, dass iodine die Quelladressen der Anfragen
+nicht überprüft. Die Überprüfung ist nicht möglich wenn die DNS Anfragen über ein Cluster verarbeitet werden,
+sodass die beim Server einkommenden Pakete von verschiedenen Quelladressen stammen.</p></div>
+<div class="paragraph"><p>Der Server legt ein TUN-Device an (typischerweise "dns0"), je nach Zweck ist noch das
+IP Routing/Masquerade zu konfigurieren.</p></div>
+<div class="sect2">
+<h3 id="_testen">Testen</h3>
+<div class="paragraph"><p>Die Funktionstüchtigkeit eines iodine Server kann mit einfachen DNS Anfragen getestet werden:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>$ dig -t A zabc<span style="color: #990000">.</span>t<span style="color: #990000">.</span>example<span style="color: #990000">.</span>com
+<span style="color: #990000">....</span>
+<span style="color: #990000">;;</span> QUESTION SECTION<span style="color: #990000">:</span>
+<span style="color: #990000">;</span>zabc<span style="color: #990000">.</span>t<span style="color: #990000">.</span>example<span style="color: #990000">.</span>com<span style="color: #990000">.</span>      IN  A
+
+<span style="color: #990000">;;</span> ANSWER SECTION<span style="color: #990000">:</span>
+zabc<span style="color: #990000">.</span>t<span style="color: #990000">.</span>example<span style="color: #990000">.</span>com<span style="color: #990000">.</span>   <span style="color: #993399">0</span> IN  CNAME hpjqweyzo<span style="color: #990000">.</span>dh<span style="color: #990000">.</span>
+
+$ <span style="color: #990000">.</span>/base<span style="color: #993399">32</span> d pjqweyz
+Decoded <span style="color: #993399">4</span> bytes<span style="color: #990000">:</span>
+<span style="color: #993399">0x7a</span> <span style="color: #990000">(</span>z<span style="color: #990000">)</span> <span style="color: #993399">0x61</span> <span style="color: #990000">(</span>a<span style="color: #990000">)</span> <span style="color: #993399">0x62</span> <span style="color: #990000">(</span>b<span style="color: #990000">)</span> <span style="color: #993399">0x63</span> <span style="color: #990000">(</span>c<span style="color: #990000">)</span></tt></pre></div></div>
+<div class="paragraph"><p>Unter <a href="http://code.kryo.se/iodine/check-it/">http://code.kryo.se/iodine/check-it/</a> wird ein Online Service zum Testen der Konfiguration angeboten.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anhang">Anhang</h2>
+<div class="sectionbody">
+<div class="ulist bibliography"><ul>
+<li>
+<p>
+<a id="schillinger11"></a>[schillinger11]
+  <a href="http://www.data.ks.uni-freiburg.de/download/praxisseminarSS11/dns-tunnel/Fabian%20Schillinger%20-%20DNS-Tunnel.pdf">Fabian Schillinger, DNS-Tunnel, Universität Freiburg 2011</a>
+</p>
+</li>
+<li>
+<p>
+<a id="iodine"></a>[iodine] <a href="http://code.kryo.se/iodine/">http://code.kryo.se/iodine/</a>
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Letzte Änderung 2013-06-12 22:22:54 CEST
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+/bin
+/jni/iodine/src/*.o
+/jni/iodine/bin
+/obj
+/libs
+/gen
+jni/iodine/src/base64u.c
+jni/iodine/src/base64u.h
+tests/gen
+
+# eclipse
+.project
+.classpath
+
+# Android Studio
+.idea
+
+# ant
+out
+build.xml
+local.properties

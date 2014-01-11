@@ -1,0 +1,1284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
+<head>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.6.9" />
+<title>Android Iodine Entwicklerdokumentation</title>
+<style type="text/css">
+/* Shared CSS for AsciiDoc xhtml11 and html5 backends */
+
+/* Default font. */
+body {
+  font-family: Georgia,serif;
+}
+
+/* Title font. */
+h1, h2, h3, h4, h5, h6,
+div.title, caption.title,
+thead, p.table.header,
+#toctitle,
+#author, #revnumber, #revdate, #revremark,
+#footer {
+  font-family: Arial,Helvetica,sans-serif;
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+h5 {
+  font-size: 1.0em;
+}
+
+div.sectionbody {
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+ul > li     { color: #aaa; }
+ul > li > * { color: black; }
+
+.monospaced, code, pre {
+  font-family: "Courier New", Courier, monospace;
+  font-size: inherit;
+  color: navy;
+  padding: 0;
+  margin: 0;
+}
+pre {
+  white-space: pre-wrap;
+}
+
+#author {
+  color: #527bbd;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+#email {
+}
+#revnumber, #revdate, #revremark {
+}
+
+#footer {
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.0em;
+  margin-bottom: 2.0em;
+  margin-right: 10%;
+  color: #606060;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid #dddddd;
+  border-left: 4px solid #f0f0f0;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid #dddddd;
+  border-left: 5px solid #f0f0f0;
+  background: #f8f8f8;
+  padding: 0.5em;
+}
+
+div.quoteblock, div.verseblock {
+  padding-left: 1.0em;
+  margin-left: 1.0em;
+  margin-right: 10%;
+  border-left: 5px solid #f0f0f0;
+  color: #888;
+}
+
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock > pre.content {
+  font-family: inherit;
+  font-size: inherit;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 3px solid #dddddd;
+}
+
+div.exampleblock > div.content {
+  border-left: 3px solid #dddddd;
+  padding-left: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; vertical-align: text-bottom; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+.footnote, .footnoteref {
+  font-size: 0.8em;
+}
+
+span.footnote, span.footnoteref {
+  vertical-align: super;
+}
+
+#footnotes {
+  margin: 20px 0 20px 0;
+  padding: 7px 0 0 0;
+}
+
+#footnotes div.footnote {
+  margin: 0 0 5px 0;
+}
+
+#footnotes hr {
+  border: none;
+  border-top: 1px solid silver;
+  height: 1px;
+  text-align: left;
+  margin-left: 0;
+  width: 20%;
+  min-width: 100px;
+}
+
+div.colist td {
+  padding-right: 0.5em;
+  padding-bottom: 0.3em;
+  vertical-align: top;
+}
+div.colist td img {
+  margin-top: 0.3em;
+}
+
+@media print {
+  #footer-badges { display: none; }
+}
+
+#toc {
+  margin-bottom: 2.5em;
+}
+
+#toctitle {
+  color: #527bbd;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel0, div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+
+span.aqua { color: aqua; }
+span.black { color: black; }
+span.blue { color: blue; }
+span.fuchsia { color: fuchsia; }
+span.gray { color: gray; }
+span.green { color: green; }
+span.lime { color: lime; }
+span.maroon { color: maroon; }
+span.navy { color: navy; }
+span.olive { color: olive; }
+span.purple { color: purple; }
+span.red { color: red; }
+span.silver { color: silver; }
+span.teal { color: teal; }
+span.white { color: white; }
+span.yellow { color: yellow; }
+
+span.aqua-background { background: aqua; }
+span.black-background { background: black; }
+span.blue-background { background: blue; }
+span.fuchsia-background { background: fuchsia; }
+span.gray-background { background: gray; }
+span.green-background { background: green; }
+span.lime-background { background: lime; }
+span.maroon-background { background: maroon; }
+span.navy-background { background: navy; }
+span.olive-background { background: olive; }
+span.purple-background { background: purple; }
+span.red-background { background: red; }
+span.silver-background { background: silver; }
+span.teal-background { background: teal; }
+span.white-background { background: white; }
+span.yellow-background { background: yellow; }
+
+span.big { font-size: 2em; }
+span.small { font-size: 0.6em; }
+
+span.underline { text-decoration: underline; }
+span.overline { text-decoration: overline; }
+span.line-through { text-decoration: line-through; }
+
+div.unbreakable { page-break-inside: avoid; }
+
+
+/*
+ * xhtml11 specific
+ *
+ * */
+
+div.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead, p.table.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+/*
+ * html5 specific
+ *
+ * */
+
+table.tableblock {
+  margin-top: 1.0em;
+  margin-bottom: 1.5em;
+}
+thead, p.tableblock.header {
+  font-weight: bold;
+  color: #527bbd;
+}
+p.tableblock {
+  margin-top: 0;
+}
+table.tableblock {
+  border-width: 3px;
+  border-spacing: 0px;
+  border-style: solid;
+  border-color: #527bbd;
+  border-collapse: collapse;
+}
+th.tableblock, td.tableblock {
+  border-width: 1px;
+  padding: 4px;
+  border-style: solid;
+  border-color: #527bbd;
+}
+
+table.tableblock.frame-topbot {
+  border-left-style: hidden;
+  border-right-style: hidden;
+}
+table.tableblock.frame-sides {
+  border-top-style: hidden;
+  border-bottom-style: hidden;
+}
+table.tableblock.frame-none {
+  border-style: hidden;
+}
+
+th.tableblock.halign-left, td.tableblock.halign-left {
+  text-align: left;
+}
+th.tableblock.halign-center, td.tableblock.halign-center {
+  text-align: center;
+}
+th.tableblock.halign-right, td.tableblock.halign-right {
+  text-align: right;
+}
+
+th.tableblock.valign-top, td.tableblock.valign-top {
+  vertical-align: top;
+}
+th.tableblock.valign-middle, td.tableblock.valign-middle {
+  vertical-align: middle;
+}
+th.tableblock.valign-bottom, td.tableblock.valign-bottom {
+  vertical-align: bottom;
+}
+
+
+/*
+ * manpage specific
+ *
+ * */
+
+body.manpage h1 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-top: 2px solid silver;
+  border-bottom: 2px solid silver;
+}
+body.manpage h2 {
+  border-style: none;
+}
+body.manpage div.sectionbody {
+  margin-left: 3em;
+}
+
+@media print {
+  body.manpage div#toc { display: none; }
+}
+
+
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var asciidoc = {  // Namespace.
+
+/////////////////////////////////////////////////////////////////////
+// Table Of Contents generator
+/////////////////////////////////////////////////////////////////////
+
+/* Author: Mihai Bazon, September 2002
+ * http://students.infoiasi.ro/~mishoo
+ *
+ * Table Of Content generator
+ * Version: 0.4
+ *
+ * Feel free to use this script under the terms of the GNU General Public
+ * License, as long as you do not remove or alter this notice.
+ */
+
+ /* modified by Troy D. Hanson, September 2006. License: GPL */
+ /* modified by Stuart Rackham, 2006, 2009. License: GPL */
+
+// toclevels = 1..4.
+toc: function (toclevels) {
+
+  function getText(el) {
+    var text = "";
+    for (var i = el.firstChild; i != null; i = i.nextSibling) {
+      if (i.nodeType == 3 /* Node.TEXT_NODE */) // IE doesn't speak constants.
+        text += i.data;
+      else if (i.firstChild != null)
+        text += getText(i);
+    }
+    return text;
+  }
+
+  function TocEntry(el, text, toclevel) {
+    this.element = el;
+    this.text = text;
+    this.toclevel = toclevel;
+  }
+
+  function tocEntries(el, toclevels) {
+    var result = new Array;
+    var re = new RegExp('[hH]([1-'+(toclevels+1)+'])');
+    // Function that scans the DOM tree for header elements (the DOM2
+    // nodeIterator API would be a better technique but not supported by all
+    // browsers).
+    var iterate = function (el) {
+      for (var i = el.firstChild; i != null; i = i.nextSibling) {
+        if (i.nodeType == 1 /* Node.ELEMENT_NODE */) {
+          var mo = re.exec(i.tagName);
+          if (mo && (i.getAttribute("class") || i.getAttribute("className")) != "float") {
+            result[result.length] = new TocEntry(i, getText(i), mo[1]-1);
+          }
+          iterate(i);
+        }
+      }
+    }
+    iterate(el);
+    return result;
+  }
+
+  var toc = document.getElementById("toc");
+  if (!toc) {
+    return;
+  }
+
+  // Delete existing TOC entries in case we're reloading the TOC.
+  var tocEntriesToRemove = [];
+  var i;
+  for (i = 0; i < toc.childNodes.length; i++) {
+    var entry = toc.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div'
+     && entry.getAttribute("class")
+     && entry.getAttribute("class").match(/^toclevel/))
+      tocEntriesToRemove.push(entry);
+  }
+  for (i = 0; i < tocEntriesToRemove.length; i++) {
+    toc.removeChild(tocEntriesToRemove[i]);
+  }
+
+  // Rebuild TOC entries.
+  var entries = tocEntries(document.getElementById("content"), toclevels);
+  for (var i = 0; i < entries.length; ++i) {
+    var entry = entries[i];
+    if (entry.element.id == "")
+      entry.element.id = "_toc_" + i;
+    var a = document.createElement("a");
+    a.href = "#" + entry.element.id;
+    a.appendChild(document.createTextNode(entry.text));
+    var div = document.createElement("div");
+    div.appendChild(a);
+    div.className = "toclevel" + entry.toclevel;
+    toc.appendChild(div);
+  }
+  if (entries.length == 0)
+    toc.parentNode.removeChild(toc);
+},
+
+
+/////////////////////////////////////////////////////////////////////
+// Footnotes generator
+/////////////////////////////////////////////////////////////////////
+
+/* Based on footnote generation code from:
+ * http://www.brandspankingnew.net/archive/2005/07/format_footnote.html
+ */
+
+footnotes: function () {
+  // Delete existing footnote entries in case we're reloading the footnodes.
+  var i;
+  var noteholder = document.getElementById("footnotes");
+  if (!noteholder) {
+    return;
+  }
+  var entriesToRemove = [];
+  for (i = 0; i < noteholder.childNodes.length; i++) {
+    var entry = noteholder.childNodes[i];
+    if (entry.nodeName.toLowerCase() == 'div' && entry.getAttribute("class") == "footnote")
+      entriesToRemove.push(entry);
+  }
+  for (i = 0; i < entriesToRemove.length; i++) {
+    noteholder.removeChild(entriesToRemove[i]);
+  }
+
+  // Rebuild footnote entries.
+  var cont = document.getElementById("content");
+  var spans = cont.getElementsByTagName("span");
+  var refs = {};
+  var n = 0;
+  for (i=0; i<spans.length; i++) {
+    if (spans[i].className == "footnote") {
+      n++;
+      var note = spans[i].getAttribute("data-note");
+      if (!note) {
+        // Use [\s\S] in place of . so multi-line matches work.
+        // Because JavaScript has no s (dotall) regex flag.
+        note = spans[i].innerHTML.match(/\s*\[([\s\S]*)]\s*/)[1];
+        spans[i].innerHTML =
+          "[<a id='_footnoteref_" + n + "' href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+        spans[i].setAttribute("data-note", note);
+      }
+      noteholder.innerHTML +=
+        "<div class='footnote' id='_footnote_" + n + "'>" +
+        "<a href='#_footnoteref_" + n + "' title='Return to text'>" +
+        n + "</a>. " + note + "</div>";
+      var id =spans[i].getAttribute("id");
+      if (id != null) refs["#"+id] = n;
+    }
+  }
+  if (n == 0)
+    noteholder.parentNode.removeChild(noteholder);
+  else {
+    // Process footnoterefs.
+    for (i=0; i<spans.length; i++) {
+      if (spans[i].className == "footnoteref") {
+        var href = spans[i].getElementsByTagName("a")[0].getAttribute("href");
+        href = href.match(/#.*/)[0];  // Because IE return full URL.
+        n = refs[href];
+        spans[i].innerHTML =
+          "[<a href='#_footnote_" + n +
+          "' title='View footnote' class='footnote'>" + n + "</a>]";
+      }
+    }
+  }
+},
+
+install: function(toclevels) {
+  var timerId;
+
+  function reinstall() {
+    asciidoc.footnotes();
+    if (toclevels) {
+      asciidoc.toc(toclevels);
+    }
+  }
+
+  function reinstallAndRemoveTimer() {
+    clearInterval(timerId);
+    reinstall();
+  }
+
+  timerId = setInterval(reinstall, 500);
+  if (document.addEventListener)
+    document.addEventListener("DOMContentLoaded", reinstallAndRemoveTimer, false);
+  else
+    window.onload = reinstallAndRemoveTimer;
+}
+
+}
+asciidoc.install(2);
+/*]]>*/
+</script>
+</head>
+<body class="article">
+<div id="header">
+<h1>Android Iodine Entwicklerdokumentation</h1>
+<span id="author">Yves Fischer</span><br />
+<span id="revdate">April 2013</span>
+<div id="toc">
+  <div id="toctitle">Inhaltsverzeichnis</div>
+  <noscript><p><b>JavaScript must be enabled in your browser to display the table of contents.</b></p></noscript>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="quoteblock">
+<div class="content">
+<div class="paragraph"><p>Die Dokumentation ist zweigeteilt. Dieser Teil enthält eine technische Beschreibung.
+Die Bedienung und Funktionsweise ist in der <em>Anwenderdokumentation</em> beschrieben.</p></div>
+</div>
+<div class="attribution">
+</div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_aufbau">Aufbau</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Die Anwendung besteht im groben aus 4 Komponenten</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Activity <code>.IodineMain</code>
+</p>
+</li>
+<li>
+<p>
+Activity Verbindungseinstellungen <code>.IodinePref</code>
+</p>
+</li>
+<li>
+<p>
+Tunnel Service <code>VpnService</code> und den JNI Bindings <code>IodineClient</code>
+</p>
+</li>
+<li>
+<p>
+Konfigurationsverwaltung <code>.config.ConfigDatabase</code> und <code>.config.IodineConfiguration</code>
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p><a href="#whiteboard-komponenten">[whiteboard-komponenten]</a> zeigt Architektur der Anwendung:</p></div>
+<div class="imageblock" id="whiteboard-komponenten" style="text-align:center;">
+<div class="content">
+<img src="bilder/Model_model_Architektur.PNG" alt="bilder/Model_model_Architektur.PNG" width="500px" />
+</div>
+<div class="title">Abbildung 1. Architektur der Anwendung</div>
+</div>
+<div class="sect2">
+<h3 id="_benutzeroberfläche">Benutzeroberfläche</h3>
+<div class="paragraph"><p>Die Haupt Activity <code>.IodineMain</code> startet den "VpnService" und steuert
+ihn über Broadcast Intents. In dieser Activity steuert der Benutzer den
+Auf- und Abbau der Tunnel. Über ein Button in der ActionToolbar kann
+eine neue Tunnelkonfiguration angelegt werden.</p></div>
+<div class="paragraph"><p>Die Interaktion zwischen des Benutzers in der Anwendung ist in
+<a href="#whiteboard-gui">[whiteboard-gui]</a> visuell dargestellt:</p></div>
+<div class="imageblock" id="whiteboard-gui" style="text-align:center;">
+<div class="content">
+<img src="bilder/whiteboard_gui.jpg" alt="bilder/whiteboard_gui.jpg" width="500px" />
+</div>
+<div class="title">Abbildung 2. Graphischer Aufbau der GUI</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_konfiguration">Konfiguration</h3>
+<div class="paragraph"><p>Die Tunnelkonfigurationen werden in einer SQLite Datenbank abgelegt. Es
+existiert mit <code>.config.IodineConfiguration</code> ein leichtgewichtiger Proxy
+um die Android <code>ContentValues</code> Klasse. Die <code>.config.ConfigDatabase</code> Klasse
+ist ein <code>SQLiteOpenHelper</code> und kann mehrfach instanziert werden.</p></div>
+</div>
+<div class="sect2">
+<h3 id="_vpn_service">VPN-Service</h3>
+<div class="paragraph"><p>Der VPN Service hat 5 Zustände die er über Broadcast Intents mitteilt.
+Eine solche Mitteilung wird verschickt wenn sich der Zustand ändert oder
+dies über ACTION_CONTROL_UPDATE angefordert wurde.</p></div>
+<div class="paragraph"><p>Die Kommunikation der Oberfläche mit dem VPN Service erfolgt mit Broadcasts Intents.</p></div>
+<div class="paragraph"><p><a href="#whiteboard-intents">[whiteboard-intents]</a> zeigt die Zustände des Iodine VPN-Service. Rot nummeriert sind die
+Intents die der Service verschickt um über Statusänderungen zu informieren. Blau nummeriert
+sind Intents mit denen der Service gesteuert werden kann.</p></div>
+<div class="imageblock" id="whiteboard-intents" style="text-align:center;">
+<div class="content">
+<img src="bilder/whiteboard_intents.jpg" alt="bilder/whiteboard_intents.jpg" width="500px" />
+</div>
+<div class="title">Abbildung 3. Status Informations und Steuerungs Intents des VPN Service</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_jni">JNI</h3>
+<div class="paragraph"><p>Die JNI Methoden für iodine befinden sich in der Klasse <code>.IodineClient</code>
+bzw. <code>/jni/iodine-client.c</code>. <code>IodineClient#connect</code> ersetzt dabei prinzipiell
+die <code>main()</code> des ursprünglichen iodine Client.</p></div>
+<div class="paragraph"><p>Weitere Methoden dienen dem Austausch der vom Server übermittelten Konfiguration
+und des im System eingestellten DNS Server.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_android_vpn_framework">Android VPN-Framework</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Seit API Level 14/Android 4 ist es möglich VPN Verbindungen mit Android
+Anwendungen aufzubauen und zu verwalten.</p></div>
+<div class="paragraph"><p>Die Application benötigt dazu die Permission
+<code>android.permission.BIND_VPN_SERVICE</code>.</p></div>
+<div class="paragraph"><p>Bevor eine Anwendung das erste mal eine VPN Verbindung aufbauen darf
+wird Android sicherheitshalber den Benutzer explizit um Erlaubnis
+fragen.</p></div>
+<div class="paragraph"><p>Dazu wird <code>IodineVpnService.prepare(this)</code> <a href="#vpnapi">[vpnapi]</a>
+aufgerufen. Wird null zurückgegeben hat der Benutzer VPN Verbindungen
+dieser App bereits früher zugestimmt. Andernfalls wird ein Intent
+zurückgegeben mit dem die Benutzernachfrage initiiert werden kann.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>  <span style="font-weight: bold"><span style="color: #0000FF">public</span></span> <span style="color: #009900">void</span> <span style="font-weight: bold"><span style="color: #000000">tunnel</span></span><span style="color: #990000">()</span> <span style="color: #FF0000">{</span>
+    <span style="color: #008080">Intent</span> intent <span style="color: #990000">=</span> IodineVpnService<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">prepare</span></span><span style="color: #990000">(</span><span style="font-weight: bold"><span style="color: #0000FF">this</span></span><span style="color: #990000">);</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span>intent <span style="color: #990000">!=</span> <span style="font-weight: bold"><span style="color: #0000FF">null</span></span><span style="color: #990000">)</span> <span style="color: #FF0000">{</span>
+      <span style="font-style: italic"><span style="color: #9A1900">// Ask for permission</span></span>
+      intent<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">putExtra</span></span><span style="color: #990000">(</span>IodineVpnService<span style="color: #990000">.</span>EXTRA_CONFIGURATION_ID<span style="color: #990000">,</span> configuration<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">getId</span></span><span style="color: #990000">());</span>
+      <span style="font-weight: bold"><span style="color: #000000">startActivityForResult</span></span><span style="color: #990000">(</span>intent<span style="color: #990000">,</span> INTENT_REQUEST_CODE_PREPARE<span style="color: #990000">);</span>
+    <span style="color: #FF0000">}</span> <span style="font-weight: bold"><span style="color: #0000FF">else</span></span> <span style="color: #FF0000">{</span>
+      <span style="font-style: italic"><span style="color: #9A1900">// Permission already granted</span></span>
+      <span style="font-weight: bold"><span style="color: #000000">startVPNService</span></span><span style="color: #990000">();</span>
+    <span style="color: #FF0000">}</span>
+  <span style="color: #FF0000">}</span>
+
+  @Override
+  <span style="font-weight: bold"><span style="color: #0000FF">protected</span></span> <span style="color: #009900">void</span> <span style="font-weight: bold"><span style="color: #000000">onActivityResult</span></span><span style="color: #990000">(</span><span style="color: #009900">int</span> requestCode<span style="color: #990000">,</span> <span style="color: #009900">int</span> resultCode<span style="color: #990000">,</span> <span style="color: #008080">Intent</span> data<span style="color: #990000">)</span> <span style="color: #FF0000">{</span>
+    <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span>requestCode <span style="color: #990000">==</span> INTENT_REQUEST_CODE_PREPARE<span style="color: #990000">)</span> <span style="color: #FF0000">{</span>
+      <span style="font-weight: bold"><span style="color: #0000FF">if</span></span> <span style="color: #990000">(</span>resultCode <span style="color: #990000">==</span> RESULT_OK<span style="color: #990000">)</span> <span style="color: #FF0000">{</span>
+        <span style="font-weight: bold"><span style="color: #000000">startVPNService</span></span><span style="color: #990000">();</span>
+      <span style="color: #FF0000">}</span> <span style="font-weight: bold"><span style="color: #0000FF">else</span></span> <span style="color: #FF0000">{</span>
+        <span style="font-style: italic"><span style="color: #9A1900">// User denied permission</span></span>
+      <span style="color: #FF0000">}</span>
+    <span style="color: #FF0000">}</span>
+  <span style="color: #FF0000">}</span>
+
+  <span style="font-weight: bold"><span style="color: #0000FF">private</span></span> <span style="color: #009900">void</span> <span style="font-weight: bold"><span style="color: #000000">startVPNService</span></span><span style="color: #990000">()</span> <span style="color: #FF0000">{</span>
+    <span style="font-style: italic"><span style="color: #9A1900">// Start VPN with VPNService.Builder</span></span>
+  <span style="color: #FF0000">}</span></tt></pre></div></div>
+<div class="paragraph"><p>Der weitere Weg mit dem <code>VPNService.Builder</code> ist geradelinig. Im Fall
+von iodine wird zunächst der Tunnel über DNS aufgebaut bevor das
+tun-Interface geöffnet wird.</p></div>
+<div class="paragraph"><p>Nachdem vom Server die IP-Konfiguration mitgeteilt wurde, wird diese im
+<code>Builder</code> gesetzt und der Tunnel geöffnet:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>    <span style="font-style: italic"><span style="color: #9A1900">// .... IodineVpnService.java :: runTunnel()</span></span>
+    b<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">addAddress</span></span><span style="color: #990000">(</span>hostAddress<span style="color: #990000">,</span> netbits<span style="color: #990000">);</span>
+    b<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">addRoute</span></span><span style="color: #990000">(</span><span style="color: #FF0000">"0.0.0.0"</span><span style="color: #990000">,</span> <span style="color: #993399">0</span><span style="color: #990000">);</span> <span style="font-style: italic"><span style="color: #9A1900">// Default Route</span></span>
+    b<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">setMtu</span></span><span style="color: #990000">(</span>mtu<span style="color: #990000">);</span>
+
+    <span style="font-style: italic"><span style="color: #9A1900">// Opens tun device</span></span>
+    <span style="color: #008080">ParcelFileDescriptor</span> parcelFD <span style="color: #990000">=</span> b<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">establish</span></span><span style="color: #990000">();</span>
+
+    <span style="font-style: italic"><span style="color: #9A1900">// prevent dns traffic to get through its own tunnel</span></span>
+    <span style="font-weight: bold"><span style="color: #000000">protect</span></span><span style="color: #990000">(</span>IodineClient<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">getDnsFd</span></span><span style="color: #990000">());</span>
+
+    <span style="font-style: italic"><span style="color: #9A1900">// get the filedescriptor</span></span>
+    <span style="color: #009900">int</span> tun_fd <span style="color: #990000">=</span> parcelFD<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">detachFd</span></span><span style="color: #990000">();</span>
+
+    <span style="font-style: italic"><span style="color: #9A1900">// pass the filedescriptor to iodine</span></span>
+    IodineClient<span style="color: #990000">.</span><span style="font-weight: bold"><span style="color: #000000">tunnel</span></span><span style="color: #990000">(</span>tun_fd<span style="color: #990000">);</span></tt></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_iodine">iodine</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_verbindungsaufbau_handshake">Verbindungsaufbau (Handshake)</h3>
+<div class="paragraph"><p>Der folgende Text zeigt ein Beispiel für den Ablauf eines Handshake. Der genaue Ablauf kann
+variieren jenachdem wie die Verbindungsparameter gewählt werden.</p></div>
+<div class="paragraph"><p>Hier sind gewählt -m 768 fragment size und ein 9 Zeichen
+Passwort. Die Gegenstelle ist <code>t.yves.tw</code>. Eine Raw (direkte UDP) Verbindung
+wurde verhindert indem der Rechner zum Testzeitpunkt keine default Route hatte.</p></div>
+<div class="paragraph"><p>RX/TX aus der Sicht des Servers. Die "*" in den Hostnamen markieren Zeichen die
+sich aus Random Daten ergeben.</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 3.1.6
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt>    <span style="color: #990000">==</span> Der Client testet die Qualitaet der Uebertragung
+    <span style="color: #990000">&lt;--</span> client<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">handshake_qtype_autodetect</span></span><span style="color: #990000">()</span>
+              <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #000000">handshake_qtypetest</span></span><span style="color: #990000">()</span>
+              <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #000000">send_downenctest</span></span><span style="color: #990000">()</span>
+      hostname<span style="color: #990000">[</span><span style="color: #993399">0</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #FF0000">"y"</span>
+      hostanme<span style="color: #990000">[</span><span style="color: #993399">1</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> downenc <span style="color: #990000">=</span> <span style="color: #FF0000">'r'</span>
+      hostname<span style="color: #990000">[</span><span style="color: #993399">2</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> variant <span style="color: #990000">=</span> <span style="color: #993399">1</span> <span style="color: #990000">=</span> <span style="color: #FF0000">'b'</span> <span style="color: #990000">(</span>b32<span style="color: #990000">)</span>
+      hostname<span style="color: #990000">[</span><span style="color: #993399">3</span><span style="color: #990000">..</span><span style="color: #993399">5</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> rand_seed<span style="color: #990000">++</span>
+      RX<span style="color: #990000">:</span> yrb<span style="color: #990000">***.</span>t<span style="color: #990000">.</span>yves<span style="color: #990000">.</span>tw
+
+    <span style="color: #990000">--&gt;</span> <span style="color: #993399">48</span> bytes <span style="color: #008080">aus</span> encoding<span style="color: #990000">.</span>h<span style="color: #990000">:</span>DOWNCODECHECK
+      TX<span style="color: #990000">:</span> yrb<span style="color: #990000">***.</span>t<span style="color: #990000">.</span>yves<span style="color: #990000">.</span>tw<span style="color: #990000">,</span> <span style="color: #993399">48</span> bytes data
+
+    <span style="color: #990000">==</span> Austausch der Versionsinformationen
+    <span style="color: #990000">&lt;--</span> client<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">send_version</span></span><span style="color: #990000">()</span>
+      VERSION<span style="color: #990000">=</span><span style="color: #993399">0x00</span> <span style="color: #993399">00</span> <span style="color: #993399">05</span> <span style="color: #993399">02</span>
+      hostname<span style="color: #990000">[</span><span style="color: #993399">0</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> cmd <span style="color: #990000">=</span> <span style="color: #FF0000">'v'</span>
+      hostname<span style="color: #990000">[</span><span style="color: #993399">1</span><span style="color: #990000">..</span><span style="color: #993399">6</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">b32</span></span><span style="color: #990000">(</span><span style="color: #993399">0</span><span style="color: #990000">,</span><span style="color: #993399">0</span><span style="color: #990000">,</span><span style="color: #993399">5</span><span style="color: #990000">,</span><span style="color: #993399">2</span><span style="color: #990000">,</span>random<span style="color: #990000">&lt;&lt;</span><span style="color: #993399">8</span><span style="color: #990000">,</span>random<span style="color: #990000">)</span>
+      hostname <span style="color: #990000">=</span> <span style="color: #FF0000">"vAAAAKAR__"</span>
+      RX<span style="color: #990000">:</span> vaaaaka<span style="color: #990000">****.</span>t<span style="color: #990000">.</span>yves<span style="color: #990000">.</span>tw
+
+    <span style="color: #990000">--&gt;</span> iodined<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">send_version_response</span></span><span style="color: #990000">()</span>
+      der Server bestaetigt mit
+      data<span style="color: #990000">[</span><span style="color: #993399">0</span><span style="color: #990000">..</span><span style="color: #993399">8</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #FF0000">"VACK"</span> <span style="font-weight: bold"><span style="color: #000000">b32</span></span><span style="color: #990000">(</span>seed<span style="color: #990000">&gt;&gt;</span><span style="color: #993399">24</span><span style="color: #990000">,</span> seed<span style="color: #990000">&gt;&gt;</span><span style="color: #993399">16</span><span style="color: #990000">,</span> seed<span style="color: #990000">&gt;&gt;</span><span style="color: #993399">8</span><span style="color: #990000">,</span> seed<span style="color: #990000">,</span> userid<span style="color: #990000">)</span>
+      TX<span style="color: #990000">:</span> vaaaaka<span style="color: #990000">***.</span>t<span style="color: #990000">.</span>yves<span style="color: #990000">.</span>tw<span style="color: #990000">,</span> <span style="color: #993399">9</span> bytes data
+
+
+    <span style="color: #990000">==</span> Senden von Passwort <span style="color: #008080">und</span> IP<span style="color: #990000">-</span><span style="font-weight: bold"><span style="color: #000000">Konfiguration</span></span> <span style="color: #990000">(</span>Subnetz<span style="color: #990000">)</span>
+    <span style="color: #990000">&lt;--</span> client<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">send_login</span></span><span style="color: #990000">()</span>
+      cmd <span style="color: #990000">=</span> <span style="color: #FF0000">'l'</span>
+      hostname<span style="color: #990000">[</span><span style="color: #993399">1</span><span style="color: #990000">..</span><span style="color: #993399">16</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> login<span style="color: #990000">/</span>password mit seed xored und md5
+      hostname<span style="color: #990000">[</span><span style="color: #993399">17</span><span style="color: #990000">..</span><span style="color: #993399">18</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> seed
+      RX<span style="color: #990000">:</span> lad24srn4ezmg21qjsfy13msagd0srfq<span style="color: #990000">.</span>t<span style="color: #990000">.</span>yves<span style="color: #990000">.</span>tw
+
+    <span style="color: #990000">--&gt;</span> iodined<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">handle_null_request</span></span><span style="color: #990000">()</span>
+      Sendet bei Erfolg die IP Einstellungen wie
+      <span style="color: #FF0000">"172.16.0.1-172.16.0.2-1130-16"</span>
+      server<span style="color: #990000">=</span><span style="color: #FF0000">"172.16.0.1"</span>
+      client<span style="color: #990000">=</span><span style="color: #FF0000">"172.16.0.2"</span>
+      mtu<span style="color: #990000">=</span><span style="color: #993399">1130</span>
+      netbits<span style="color: #990000">=</span><span style="color: #993399">16</span>
+      TX<span style="color: #990000">:</span> lad24srn4ezmg21qjsfy13msagd0srfq<span style="color: #990000">.</span>t<span style="color: #990000">.</span>yves<span style="color: #990000">.</span>tw
+        <span style="color: #990000">=</span> 3137322<span style="font-weight: bold"><span style="color: #000000">e31362e302e312d3137322e31362e302e322d313133302d3136</span></span> <span style="color: #990000">(</span>_16<span style="color: #990000">)</span>
+        <span style="color: #990000">=</span> <span style="color: #993399">172.16</span><span style="color: #990000">.</span><span style="color: #993399">0.1</span><span style="color: #990000">-</span><span style="color: #993399">172.16</span><span style="color: #990000">.</span><span style="color: #993399">0.2</span><span style="color: #990000">-</span><span style="color: #993399">1130</span><span style="color: #990000">-</span><span style="color: #993399">16</span>
+
+    <span style="color: #990000">==</span> Senden der IP Adresse des Clients
+    <span style="color: #990000">&lt;--</span> Request <span style="font-weight: bold"><span style="color: #0000FF">for</span></span> IP address
+      RX<span style="color: #990000">:</span> iamin<span style="color: #990000">.</span>t<span style="color: #990000">.</span>yves<span style="color: #990000">.</span>tw
+
+    <span style="color: #990000">--&gt;</span> iodined<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">handle_null_request</span></span><span style="color: #990000">()</span>
+        addr <span style="color: #990000">=</span> externe IP Adresse <span style="color: #008080">des</span> <span style="font-weight: bold"><span style="color: #000000">Server</span></span> <span style="color: #990000">(-</span><span style="color: #008080">n</span> Switch<span style="color: #990000">)</span>
+        reply<span style="color: #990000">[</span><span style="color: #993399">0</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #FF0000">'I'</span><span style="color: #990000">;</span>
+        reply<span style="color: #990000">[</span><span style="color: #993399">1</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #990000">(</span>addr <span style="color: #990000">&gt;&gt;</span> <span style="color: #993399">24</span><span style="color: #990000">)</span> <span style="color: #990000">&amp;</span> <span style="color: #993399">0xFF</span><span style="color: #990000">;</span>
+        reply<span style="color: #990000">[</span><span style="color: #993399">2</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #990000">(</span>addr <span style="color: #990000">&gt;&gt;</span> <span style="color: #993399">16</span><span style="color: #990000">)</span> <span style="color: #990000">&amp;</span> <span style="color: #993399">0xFF</span><span style="color: #990000">;</span>
+        reply<span style="color: #990000">[</span><span style="color: #993399">3</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #990000">(</span>addr <span style="color: #990000">&gt;&gt;</span>  <span style="color: #993399">8</span><span style="color: #990000">)</span> <span style="color: #990000">&amp;</span> <span style="color: #993399">0xFF</span><span style="color: #990000">;</span>
+        reply<span style="color: #990000">[</span><span style="color: #993399">4</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #990000">(</span>addr <span style="color: #990000">&gt;&gt;</span>  <span style="color: #993399">0</span><span style="color: #990000">)</span> <span style="color: #990000">&amp;</span> <span style="color: #993399">0xFF</span><span style="color: #990000">;</span>
+      TX<span style="color: #990000">:</span> iamin<span style="color: #990000">.</span>t<span style="color: #990000">.</span>yves<span style="color: #990000">.</span>tw
+        <span style="color: #990000">=</span> 494<span style="font-weight: bold"><span style="color: #000000">e2f737d</span></span> <span style="color: #990000">(</span>_16<span style="color: #990000">)</span>
+
+    <span style="color: #990000">==</span> Testen auf EDNS Erweiterung
+    <span style="color: #990000">&lt;--</span> client<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">handshake_edns0_check</span></span><span style="color: #990000">()</span>
+              <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #000000">send_downenctest</span></span><span style="color: #990000">()</span>
+      downenc <span style="color: #990000">=</span> <span style="color: #FF0000">'r'</span> <span style="color: #008080">fuer</span> T_NULL <span style="color: #FF0000">'t'</span>
+      variant <span style="color: #990000">=</span> <span style="color: #993399">1</span> <span style="color: #990000">=</span> <span style="color: #FF0000">'b'</span> <span style="color: #990000">(</span>b32<span style="color: #990000">)</span>
+      data<span style="color: #990000">[</span><span style="color: #993399">0</span><span style="color: #990000">..</span><span style="color: #993399">5</span><span style="color: #990000">]</span>  <span style="color: #990000">=</span> <span style="color: #FF0000">"y"</span> downenc <span style="color: #008080">variant</span> rand_seed<span style="color: #990000">[</span><span style="color: #993399">0</span><span style="color: #990000">..</span><span style="color: #993399">2</span><span style="color: #990000">]</span>
+      RX<span style="color: #990000">:</span> yrb<span style="color: #990000">***.</span>t<span style="color: #990000">.</span>yves<span style="color: #990000">.</span>tw
+
+    <span style="color: #990000">--&gt;</span> iodined<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">handle_null_login</span></span><span style="color: #990000">()</span> <span style="color: #990000">:</span> <span style="color: #993399">937</span>
+               <span style="color: #990000">-&gt;</span> <span style="font-weight: bold"><span style="color: #000000">write_dns</span></span><span style="color: #990000">(</span> type<span style="color: #990000">=</span><span style="color: #FF0000">'R'</span><span style="color: #990000">)</span>
+      Der Server antwortet mit <span style="color: #993399">48</span> bytes <span style="color: #008080">aus</span> encoding<span style="color: #990000">.</span>h<span style="color: #990000">:</span>DOWNCODECHECK
+      TX<span style="color: #990000">:</span> yrb<span style="color: #990000">***.</span>t<span style="color: #990000">.</span>yves<span style="color: #990000">.</span>tw<span style="color: #990000">,</span> <span style="color: #993399">48</span> bytes data
+
+
+    <span style="color: #990000">==</span> Testen der Kodierungen mit verschiedenen Patterns
+    <span style="color: #990000">&lt;--</span> client<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">handshake_upenc_autodetect</span></span><span style="color: #990000">()</span>
+      In den folgenden Tests testet der Client ob mit Base128
+      kodierte Nachrichten vom DNS Relay korrekt <span style="color: #008080">verarbeitet</span> werden<span style="color: #990000">.</span>
+
+    <span style="color: #990000">--&gt;</span> Der Server schickt die Patterns einfach <span style="color: #008080">wieder</span> zurueck<span style="color: #990000">.</span>
+
+    <span style="color: #990000">==</span> Client legt <span style="color: #008080">Kodierung</span> fest<span style="color: #990000">,</span> Server bestaetigt
+    <span style="color: #990000">&lt;--</span> client<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">handshake_switch_codec</span></span><span style="color: #990000">()</span>
+      hostname<span style="color: #990000">[</span><span style="color: #993399">0</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> command <span style="color: #FF0000">'s'</span>
+      hostname<span style="color: #990000">[</span><span style="color: #993399">1</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">b32</span></span><span style="color: #990000">(</span>userid<span style="color: #990000">)</span>
+      hostname<span style="color: #990000">[</span><span style="color: #993399">2</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #FF0000">'h'</span> <span style="color: #990000">(</span><span style="color: #993399">7</span><span style="color: #990000">)</span>
+      hostname<span style="color: #990000">[</span><span style="color: #993399">3</span><span style="color: #990000">..</span><span style="color: #993399">5</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> rand_seed<span style="color: #990000">++</span>
+      rand_seed<span style="color: #990000">++;</span>
+      RX<span style="color: #990000">:</span> sahmiut<span style="color: #990000">.</span>yves<span style="color: #990000">.</span>tw
+
+    <span style="color: #990000">--&gt;</span> iodined<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="color: #993399">840</span>
+      Schreibt den Namen des <span style="color: #008080">ausgewaehlten</span> Codecs<span style="color: #990000">:</span>
+      data<span style="color: #990000">=</span><span style="color: #FF0000">"Base128"</span> <span style="color: #990000">(</span><span style="color: #008080">kein</span> encoding<span style="color: #990000">!)</span>
+      TX<span style="color: #990000">:</span> sahmiut<span style="color: #990000">.</span>yves<span style="color: #990000">.</span>tw<span style="color: #990000">,</span> <span style="color: #993399">7</span> bytes of data
+
+    <span style="color: #990000">==</span> Anschalten <span style="color: #008080">lazy</span> <span style="font-weight: bold"><span style="color: #000000">mode</span></span> <span style="color: #990000">(</span>an<span style="color: #990000">:</span> Server beantwortet Anfragen <span style="color: #008080">nicht</span> sofort<span style="color: #990000">)</span>
+    <span style="color: #990000">&lt;--</span> client<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">send_lazy_switch</span></span><span style="color: #990000">()</span>
+      hostname<span style="color: #990000">[</span><span style="color: #993399">0</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #FF0000">'o'</span>
+      hostname<span style="color: #990000">[</span><span style="color: #993399">1</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="font-weight: bold"><span style="color: #000000">b32</span></span><span style="color: #990000">(</span>userid<span style="color: #990000">)</span> <span style="color: #990000">=</span> <span style="color: #FF0000">'a'</span>
+      hostname<span style="color: #990000">[</span><span style="color: #993399">2</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #FF0000">'l'</span> fuer lazy <span style="color: #008080">mode</span> oder <span style="color: #FF0000">'i'</span>
+      hostname<span style="color: #990000">[</span><span style="color: #993399">3</span><span style="color: #990000">..</span><span style="color: #993399">5</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> rand_seed<span style="color: #990000">++</span>
+      RX<span style="color: #990000">:</span> oalmiv<span style="color: #990000">.</span>t<span style="color: #990000">.</span>yves<span style="color: #990000">.</span>tw
+
+    <span style="color: #990000">--&gt;</span> iodined<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="color: #993399">919</span>
+      data<span style="color: #990000">=</span><span style="color: #FF0000">"Lazy"</span> <span style="color: #990000">(</span><span style="color: #008080">kein</span> encoding<span style="color: #990000">!)</span>
+      TX<span style="color: #990000">:</span> oalmiv<span style="color: #990000">.</span>t<span style="color: #990000">.</span>yves<span style="color: #990000">.</span>tw<span style="color: #990000">,</span> <span style="color: #993399">4</span> bytes of data
+
+    <span style="color: #990000">==</span>
+    <span style="color: #990000">&lt;--</span> client<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">send_set_downstream_fragsize</span></span><span style="color: #990000">()</span>
+      data<span style="color: #990000">[</span><span style="color: #993399">0</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> userid<span style="color: #990000">;</span>
+      data<span style="color: #990000">[</span><span style="color: #993399">1</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #990000">(</span>fragsize <span style="color: #990000">&amp;</span> <span style="color: #993399">0xff00</span><span style="color: #990000">)</span> <span style="color: #990000">&gt;&gt;</span> <span style="color: #993399">8</span><span style="color: #990000">;</span>
+      data<span style="color: #990000">[</span><span style="color: #993399">2</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #990000">(</span>fragsize <span style="color: #990000">&amp;</span> <span style="color: #993399">0x00ff</span><span style="color: #990000">);</span>
+      data<span style="color: #990000">[</span><span style="color: #993399">3</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #990000">(</span>rand_seed <span style="color: #990000">&gt;&gt;</span> <span style="color: #993399">8</span><span style="color: #990000">)</span> <span style="color: #990000">&amp;</span> <span style="color: #993399">0xff</span><span style="color: #990000">;</span>
+      data<span style="color: #990000">[</span><span style="color: #993399">4</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #990000">(</span>rand_seed <span style="color: #990000">&gt;&gt;</span> <span style="color: #993399">0</span><span style="color: #990000">)</span> <span style="color: #990000">&amp;</span> <span style="color: #993399">0xff</span><span style="color: #990000">;</span>
+      hostname <span style="color: #990000">=</span> <span style="color: #FF0000">'n'</span> <span style="color: #990000">+</span> <span style="font-weight: bold"><span style="color: #000000">b32</span></span><span style="color: #990000">(</span>data<span style="color: #990000">)</span>
+      RX<span style="color: #990000">:</span> naabqbmiw<span style="color: #990000">.</span>t<span style="color: #990000">.</span>yves<span style="color: #990000">.</span>tw
+
+    <span style="color: #990000">--&gt;</span> iodined<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="color: #993399">1042</span>
+      bestaetigt empfangene Framesize durch Wiederholung
+
+    <span style="color: #990000">==</span> Regelmaesige pings fragen den Server nach anstehenden Daten ab
+    <span style="color: #990000">&lt;--</span> client<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="font-weight: bold"><span style="color: #000000">send_ping</span></span><span style="color: #990000">()</span>
+      data<span style="color: #990000">[</span><span style="color: #993399">0</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> userid<span style="color: #990000">;</span>
+      data<span style="color: #990000">[</span><span style="color: #993399">1</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #990000">((</span>inpkt<span style="color: #990000">.</span>seqno <span style="color: #990000">&amp;</span> <span style="color: #993399">7</span><span style="color: #990000">)</span> <span style="color: #990000">&lt;&lt;</span> <span style="color: #993399">4</span><span style="color: #990000">)</span> <span style="color: #990000">|</span> <span style="color: #990000">(</span>inpkt<span style="color: #990000">.</span>fragment <span style="color: #990000">&amp;</span> <span style="color: #993399">15</span><span style="color: #990000">);</span>
+      data<span style="color: #990000">[</span><span style="color: #993399">2</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #990000">(</span>rand_seed <span style="color: #990000">&gt;&gt;</span> <span style="color: #993399">8</span><span style="color: #990000">)</span> <span style="color: #990000">&amp;</span> <span style="color: #993399">0xff</span><span style="color: #990000">;</span>
+      data<span style="color: #990000">[</span><span style="color: #993399">3</span><span style="color: #990000">]</span> <span style="color: #990000">=</span> <span style="color: #990000">(</span>rand_seed <span style="color: #990000">&gt;&gt;</span> <span style="color: #993399">0</span><span style="color: #990000">)</span> <span style="color: #990000">&amp;</span> <span style="color: #993399">0xff</span><span style="color: #990000">;</span>
+      hostname <span style="color: #990000">=</span> <span style="color: #FF0000">'p'</span> <span style="color: #990000">+</span> <span style="font-weight: bold"><span style="color: #000000">b32</span></span><span style="color: #990000">(</span>data<span style="color: #990000">)</span>
+      RX<span style="color: #990000">:</span> paaalcfy<span style="color: #990000">.</span>t<span style="color: #990000">.</span>yves<span style="color: #990000">.</span>tw
+
+    <span style="color: #990000">--&gt;</span> iodined<span style="color: #990000">.</span>c<span style="color: #990000">:</span><span style="color: #993399">1067</span>
+      Der Server nutzt die regelmaessigen Pings um Daten an den Client <span style="color: #008080">zu</span> liefern<span style="color: #990000">.</span></tt></pre></div></div>
+<div class="sect3">
+<h4 id="_der_lazy_modus">Der lazy Modus</h4>
+<div class="paragraph"><p>Wie in der Anwenderdokumentation beschrieben erhöht der Lazy Modus den Durchsatz
+und senkt die Latenzzeit, wird aber nicht von allen DNS-Relays unterstützt.</p></div>
+<div class="paragraph"><p>Lazy bezieht sich auf das Verhalten des Servers. Der Server wird im Lazy-mode
+alle Antworten auf Anfragen solange zurückhalten bis er neue Daten für den
+Client erhalten hat. Im Idealfall also bis das Antwortpaket der getunnelten
+IP Verbindung angekommen ist.</p></div>
+<div class="paragraph"><p>Diese Verzögerung kann mit manchen DNS-Relays Probleme machen. Der Server kann dies jedoch
+anhand der Duplikate in den Anfragen erkennen und damit den lazy-mode ausschalten.</p></div>
+<div class="paragraph"><p>Ohne diesen Mechanismus müsste der Client jedoch viel häufiger nach neuen Daten
+pollen (vgl. HTTP Long polling in Comet oder BOSH).</p></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_iodine_base_32_kodierung">iodine base(32) Kodierung</h3>
+<div class="paragraph"><p>Dieses Programm bietet die Base32 Kodierung von iodine für die
+Kommandozeile zum Debuggen an.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+#include "src/base32.h"
+#include "src/encoding.h"
+
+<strong>int</strong> main(<strong>int</strong> argc, <strong>char</strong> *argv[]) {
+    <strong>struct</strong> encoder *b32 = get_base32_encoder();
+    <strong>char</strong> buf[512];
+    size_t len = 512;
+
+    <strong>if</strong> (argc != 3) <strong>return</strong> 0;
+    <strong>if</strong> (*argv[1] == 'd') {
+        <strong>int</strong> r = b32-&gt;decode(buf, &amp;len, argv[2], strlen(argv[2]));
+        <strong>int</strong> i;
+        printf("Decoded %d bytes:\n", r);
+        <strong>for</strong> (i = 0; i&lt; r; i++) {
+            printf("0x%02hhx (%c) ", buf[i], (buf[i] &gt;= '0' &amp;&amp; buf[i] &lt;= 'z') ? buf[i] : ' ');
+        }
+        printf("\n");
+    } <strong>else</strong> <strong>if</strong> (*argv[1] == 'e') {
+        <strong>int</strong> r = b32-&gt;encode(buf, &amp;len, argv[2], strlen(argv[2]));
+        printf("Encoded %d bytes in %ld output bytes: &gt;%s&lt;\n", len, r, buf);
+    }
+    <strong>return</strong> 0;
+}</code></pre>
+</div></div>
+<div class="listingblock">
+<div class="content">
+<pre><code># gcc test.c src/base32.c -o test
+# ./test e abcdefg
+Encoded 7 12 bytes: &gt;mfrggzdfmztq&lt;</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_änderungen_an_iodine">Änderungen an iodine</h3>
+<div class="paragraph"><p>Der Code basiert auf der letzten Iodine Version 0.6.0-rc1. Die
+Änderungen wurden absichtlich möglichst gering gehalten und betragen
+im wesentlichsten nur ca. 80 Zeilen.</p></div>
+<div class="paragraph"><p>Ein Hauptteil der Änderungen verhindern, dass Android als Linux erkannt wird.
+Im Gegensatz zu vielen Linux Installationen verwenden Android nicht die GNU libc
+sondern <em>Bionic libc</em>. Dies ist eine besonders kleine, auf die BSD libc zurückgehende
+standard C Library. Es fehlen einige Features der glibc wie wide-character support,
+volle POSIX Thread Unterstützung oder locale Unterstützung. Das Ziel von Bionic ist
+nicht eine vollständige C Standardbibliothek sondern lediglich eine schlanke Implementierung
+aller für ein Android nötigen Funktionen.</p></div>
+<div class="paragraph"><p>Im einfachsten Fall scheitert die Ausführung von iodine unter Android an einem <code>system()</code> Aufruf
+mit dem iodine die IP-Konfiguration anwendet.</p></div>
+<div class="sect3">
+<h4 id="_android_mk">Android.mk</h4>
+<div class="paragraph"><p>Das ursprüngliche iodine Makefile wird nicht verwendet. Es wird das
+Android NDK Buildsystem verwendet, die Anweisungen dazu liegen in
+<code>jni/Android.mk</code>. Aus dem Projektverzeichnis kann die Übersetzung der
+C-Quellen angestossen werden.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>org.xapek.andiodine % ~/$NDK_ROOT/ndk-build clean
+Clean: iodine-client [armeabi]
+Clean: stdc++ [armeabi]
+org.xapek.andiodine % ~/$NDK_ROOT/ndk-build
+Compile thumb  : iodine-client &lt;= iodine-client.c
+Compile thumb  : iodine-client &lt;= tun.c
+Compile thumb  : iodine-client &lt;= dns.c
+Compile thumb  : iodine-client &lt;= read.c
+Compile thumb  : iodine-client &lt;= encoding.c
+Compile thumb  : iodine-client &lt;= login.c
+Compile thumb  : iodine-client &lt;= base32.c
+Compile thumb  : iodine-client &lt;= base64.c
+Compile thumb  : iodine-client &lt;= base64u.c
+Compile thumb  : iodine-client &lt;= base128.c
+Compile thumb  : iodine-client &lt;= md5.c
+Compile thumb  : iodine-client &lt;= common.c
+Compile thumb  : iodine-client &lt;= client.c
+Compile thumb  : iodine-client &lt;= util.c
+SharedLibrary  : libiodine-client.so
+Install        : libiodine-client.so =&gt; libs/armeabi/libiodine-client.so</code></pre>
+</div></div>
+<div class="paragraph"><p>Die Library wird vom Android SDK automatisch in die APK-Datei eingefügt.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_common_c_daemon">common.c daemon()</h4>
+<div class="paragraph"><p>Die <code>daemon()</code> Funktion in src/common.c ist gedacht um iodine als
+Hintergrundprozess laufen zu lassen. Sie ist nur für Linux und BSD
+vorgesehen.</p></div>
+<div class="paragraph"><p>Das <code>#ifdef</code> erkennt Android als Linux, Bionic unterstützt <code>daemon()</code>
+jedoch nicht, da die Funktionalität der <code>daemon()</code> Funktion für eine
+Android App nicht benötigt wird.</p></div>
+<div class="paragraph"><p>Auch in diesem Fall brauchen wir die <code>daemon()</code> Funktion nicht, da iodine
+in einem von Java gesteuerten Thread laufen wird.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_common_c_warn">common.c warn()</h4>
+<div class="paragraph"><p>Die <code>warn()</code> Funktion existiert nicht in der Bionic libc. Die
+bereitgestellte Implementierung verwendet <code>fprintf</code> auf stderr. Die
+Meldungen werden in das Android Logging System umgeleitet und sind auch
+über Logcat nutzbar.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_tun_c_write_tun_read_tun">tun.c write_tun() / read_tun()</h4>
+<div class="paragraph"><p>Wie bei FreeBSD und Windows muss beim schreiben auf das Tun device
+(<code>write_tun</code> ) kein 4 byte großer Header mit der Adress Family angefügt werden.
+Entsprechend wird dieser in <code>read_tun()</code> im Fall von Android, FreeBSD
+und Windows nicht entfernt.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_tun_c_tun_setip">tun.c tun_setip()</h4>
+<div class="paragraph"><p>Je nach Plattform werden wird die IP-Adresse unterschiedlich gesetzt. Im
+Fall von Linux geschieht dies mit einem fragwürdigen
+<code>system("/sbin/ifconfig")</code> Aufruf.</p></div>
+<div class="paragraph"><p>Dies ist unter Android so nicht möglich. Es wurde daher eine globale
+Datenstruktur <code>tun_config_android</code> (tun.h) angelegt in welcher die zu
+setzende IP-Adresse, Gegenstelle IP-Adresse und Netzmaske abgelegt wird.
+Die Inhalte dieser Datenstruktur können von Java über JNI Funktionen
+abgefragt werden.</p></div>
+<div class="paragraph"><p>Das setzen der IP-Adressen und Routen geschieht über Methoden des
+Android VPN-Framework in Java.</p></div>
+</div>
+<div class="sect3">
+<h4 id="_dns_headerfiles">DNS Headerfiles</h4>
+<div class="paragraph"><p>Iodine benötigt Konstanten aus arpa/nameser_compat.h und arpa/nameser.h
+das nicht Teil der Android Libc ist. Die Header wurden als
+src/dns_android.h hinzugefügt.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_projekt_öffnen_und_bauen">Projekt öffnen und bauen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_c_quellcodes_übersetzen">C Quellcodes übersetzen</h3>
+<div class="paragraph"><p>Um das Projekt zu bauen ist neben dem Android SDK auch das Android NDK erforderlich. Mit dem daraus
+bereitgestellten Kommando <code>ndk-build</code> werden die C-Quellcodes unterhalb des Verzeichnisses <code>jni/</code>
+übersetzt.</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>andiodine$ $NDK_ROOT/ndk-build clean
+Clean: iodine-client [armeabi]
+Clean: stdc++ [armeabi]
+Clean: iodine-client [x86]
+Clean: stdc++ [x86]
+
+andiodine$ $NDK_ROOT/ndk-build
+Compile thumb  : iodine-client &lt;= iodine-client.c
+.....
+SharedLibrary  : libiodine-client.so
+Install        : libiodine-client.so =&gt; libs/armeabi/libiodine-client.so
+Compile x86    : iodine-client &lt;= iodine-client.c
+.....
+SharedLibrary  : libiodine-client.so
+Install        : libiodine-client.so =&gt; libs/x86/libiodine-client.so</code></pre>
+</div></div>
+</div>
+<div class="sect2">
+<h3 id="_entwickeln_mit_eclipse">Entwickeln mit Eclipse</h3>
+<div class="paragraph"><p>Das Projekt kann über den Importassistenten eingebunden werden:</p></div>
+<div class="paragraph"><p>Import &#8594; Android &#8594; Existing Android Code Into Workspace</p></div>
+</div>
+<div class="sect2">
+<h3 id="_entwickeln_mit_android_studio">Entwickeln mit Android Studio</h3>
+<div class="ulist"><ul>
+<li>
+<p>
+Choose Import Project, choose project Folder.
+</p>
+</li>
+<li>
+<p>
+Select "Create project from existing sources".
+</p>
+</li>
+</ul></div>
+</div>
+<div class="sect2">
+<h3 id="_übersetzen_mit_ant">Übersetzen mit ant</h3>
+<div class="paragraph"><p>Using ant</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><code>   android project --path .
+   ant debug</code></pre>
+</div></div>
+<div class="paragraph"><p>Die APK liegt unterhalb von <code>bin</code> und kann mit dem ant target <code>install</code> über adb installiert werden.</p></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_anhang">Anhang</h2>
+<div class="sectionbody">
+<div class="ulist bibliography"><ul>
+<li>
+<p>
+<a id="vpnapi"></a>[vpnapi]
+  <a href="http://developer.android.com/reference/android/net/VpnService.html">http://developer.android.com/reference/android/net/VpnService.html</a> Dokumentation
+  zu den Android VPN Service API
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div>
+<div id="footnotes"><hr /></div>
+<div id="footer">
+<div id="footer-text">
+Letzte Änderung 2014-01-11 18:40:29 CET
+</div>
+</div>
+</body>
+</html>
