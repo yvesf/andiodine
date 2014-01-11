@@ -1,12 +1,12 @@
 Dies ist eine Portierung von iodine (http://code.kryo.se/iodine/)
 auf Android
 
-# Dokumentation
+# Documentation
 
-  - [Anwenderdokumentation](doc/anwenderdoku.html) [(PDF)](doc/anwenderdoku.pdf)
-  - [Entwicklerdokumentation](doc/entwicklerdoku.html) [(PDF)](doc/entwicklerdoku.pdf)
+  - (german)[Anwenderdokumentation](doc/anwenderdoku.html) [(PDF)](doc/anwenderdoku.pdf)
+  - (german)[Entwicklerdokumentation](doc/entwicklerdoku.html) [(PDF)](doc/entwicklerdoku.pdf)
 
-# Authos and License
+# Authors and License
 Android Iodine Copyright (c) 2013 Yves Fischer <yvesf+andiodine@xapek.org>
 Same license as iodine.
 
