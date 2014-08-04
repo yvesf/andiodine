@@ -43,7 +43,7 @@ Funktionsweise eines DNS-Tunnel
 -------------------------------
 
 Das Domain-Name-System (DNS) wird eingesetzt um Namen (wie
-"example.com") in IP-Adressen (wie "194.71.107.50" oder
+"example.com") in IP-Adressen (wie "203.0.113.23" oder
 "2001:db8:85a3:8d3:1319:8a2e:370:7347") zu übersetzen. DNS wurde in den
 1980er Jahren ursprünglich mit dem Ziel entwickelt lokale `hosts` Datei
 im Internet abzulösen. Inzwischen werden auch andere Informationen als
