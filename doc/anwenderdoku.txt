@@ -16,7 +16,8 @@ des Programs siehe 'Entwicklerdokumentation'.
 
 Ein DNS Tunnel ermöglicht regulären IP Verkehr durch den Internet
 Namensauflösungsdienst DNS zu tunneln. Damit ist es möglich, in Netzen
-die keine normales Internet Routing unterstützen, Daten auszutauschen.
+in denen ein restriktiver Paket Filter arbeitet oder überhaupt keine Route ins
+Internet angekündigt wird, beliebige Daten mit dem Tunnel Endpunkt auszutauschen.
 Voraussetzung ist, dass das Netz gewöhnliche DNS-Auflösung unterstützt.
 Die Datenpakete werden in DNS-Anfragen kodiert, die durch die hierarchische
 Struktur an einen speziellen (i.d.R. third-level) Nameserver weitergeleitet werden.
@@ -230,9 +231,9 @@ Vorraussetzung für den Betrieb eines Iodine Server ist eine öffentlich erreich
 ein freier Port 53/dns.
 
 Es muss ein NS-Record für diese IP-Adresse eingerichtet werden. Angenommen die Tunnel Toplevel Domain
-soll "t.example.com" sein und der Server hat die IP-Adresse 192.0.43.10, dann lautet der Eintrag:
+soll "t.example.com" sein und der Server hat die IP-Adresse 203.0.113.42, dann lautet der Eintrag:
 
-    t.example.com.       8192    IN  NS    192.0.43.10
+    y.example.com.       8192    IN  NS    203.0.113.42
 
 Die Konfiguration der IP-Adressen erfolgt nicht über DHCP oder statisch, sondern diese werden den Clients
 vom iodine Server, aus einem IP Subnetz das beim Start festgelegt wird, zugewiesen.
