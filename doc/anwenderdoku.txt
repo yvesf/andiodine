@@ -16,12 +16,13 @@ des Programs siehe 'Entwicklerdokumentation'.
 
 Ein DNS Tunnel ermöglicht regulären IP Verkehr durch den Internet
 Namensauflösungsdienst DNS zu tunneln. Damit ist es möglich, in Netzen
-die keine normales Internet Routing unterstützen, Daten auszutauschen.
-Voraussetzung ist, dass das Netz gewöhnliche DNS-Auflösung unterstützt. 
+in denen ein restriktiver Paket Filter arbeitet oder überhaupt keine Route ins
+Internet angekündigt wird, beliebige Daten mit dem Tunnel Endpunkt auszutauschen.
+Voraussetzung ist, dass das Netz gewöhnliche DNS-Auflösung unterstützt.
 Die Datenpakete werden in DNS-Anfragen kodiert, die durch die hierarchische
 Struktur an einen speziellen (i.d.R. third-level) Nameserver weitergeleitet werden.
 
-Die Software <<iodine>> ist eine Implementierung eines DNS Tunnel für Linux, 
+Die Software <<iodine>> ist eine Implementierung eines DNS Tunnel für Linux,
 Mac OS X, FreeBSD, NetBSD, OpenBSD and Windows. Diese Dokumentation beschreibt
 die Portierung auf Android mit einer angepassten Benutzeroberfläche.
 --
@@ -38,12 +39,12 @@ http://code.kryo.se/iodine/iodine-latest-android.zip[cross-kompiliertes
 iodine] auszuführen.
 
 
-    
+
 Funktionsweise eines DNS-Tunnel
 -------------------------------
 
 Das Domain-Name-System (DNS) wird eingesetzt um Namen (wie
-"example.com") in IP-Adressen (wie "194.71.107.50" oder
+"example.com") in IP-Adressen (wie "203.0.113.23" oder
 "2001:db8:85a3:8d3:1319:8a2e:370:7347") zu übersetzen. DNS wurde in den
 1980er Jahren ursprünglich mit dem Ziel entwickelt lokale `hosts` Datei
 im Internet abzulösen. Inzwischen werden auch andere Informationen als
@@ -58,14 +59,14 @@ Einbetten von beliebigen Daten
 Im folgenden ist der Datenverkehr zur Auflösung des Namens "bla.de" dekodiert dargestellt.
 Das erste Paket ist die Anfrage des A-Record zu "bla.de". Das zweite Paket die Antwort des DNS Relay.
 
-Das DNS-Relay antwortet "bla.de A IN 217.160.95.28", diese Angabe soll "5 hours, 39 minutes, 
+Das DNS-Relay antwortet "bla.de A IN 217.160.95.28", diese Angabe soll "5 hours, 39 minutes,
 47 seconds" gültig sein. `217.160.95.28` wurde direkt binär übertragen als  `d9 a0  5f 1c`.
 
 Nichts hält einen DNS Server davon ab andere Daten als IP-Adressen in der Antwort zu verschicken und
 nichts kann einen Client davon abhalten beliebige Daten in subdomains (hallowelt.bla.de) zu kodieren.
 
 Aufgrund der hierarchischen Architektur von DNS kann der Inhaber einer Domains die Auflösung von
-Subdomains übernehmen. Nach RFC1035 ist die maximale Länge eines auflösbaren Namens 255 Zeichen.  
+Subdomains übernehmen. Nach RFC1035 ist die maximale Länge eines auflösbaren Namens 255 Zeichen.
 
 [source,c]
 -------------------------------------------------------------------------------------------------------------
@@ -131,33 +132,33 @@ Gegenmaßnahmen
 
 Die von einem idealen DNS Tunnel gestellten Anfragen sind gültig und unterscheiden sich
 in erster Linie nicht von denen einer gewöhnlichen Anwendung von DNS. Um Tunnel
-aufzuspüren wären daher statistische Verfahren nötig die Kriterien wie Anzahl, 
-Größe und Inhalt der Pakete betrachten. Aufgrund der Fehleranfälligkeit ist 
-es damit aber auch möglich legitime Anwendungen zu blockieren. 
+aufzuspüren wären daher statistische Verfahren nötig die Kriterien wie Anzahl,
+Größe und Inhalt der Pakete betrachten. Aufgrund der Fehleranfälligkeit ist
+es damit aber auch möglich legitime Anwendungen zu blockieren.
 
 Möchte man lediglich iodine als konkrete Implementierung blockieren ist dies sehr einfach möglich.
 Der vom iodine Client Verwendete "ping" Aufruf kann sehr einfach erkannt werden, es könnte jeder Client
 der regelmäßíg eine Subdomain mit dem Anfangsbuchstaben "p" der gleichen Restdomain erfragt geblockt werden.
 
-In einem durch Proxy Server sowieso schon stark eingeschränkten Netzwerk ist es denkbar, dass auf die Auflösung von 
-Namen ausserhalb der lokalen Domain durch den DNS Server allgemein verzichtet wird. 
+In einem durch Proxy Server sowieso schon stark eingeschränkten Netzwerk ist es denkbar, dass auf die Auflösung von
+Namen ausserhalb der lokalen Domain durch den DNS Server allgemein verzichtet wird.
 Sowohl ein HTTP-Proxyserver als auch ein SOCKS Server kann dies für
 den Client übernehmen.
 
 In einer Konfiguration für einen Internet Hotspot mit Autorisation der Benutzer (z.B. nach Bezahlvorgang) ist
 es unbedingt sinnvoll die Autoriserungsregeln auch auf den DNS Server anzuwenden, sodass für den nicht autorisierten
 Benutzer nur das Loginformular aufrufbar ist. Dies in vielen öffentlichen Hotspots momentan nicht umgesetzt.
-Für weitere Informationen zum Blockieren von DNS Tunneln siehe <<schillinger11>>. 
- 
+Für weitere Informationen zum Blockieren von DNS Tunneln siehe <<schillinger11>>.
+
 
 Bedienung
 ---------
 
 Im folgenden wird die Bedienung der Android Oberfläche beschrieben. Die Anwendungen
-teilt sich für den Benutzer in zwei Bereiche: Die Steuerung der Tunnel und die 
+teilt sich für den Benutzer in zwei Bereiche: Die Steuerung der Tunnel und die
 Verbindungskonfiguration.
 
- 
+
 Hauptbildschirm
 ~~~~~~~~~~~~~~~
 
@@ -165,10 +166,10 @@ unfloat::[]
 
 image::bilder/screen_main.png[width="300px",scaledwidth="50%",float="left"]
 
-Der Hauptbildschirm zeigt die konfigurierten Verbindungsprofile. Eine Verbindung wird 
+Der Hauptbildschirm zeigt die konfigurierten Verbindungsprofile. Eine Verbindung wird
 mit Auswahl des Eintrags gestartet.
 
-Mit dem Einstellungsbutton image:../res/drawable/ic_bt_config.png[width="32px"] können 
+Mit dem Einstellungsbutton image:../res/drawable/ic_bt_config.png[width="32px"] können
 die Verbindungsparameter geändert werden.
 
 Mit dem Button image:../res/drawable/device_access_new_account.png[width="32px"] in der ActionBar
@@ -183,14 +184,14 @@ unfloat::[]
 
 image::bilder/screen_pref.png[width="300px",scaledwidth="50%",float="left"]
 
-In der Verbindungskonfiguration werden Parameter festgelegt die beim Starten 
+In der Verbindungskonfiguration werden Parameter festgelegt die beim Starten
 des Tunnels gesetzt werden. Die Änderungen werden sofort übernommen.
 
-Zu jeder Einstellung kann mit Drücken des Hilfebuttons die Hilfe aus der Nachfolgenden 
+Zu jeder Einstellung kann mit Drücken des Hilfebuttons die Hilfe aus der Nachfolgenden
 Tabelle aufgerufen werden.
 
 Mit mit der Auswahl von image:../res/drawable/delete.png[width="32px"] wird
-die aktuell geöffnete Konfiguration gelöscht. 
+die aktuell geöffnete Konfiguration gelöscht.
 
 unfloat::[]
 
@@ -199,26 +200,26 @@ unfloat::[]
 |=====================================
 |Parameter            | Beschreibung
 |Name                 | Name für diese Verbindungskonfiguration<
-|Lazy-Mode            | Lazy mode erhöht den Durchsatz und senkt die Reaktionszeit. 
-                        Eine kleine Minderheit an DNS Relays scheint damit nicht klarzukommen was 
-                        darin resultiert dass keine oder fast keine Daten übertragen werden. 
-                        Der Client wird dies aber in der Regel feststellen und den Lazy mode ausschalten. 
+|Lazy-Mode            | Lazy mode erhöht den Durchsatz und senkt die Reaktionszeit.
+                        Eine kleine Minderheit an DNS Relays scheint damit nicht klarzukommen was
+                        darin resultiert dass keine oder fast keine Daten übertragen werden.
+                        Der Client wird dies aber in der Regel feststellen und den Lazy mode ausschalten.
                         Falls nicht, kann lazy-mode mit dieser Option ausgeschaltet werden.
-|Tunnel Nameserver    | Der Nameserver/DNS Relay, der verwendet wird um mit iodined zu kommunizieren.  
-                        Dieses Feld ist optional und wenn es nicht gesetzt ist wird der im System hinterlegte 
+|Tunnel Nameserver    | Der Nameserver/DNS Relay, der verwendet wird um mit iodined zu kommunizieren.
+                        Dieses Feld ist optional und wenn es nicht gesetzt ist wird der im System hinterlegte
                         DNS Server verwendet
 |Nameserver-Mode      | Legt fest wie der Nameserver gesetzt werden soll nachdem der Tunnel aufgebaut wurde
-|Nameserver           | IP-Adresse eine speziellen Nameserver der gesetzt werden soll 
+|Nameserver           | IP-Adresse eine speziellen Nameserver der gesetzt werden soll
                         wenn Nameserver Modus = Custom ist.
 |Password             | Dieses Feld ist optional. Es werden nur die ersten 32 Zeichen verwendet.
                         pwasswo cont
 |Raw-Mode             | Falls gesetzt wird iodine versuchen die öffentliche IP-Adresse des iodined Server
-                        aufzulösen und testen ob er direkt erreichbar ist. Falls ja, wird er den Traffic 
+                        aufzulösen und testen ob er direkt erreichbar ist. Falls ja, wird er den Traffic
                         direkt an den Server senden anstatt an ein DNS relay
 |Request-Type         | Typ der DNS Abfragen. Standardmäßig wird die beste Request type automatisch ausgewählt.
-|Top-Domain           | Der DNS Traffic wird als Anfragen für subdomains unterhalb dieser Topdomain gesendert. 
-                        Dies ist gewöhnlich eine Domain die Dir gehört. Verwende eine kurze 
-                        Domain um mehr Durchsatz zu erzielen. 
+|Top-Domain           | Der DNS Traffic wird als Anfragen für subdomains unterhalb dieser Topdomain gesendert.
+                        Dies ist gewöhnlich eine Domain die Dir gehört. Verwende eine kurze
+                        Domain um mehr Durchsatz zu erzielen.
                         Diese Einstellung muss am Server und am Client gleich sein
 |Default Route        | Legt fest ob die Default Route gesetzt wird nachdem die Verbindung aufgebaut wurde
 |====================================
@@ -230,9 +231,9 @@ Vorraussetzung für den Betrieb eines Iodine Server ist eine öffentlich erreich
 ein freier Port 53/dns.
 
 Es muss ein NS-Record für diese IP-Adresse eingerichtet werden. Angenommen die Tunnel Toplevel Domain
-soll "t.example.com" sein und der Server hat die IP-Adresse 192.0.43.10, dann lautet der Eintrag:
+soll "t.example.com" sein und der Server hat die IP-Adresse 203.0.113.42, dann lautet der Eintrag:
 
-    t.example.com.       8192    IN  NS    192.0.43.10
+    y.example.com.       8192    IN  NS    203.0.113.42
 
 Die Konfiguration der IP-Adressen erfolgt nicht über DHCP oder statisch, sondern diese werden den Clients
 vom iodine Server, aus einem IP Subnetz das beim Start festgelegt wird, zugewiesen.
@@ -240,11 +241,11 @@ vom iodine Server, aus einem IP Subnetz das beim Start festgelegt wird, zugewies
     iodined -c -P PASSWORD 192.168.0.1/24 t.example.com
 
 Die Option `-c` ist nicht immer erforderlich. Sie bewirkt, dass iodine die Quelladressen der Anfragen
-nicht überprüft. Die Überprüfung ist nicht möglich wenn die DNS Anfragen über ein Cluster verarbeitet werden, 
-sodass die beim Server einkommenden Pakete von verschiedenen Quelladressen stammen. 
+nicht überprüft. Die Überprüfung ist nicht möglich wenn die DNS Anfragen über ein Cluster verarbeitet werden,
+sodass die beim Server einkommenden Pakete von verschiedenen Quelladressen stammen.
 
 Der Server legt ein TUN-Device an (typischerweise "dns0"), je nach Zweck ist noch das
-IP Routing/Masquerade zu konfigurieren. 
+IP Routing/Masquerade zu konfigurieren.
 
 Testen
 ~~~~~~
@@ -261,9 +262,9 @@ $ dig -t A zabc.t.example.com
 ;; ANSWER SECTION:
 zabc.t.example.com.   0 IN  CNAME hpjqweyzo.dh.
 
-$ ./base32 d pjqweyz 
+$ ./base32 d pjqweyz
 Decoded 4 bytes:
-0x7a (z) 0x61 (a) 0x62 (b) 0x63 (c) 
+0x7a (z) 0x61 (a) 0x62 (b) 0x63 (c)
 --------------------------------------------------------------------------------------------------------
 
 Unter http://code.kryo.se/iodine/check-it/ wird ein Online Service zum Testen der Konfiguration angeboten.
@@ -273,7 +274,7 @@ Anhang
 ------
 
 [bibliography]
-- [[[schillinger11]]] 
-  http://www.data.ks.uni-freiburg.de/download/praxisseminarSS11/dns-tunnel/Fabian%20Schillinger%20-%20DNS-Tunnel.pdf[Fabian Schillinger, DNS-Tunnel, Universität Freiburg 2011] 
+- [[[schillinger11]]]
+  http://www.data.ks.uni-freiburg.de/download/praxisseminarSS11/dns-tunnel/Fabian%20Schillinger%20-%20DNS-Tunnel.pdf[Fabian Schillinger, DNS-Tunnel, Universität Freiburg 2011]
 - [[[iodine]]] http://code.kryo.se/iodine/
 

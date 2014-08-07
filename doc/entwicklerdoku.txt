@@ -10,7 +10,7 @@ April 2013
 [abstract]
 --
 Die Dokumentation ist zweigeteilt. Dieser Teil enthält eine technische Beschreibung.
-Die Bedienung und Funktionsweise ist in der 'Anwenderdokumentation' beschrieben. 
+Die Bedienung und Funktionsweise ist in der 'Anwenderdokumentation' beschrieben.
 --
 
 Aufbau
@@ -48,7 +48,7 @@ Konfiguration
 ~~~~~~~~~~~~~
 Die Tunnelkonfigurationen werden in einer SQLite Datenbank abgelegt. Es
 existiert mit `.config.IodineConfiguration` ein leichtgewichtiger Proxy
-um die Android `ContentValues` Klasse. Die `.config.ConfigDatabase` Klasse 
+um die Android `ContentValues` Klasse. Die `.config.ConfigDatabase` Klasse
 ist ein `SQLiteOpenHelper` und kann mehrfach instanziert werden.
 
 VPN-Service
@@ -58,11 +58,11 @@ Der VPN Service hat 5 Zustände die er über Broadcast Intents mitteilt.
 Eine solche Mitteilung wird verschickt wenn sich der Zustand ändert oder
 dies über ACTION_CONTROL_UPDATE angefordert wurde.
 
-Die Kommunikation der Oberfläche mit dem VPN Service erfolgt mit Broadcasts Intents. 
+Die Kommunikation der Oberfläche mit dem VPN Service erfolgt mit Broadcasts Intents.
 
 <<whiteboard-intents>> zeigt die Zustände des Iodine VPN-Service. Rot nummeriert sind die
 Intents die der Service verschickt um über Statusänderungen zu informieren. Blau nummeriert
-sind Intents mit denen der Service gesteuert werden kann.  
+sind Intents mit denen der Service gesteuert werden kann.
 
 [[whiteboard-intents]]
 .Status Informations und Steuerungs Intents des VPN Service
@@ -72,10 +72,10 @@ JNI
 ~~~
 
 Die JNI Methoden für iodine befinden sich in der Klasse `.IodineClient`
-bzw. `/jni/iodine-client.c`. `IodineClient#connect` ersetzt dabei prinzipiell 
+bzw. `/jni/iodine-client.c`. `IodineClient#connect` ersetzt dabei prinzipiell
 die `main()` des ursprünglichen iodine Client.
 
-Weitere Methoden dienen dem Austausch der vom Server übermittelten Konfiguration 
+Weitere Methoden dienen dem Austausch der vom Server übermittelten Konfiguration
 und des im System eingestellten DNS Server.
 
 
@@ -150,7 +150,7 @@ Nachdem vom Server die IP-Konfiguration mitgeteilt wurde, wird diese im
     int tun_fd = parcelFD.detachFd();
 
     // pass the filedescriptor to iodine
-    IodineClient.tunnel(tun_fd); 
+    IodineClient.tunnel(tun_fd);
 --------------------------------------------------------
 
 iodine
@@ -162,7 +162,7 @@ Der folgende Text zeigt ein Beispiel für den Ablauf eines Handshake. Der genaue
 variieren jenachdem wie die Verbindungsparameter gewählt werden.
 
 Hier sind gewählt -m 768 fragment size und ein 9 Zeichen
-Passwort. Die Gegenstelle ist `t.yves.tw`. Eine Raw (direkte UDP) Verbindung 
+Passwort. Die Gegenstelle ist `t.yves.tw`. Eine Raw (direkte UDP) Verbindung
 wurde verhindert indem der Rechner zum Testzeitpunkt keine default Route hatte.
 
 RX/TX aus der Sicht des Servers. Die "*" in den Hostnamen markieren Zeichen die
@@ -171,18 +171,18 @@ sich aus Random Daten ergeben.
 [source,java]
 ---------------------------------------------------------------------
     == Der Client testet die Qualitaet der Uebertragung
-    <-- client.c:handshake_qtype_autodetect() 
-              -> handshake_qtypetest() 
+    <-- client.c:handshake_qtype_autodetect()
+              -> handshake_qtypetest()
               -> send_downenctest()
       hostname[0] = "y"
       hostanme[1] = downenc = 'r'
       hostname[2] = variant = 1 = 'b' (b32)
       hostname[3..5] = rand_seed++
       RX: yrb***.t.yves.tw
-    
+
     --> 48 bytes aus encoding.h:DOWNCODECHECK
       TX: yrb***.t.yves.tw, 48 bytes data
-    
+
     == Austausch der Versionsinformationen
     <-- client.c:send_version()
       VERSION=0x00 00 05 02
@@ -190,7 +190,7 @@ sich aus Random Daten ergeben.
       hostname[1..6] = b32(0,0,5,2,random<<8,random)
       hostname = "vAAAAKAR__"
       RX: vaaaaka****.t.yves.tw
-    
+
     --> iodined.c:send_version_response()
       der Server bestaetigt mit
       data[0..8] = "VACK" b32(seed>>24, seed>>16, seed>>8, seed, userid)
@@ -206,7 +206,7 @@ sich aus Random Daten ergeben.
 
     --> iodined.c:handle_null_request()
       Sendet bei Erfolg die IP Einstellungen wie
-      "172.16.0.1-172.16.0.2-1130-16" 
+      "172.16.0.1-172.16.0.2-1130-16"
       server="172.16.0.1"
       client="172.16.0.2"
       mtu=1130
@@ -214,11 +214,11 @@ sich aus Random Daten ergeben.
       TX: lad24srn4ezmg21qjsfy13msagd0srfq.t.yves.tw
         = 3137322e31362e302e312d3137322e31362e302e322d313133302d3136 (_16)
         = 172.16.0.1-172.16.0.2-1130-16
-    
+
     == Senden der IP Adresse des Clients
     <-- Request for IP address
       RX: iamin.t.yves.tw
-    
+
     --> iodined.c:handle_null_request()
         addr = externe IP Adresse des Server (-n Switch)
         reply[0] = 'I';
@@ -228,28 +228,28 @@ sich aus Random Daten ergeben.
         reply[4] = (addr >>  0) & 0xFF;
       TX: iamin.t.yves.tw
         = 494e2f737d (_16)
-    
+
     == Testen auf EDNS Erweiterung
     <-- client.c:handshake_edns0_check()
               -> send_downenctest()
-      downenc = 'r' fuer T_NULL 't' 
+      downenc = 'r' fuer T_NULL 't'
       variant = 1 = 'b' (b32)
       data[0..5]  = "y" downenc variant rand_seed[0..2]
       RX: yrb***.t.yves.tw
-    
-    --> iodined.c:handle_null_login() : 937 
-               -> write_dns( type='R') 
+
+    --> iodined.c:handle_null_login() : 937
+               -> write_dns( type='R')
       Der Server antwortet mit 48 bytes aus encoding.h:DOWNCODECHECK
       TX: yrb***.t.yves.tw, 48 bytes data
-    
-    
+
+
     == Testen der Kodierungen mit verschiedenen Patterns
     <-- client.c:handshake_upenc_autodetect()
       In den folgenden Tests testet der Client ob mit Base128
       kodierte Nachrichten vom DNS Relay korrekt verarbeitet werden.
-      
+
     --> Der Server schickt die Patterns einfach wieder zurueck.
-    
+
     == Client legt Kodierung fest, Server bestaetigt
     <-- client.c:handshake_switch_codec()
       hostname[0] = command 's'
@@ -258,25 +258,25 @@ sich aus Random Daten ergeben.
       hostname[3..5] = rand_seed++
       rand_seed++;
       RX: sahmiut.yves.tw
-    
+
     --> iodined.c:840
       Schreibt den Namen des ausgewaehlten Codecs:
       data="Base128" (kein encoding!)
-      TX: sahmiut.yves.tw, 7 bytes of data 
-    
-    == Anschalten lazy mode (an: Server beantwortet Anfragen nicht sofort) 
+      TX: sahmiut.yves.tw, 7 bytes of data
+
+    == Anschalten lazy mode (an: Server beantwortet Anfragen nicht sofort)
     <-- client.c:send_lazy_switch()
       hostname[0] = 'o'
       hostname[1] = b32(userid) = 'a'
       hostname[2] = 'l' fuer lazy mode oder 'i'
       hostname[3..5] = rand_seed++
       RX: oalmiv.t.yves.tw
-      
+
     --> iodined.c:919
       data="Lazy" (kein encoding!)
       TX: oalmiv.t.yves.tw, 4 bytes of data
-      
-    == 
+
+    ==
     <-- client.c:send_set_downstream_fragsize()
       data[0] = userid;
       data[1] = (fragsize & 0xff00) >> 8;
@@ -288,16 +288,16 @@ sich aus Random Daten ergeben.
 
     --> iodined.c:1042
       bestaetigt empfangene Framesize durch Wiederholung
-    
-    == Regelmaesige pings fragen den Server nach anstehenden Daten ab 
+
+    == Regelmaesige pings fragen den Server nach anstehenden Daten ab
     <-- client.c:send_ping()
       data[0] = userid;
       data[1] = ((inpkt.seqno & 7) << 4) | (inpkt.fragment & 15);
       data[2] = (rand_seed >> 8) & 0xff;
       data[3] = (rand_seed >> 0) & 0xff;
-      hostname = 'p' + b32(data)    
+      hostname = 'p' + b32(data)
       RX: paaalcfy.t.yves.tw
-    
+
     --> iodined.c:1067
       Der Server nutzt die regelmaessigen Pings um Daten an den Client zu liefern.
 ---------------------------------------------------------------------
@@ -305,16 +305,16 @@ sich aus Random Daten ergeben.
 Der lazy Modus
 ^^^^^^^^^^^^^^
 
-Wie in der Anwenderdokumentation beschrieben erhöht der Lazy Modus den Durchsatz 
+Wie in der Anwenderdokumentation beschrieben erhöht der Lazy Modus den Durchsatz
 und senkt die Latenzzeit, wird aber nicht von allen DNS-Relays unterstützt.
 
 Lazy bezieht sich auf das Verhalten des Servers. Der Server wird im Lazy-mode
 alle Antworten auf Anfragen solange zurückhalten bis er neue Daten für den
 Client erhalten hat. Im Idealfall also bis das Antwortpaket der getunnelten
-IP Verbindung angekommen ist. 
+IP Verbindung angekommen ist.
 
 Diese Verzögerung kann mit manchen DNS-Relays Probleme machen. Der Server kann dies jedoch
-anhand der Duplikate in den Anfragen erkennen und damit den lazy-mode ausschalten. 
+anhand der Duplikate in den Anfragen erkennen und damit den lazy-mode ausschalten.
 
 Ohne diesen Mechanismus müsste der Client jedoch viel häufiger nach neuen Daten
 pollen (vgl. HTTP Long polling in Comet oder BOSH).
@@ -343,15 +343,15 @@ int main(int argc, char *argv[]) {
     if (*argv[1] == 'd') {
         int r = b32->decode(buf, &len, argv[2], strlen(argv[2]));
         int i;
-        printf("Decoded %d bytes:\n", r); 
+        printf("Decoded %d bytes:\n", r);
         for (i = 0; i< r; i++) {
             printf("0x%02hhx (%c) ", buf[i], (buf[i] >= '0' && buf[i] <= 'z') ? buf[i] : ' ');
-        }   
+        }
         printf("\n");
     } else if (*argv[1] == 'e') {
         int r = b32->encode(buf, &len, argv[2], strlen(argv[2]));
         printf("Encoded %d bytes in %ld output bytes: >%s<\n", len, r, buf);
-    }   
+    }
     return 0;
 }
 ----------------------------------------------------------------------------------------------------
@@ -375,7 +375,7 @@ sondern 'Bionic libc'. Dies ist eine besonders kleine, auf die BSD libc zurückg
 standard C Library. Es fehlen einige Features der glibc wie wide-character support,
 volle POSIX Thread Unterstützung oder locale Unterstützung. Das Ziel von Bionic ist
 nicht eine vollständige C Standardbibliothek sondern lediglich eine schlanke Implementierung
-aller für ein Android nötigen Funktionen. 
+aller für ein Android nötigen Funktionen.
 
 Im einfachsten Fall scheitert die Ausführung von iodine unter Android an einem `system()` Aufruf
 mit dem iodine die IP-Konfiguration anwendet.
@@ -393,7 +393,7 @@ C-Quellen angestossen werden.
 org.xapek.andiodine % ~/$NDK_ROOT/ndk-build clean
 Clean: iodine-client [armeabi]
 Clean: stdc++ [armeabi]
-org.xapek.andiodine % ~/$NDK_ROOT/ndk-build      
+org.xapek.andiodine % ~/$NDK_ROOT/ndk-build
 Compile thumb  : iodine-client <= iodine-client.c
 Compile thumb  : iodine-client <= tun.c
 Compile thumb  : iodine-client <= dns.c
@@ -530,7 +530,7 @@ Anhang
 ------
 
 [bibliography]
-- [[[vpnapi]]] 
+- [[[vpnapi]]]
   http://developer.android.com/reference/android/net/VpnService.html Dokumentation
   zu den Android VPN Service API
 
