@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include <netdb.h>
 
 #include <jni.h>
 
@@ -89,13 +90,18 @@ JNIEXPORT jint JNICALL Java_org_xapek_andiodine_IodineClient_connect(
 	// XXX strdup leaks
 	const char *__p_nameserv_addr = (*env)->GetStringUTFChars(env,
 			j_nameserv_addr, NULL);
-	const char *p_nameserv_addr = strdup(__p_nameserv_addr);
+	char *p_nameserv_addr = strdup(__p_nameserv_addr);
+	struct sockaddr_storage p_nameserv;
+	int p_nameserv_len = get_addr(p_nameserv_addr, 53, AF_INET, 0, &p_nameserv);
 	(*env)->ReleaseStringUTFChars(env, j_nameserv_addr, __p_nameserv_addr);
 
 	const char *__p_topdomain = (*env)->GetStringUTFChars(env, j_topdomain,
 			NULL);
 	const char *p_topdomain = strdup(__p_topdomain);
+	__android_log_print(ANDROID_LOG_ERROR, "iodine", "Topdomain from vm: %s", p_topdomain);
+
 	(*env)->ReleaseStringUTFChars(env, j_topdomain, __p_topdomain);
+	__android_log_print(ANDROID_LOG_ERROR, "iodine", "Topdomain from vm: %s", p_topdomain);
 
 	const char *p_password = (*env)->GetStringUTFChars(env, j_password, NULL);
 	char passwordField[33];
@@ -126,14 +132,14 @@ JNIEXPORT jint JNICALL Java_org_xapek_andiodine_IodineClient_connect(
 
 	srand((unsigned) time(NULL));
 	client_init();
-	client_set_nameserver(p_nameserv_addr, DNS_PORT);
+	client_set_nameserver(&p_nameserv, p_nameserv_len);
 	client_set_selecttimeout(selecttimeout);
 	client_set_lazymode(lazy_mode);
 	client_set_topdomain(p_topdomain);
 	client_set_hostname_maxlen(hostname_maxlen);
 	client_set_password(passwordField);
 
-	if ((dns_fd = open_dns(0, INADDR_ANY)) == -1) {
+	if ((dns_fd = open_dns_from_host(NULL, 0, AF_INET, AI_PASSIVE)) == -1) {
 		printf("Could not open dns socket: %s", strerror(errno));
 		return 1;
 	}

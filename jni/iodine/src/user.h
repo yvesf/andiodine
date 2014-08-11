@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2006-2009 Bjorn Andersson <flex@kryo.se>, Erik Ekman <yarrick@kryo.se>
+ * Copyright (c) 2006-2014 Erik Ekman <yarrick@kryo.se>,
+ * 2006-2009 Bjorn Andersson <flex@kryo.se>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -33,9 +34,11 @@
 #define QMEMDATA_LEN 15
 /* Max advisable: 36/2 = 18. Total mem usage: QMEMDATA_LEN * USERS * 6 bytes */
 
-struct user {
+struct tun_user {
 	char id;
 	int active;
+	int authenticated;
+	int authenticated_raw;
 	int disabled;
 	time_t last_pkt;
 	int seed;
@@ -73,7 +76,7 @@ struct user {
 #endif
 };
 
-extern struct user users[USERS];
+extern struct tun_user *users;
 
 int init_users(in_addr_t, int);
 const char* users_get_first_ip();

@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2006-2009 Bjorn Andersson <flex@kryo.se>, Erik Ekman <yarrick@kryo.se>
+ * Copyright (c) 2006-2014 Erik Ekman <yarrick@kryo.se>,
+ * 2006-2009 Bjorn Andersson <flex@kryo.se>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -20,7 +21,8 @@
 #include <sys/stat.h>
 #include <arpa/nameser.h>
 #ifdef DARWIN
-#include <arpa/nameser8_compat.h>
+#define BIND_8_COMPAT
+#include <arpa/nameser_compat.h>
 #endif
 #include <stdio.h>
 #include <stdint.h>
@@ -49,7 +51,7 @@ START_TEST(test_read_putshort)
 					i, ntohs(k), i);
 
 		p = (char*)&k;
-		readshort(NULL, &p, (short *) &l);
+		readshort(NULL, &p, &l);
 		fail_unless(l == i,
 				"Bad value on readshort for %d: %d != %d",
 					i, l, i);
@@ -96,6 +98,7 @@ START_TEST(test_read_name_empty_loop)
 	data = (char*) emptyloop + sizeof(HEADER);
 	buf[1023] = 'A';
 	rv = readname((char *) emptyloop, sizeof(emptyloop), &data, buf, 1023);
+	fail_unless(rv == 0);
 	fail_unless(buf[1023] == 'A');
 }
 END_TEST
@@ -113,6 +116,7 @@ START_TEST(test_read_name_inf_loop)
 	data = (char*) infloop + sizeof(HEADER);
 	buf[4] = '\a';
 	rv = readname((char*) infloop, sizeof(infloop), &data, buf, 4);
+	fail_unless(rv == 3);
 	fail_unless(buf[4] == '\a');
 }
 END_TEST
@@ -136,6 +140,7 @@ START_TEST(test_read_name_longname)
 	data = (char*) longname + sizeof(HEADER);
 	buf[256] = '\a';
 	rv = readname((char*) longname, sizeof(longname), &data, buf, 256);
+	fail_unless(rv == 256);
 	fail_unless(buf[256] == '\a');
 }
 END_TEST
@@ -213,10 +218,7 @@ START_TEST(test_putname)
 	char buf[256];
 	char *domain = "BADGER.BADGER.KRYO.SE";
 	char *b;
-	int len;
 	int ret;
-
-	len = 256;
 
 	memset(buf, 0, 256);
 	b = buf;
@@ -234,10 +236,7 @@ START_TEST(test_putname_nodot)
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	char *b;
-	int len;
 	int ret;
-
-	len = 256;
 
 	memset(buf, 0, 256);
 	b = buf;
@@ -259,10 +258,7 @@ START_TEST(test_putname_toolong)
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZ.ABCDEFGHIJKLMNOPQRSTUVWXYZ."
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZ.ABCDEFGHIJKLMNOPQRSTUVWXYZ.";
 	char *b;
-	int len;
 	int ret;
-
-	len = 256;
 
 	memset(buf, 0, 256);
 	b = buf;

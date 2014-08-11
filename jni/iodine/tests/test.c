@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2006-2009 Bjorn Andersson <flex@kryo.se>, Erik Ekman <yarrick@kryo.se>
+ * Copyright (c) 2006-2014 Erik Ekman <yarrick@kryo.se>,
+ * 2006-2009 Bjorn Andersson <flex@kryo.se>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -36,6 +37,9 @@ main()
 	suite_add_tcase(iodine, test);
 
 	test = test_base64_create_tests();
+	suite_add_tcase(iodine, test);
+
+	test = test_common_create_tests();
 	suite_add_tcase(iodine, test);
 
 	test = test_dns_create_tests();

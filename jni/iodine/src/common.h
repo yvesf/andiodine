@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2006-2009 Bjorn Andersson <flex@kryo.se>, Erik Ekman <yarrick@kryo.se>
+ * Copyright (c) 2006-2014 Erik Ekman <yarrick@kryo.se>,
+ * 2006-2009 Bjorn Andersson <flex@kryo.se>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -37,8 +38,8 @@ extern const unsigned char raw_header[RAW_HDR_LEN];
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <err.h>
-#include <arpa/inet.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #endif
 
 #define DNS_PORT 53
@@ -52,12 +53,12 @@ extern const unsigned char raw_header[RAW_HDR_LEN];
 
 #define QUERY_NAME_SIZE 256
 
-#if defined IP_RECVDSTADDR 
-# define DSTADDR_SOCKOPT IP_RECVDSTADDR 
-# define dstaddr(x) ((struct in_addr *) CMSG_DATA(x)) 
-#elif defined IP_PKTINFO 
-# define DSTADDR_SOCKOPT IP_PKTINFO 
-# define dstaddr(x) (&(((struct in_pktinfo *)(CMSG_DATA(x)))->ipi_addr)) 
+#if defined IP_RECVDSTADDR
+# define DSTADDR_SOCKOPT IP_RECVDSTADDR
+# define dstaddr(x) ((struct in_addr *) CMSG_DATA(x))
+#elif defined IP_PKTINFO
+# define DSTADDR_SOCKOPT IP_PKTINFO
+# define dstaddr(x) (&(((struct in_pktinfo *)(CMSG_DATA(x)))->ipi_addr))
 #endif
 
 #if defined IP_MTU_DISCOVER
@@ -74,10 +75,12 @@ extern const unsigned char raw_header[RAW_HDR_LEN];
 # define DONT_FRAG_VALUE 1
 #endif
 
+#define T_PRIVATE 65399
+/* Undefined RR type; "private use" range, see http://www.bind9.net/dns-parameters */
 #define T_UNSET 65432
-/* Unused RR type; "private use" range, see http://www.bind9.net/dns-parameters */
+/* Unused RR type, never actually sent */
 
-struct packet 
+struct packet
 {
 	int len;		/* Total packet length */
 	int sentlen;		/* Length of chunk currently transmitted */
@@ -93,7 +96,7 @@ struct query {
 	unsigned short rcode;
 	unsigned short id;
 	struct in_addr destination;
-	struct sockaddr from;
+	struct sockaddr_storage from;
 	int fromlen;
 	unsigned short id2;
 	struct sockaddr from2;
@@ -107,7 +110,10 @@ enum connection {
 };
 
 void check_superuser(void (*usage_fn)(void));
-int open_dns(int, in_addr_t);
+char *format_addr(struct sockaddr_storage *sockaddr, int sockaddr_len);
+int get_addr(char *, int, int, int, struct sockaddr_storage *);
+int open_dns(struct sockaddr_storage *, size_t);
+int open_dns_from_host(char *host, int port, int addr_family, int flags);
 void close_dns(int);
 
 void do_chroot(char *);
@@ -117,24 +123,21 @@ void do_pidfile(char *);
 
 void read_password(char*, size_t);
 
-int check_topdomain(char *);
+int check_topdomain(char *, char **);
 
 #ifdef __ANDROID__
-//#define printf(...) __android_log_print(ANDROID_LOG_DEBUG, "iodine", __VA_ARGS__)
+#include <android/log.h>
+
 #define printf(...) android_printf(__VA_ARGS__)
+#define fprintf(egal,...) android_printf(__VA_ARGS__)
 
 void android_printf(const char *fmt, ...);
+#endif
 
-
-#define fprintf(__fd_unused, ...) printf(__VA_ARGS__)
-
-#include <android/log.h>
-void err(int eval, const char *fmt, ...);
-void warn(const char *fmt, ...);
-void errx(int eval, const char *fmt, ...);
-void warnx(const char *fmt, ...);
-#elif WINDOWS32
+#if defined(WINDOWS32) || defined(ANDROID)
+#ifndef ANDROID
 int inet_aton(const char *cp, struct in_addr *inp);
+#endif
 
 void err(int eval, const char *fmt, ...);
 void warn(const char *fmt, ...);
@@ -143,5 +146,9 @@ void warnx(const char *fmt, ...);
 #endif
 
 int recent_seqno(int , int);
+
+#ifndef WINDOWS32
+void fd_set_close_on_exec(int fd);
+#endif
 
 #endif

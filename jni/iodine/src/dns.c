@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2006-2009 Bjorn Andersson <flex@kryo.se>, Erik Ekman <yarrick@kryo.se>
+ * Copyright (c) 2006-2014 Erik Ekman <yarrick@kryo.se>,
+ * 2006-2009 Bjorn Andersson <flex@kryo.se>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -20,16 +21,21 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <strings.h>
 #include <ctype.h>
 
 #ifdef WINDOWS32
 #include "windows.h"
 #else
+#if defined(ANDROID) || defined(__ANDROID__)
+#include "android_dns.h"
+#endif
 #include <arpa/nameser.h>
 #ifdef DARWIN
 #define BIND_8_COMPAT
 #include <arpa/nameser_compat.h>
 #endif
+#include <netinet/in.h>
 #include <arpa/inet.h>
 #include <err.h>
 #endif
@@ -41,7 +47,7 @@
 
 int dnsc_use_edns0 = 1;
 
-#define CHECKLEN(x) if (buflen - (p-buf) < (x))  return 0
+#define CHECKLEN(x) if (buflen < (x) + (unsigned)(p-buf))  return 0
 
 int
 dns_encode(char *buf, size_t buflen, struct query *q, qr_t qr, char *data, size_t datalen)
@@ -56,9 +62,9 @@ dns_encode(char *buf, size_t buflen, struct query *q, qr_t qr, char *data, size_
 		return 0;
 
 	memset(buf, 0, buflen);
-	
+
 	header = (HEADER*)buf;
-	
+
 	header->id = htons(q->id);
 	header->qr = (qr == QR_ANSWER);
 	header->opcode = 0;
@@ -72,7 +78,7 @@ dns_encode(char *buf, size_t buflen, struct query *q, qr_t qr, char *data, size_
 	switch (qr) {
 	case QR_ANSWER:
 		header->qdcount = htons(1);
-	
+
 		name = 0xc000 | ((p - buf) & 0x3fff);
 
 		/* Question section */
@@ -91,7 +97,7 @@ dns_encode(char *buf, size_t buflen, struct query *q, qr_t qr, char *data, size_
 			int namelen;
 
 			CHECKLEN(10);
-			putshort(&p, name);	
+			putshort(&p, name);
 			if (q->type == T_A)
 				/* answer CNAME to A question */
 				putshort(&p, T_CNAME);
@@ -121,7 +127,7 @@ dns_encode(char *buf, size_t buflen, struct query *q, qr_t qr, char *data, size_
 			ancnt = 1;
 			while (1) {
 				CHECKLEN(10);
-				putshort(&p, name);	
+				putshort(&p, name);
 				putshort(&p, q->type);
 				putshort(&p, C_IN);
 				putlong(&p, 0);		/* TTL */
@@ -156,7 +162,7 @@ dns_encode(char *buf, size_t buflen, struct query *q, qr_t qr, char *data, size_
 			int txtlen;
 
 			CHECKLEN(10);
-			putshort(&p, name);	
+			putshort(&p, name);
 			putshort(&p, q->type);
 			putshort(&p, C_IN);
 			putlong(&p, 0);		/* TTL */
@@ -173,7 +179,7 @@ dns_encode(char *buf, size_t buflen, struct query *q, qr_t qr, char *data, size_
 			/* NULL has raw binary data */
 
 			CHECKLEN(10);
-			putshort(&p, name);	
+			putshort(&p, name);
 			putshort(&p, q->type);
 			putshort(&p, C_IN);
 			putlong(&p, 0);		/* TTL */
@@ -192,7 +198,7 @@ dns_encode(char *buf, size_t buflen, struct query *q, qr_t qr, char *data, size_
 		/* Note that iodined also uses this for forward queries */
 
 		header->qdcount = htons(1);
-	
+
 		datalen = MIN(datalen, buflen - (p - buf));
 		putname(&p, datalen, data);
 
@@ -204,20 +210,18 @@ dns_encode(char *buf, size_t buflen, struct query *q, qr_t qr, char *data, size_
 		   (even CNAME/A/MX, 255+255+header would be >512) */
 		if (dnsc_use_edns0) {
 			header->arcount = htons(1);
-			/*XXX START adjust indent 1 tab forward*/
-		CHECKLEN(11);
-		putbyte(&p, 0x00);    /* Root */
-		putshort(&p, 0x0029); /* OPT */
-		putshort(&p, 0x1000); /* Payload size: 4096 */
-		putshort(&p, 0x0000); /* Higher bits/edns version */
-		putshort(&p, 0x8000); /* Z */
-		putshort(&p, 0x0000); /* Data length */
-			/*XXX END adjust indent 1 tab forward*/
+			CHECKLEN(11);
+			putbyte(&p, 0x00);    /* Root */
+			putshort(&p, 0x0029); /* OPT */
+			putshort(&p, 0x1000); /* Payload size: 4096 */
+			putshort(&p, 0x0000); /* Higher bits/edns version */
+			putshort(&p, 0x8000); /* Z */
+			putshort(&p, 0x0000); /* Data length */
 		}
 
 		break;
 	}
-	
+
 	len = p - buf;
 
 	return len;
@@ -241,9 +245,9 @@ dns_encode_ns_response(char *buf, size_t buflen, struct query *q, char *topdomai
 		return 0;
 
 	memset(buf, 0, buflen);
-	
+
 	header = (HEADER*)buf;
-	
+
 	header->id = htons(q->id);
 	header->qr = 1;
 	header->opcode = 0;
@@ -330,9 +334,9 @@ dns_encode_a_response(char *buf, size_t buflen, struct query *q)
 		return 0;
 
 	memset(buf, 0, buflen);
-	
+
 	header = (HEADER*)buf;
-	
+
 	header->id = htons(q->id);
 	header->qr = 1;
 	header->opcode = 0;
@@ -389,7 +393,7 @@ dns_get_id(char *packet, size_t packetlen)
 	return ntohs(header->id);
 }
 
-#define CHECKLEN(x) if (packetlen - (data-packet) < (x))  return 0
+#define CHECKLEN(x) if (packetlen < (x) + (unsigned)(data-packet))  return 0
 
 int
 dns_decode(char *buf, size_t buflen, struct query *q, qr_t qr, char *packet, size_t packetlen)
@@ -400,11 +404,11 @@ dns_decode(char *buf, size_t buflen, struct query *q, qr_t qr, char *packet, siz
 	short qdcount;
 	short ancount;
 	uint32_t ttl;
-	short class;
-	short type;
+	unsigned short class;
+	unsigned short type;
 	char *data;
-	short rlen;
-	int id; 
+	unsigned short rlen;
+	int id;
 	int rv;
 
 	q->id2 = 0;
@@ -412,9 +416,9 @@ dns_decode(char *buf, size_t buflen, struct query *q, qr_t qr, char *packet, siz
 	header = (HEADER*)packet;
 
 	/* Reject short packets */
-	if (packetlen < sizeof(HEADER)) 
+	if (packetlen < sizeof(HEADER))
 		return 0;
-	
+
 	if (header->qr != qr) {
 		warnx("header->qr does not match the requested qr");
 		return -1;
@@ -423,13 +427,13 @@ dns_decode(char *buf, size_t buflen, struct query *q, qr_t qr, char *packet, siz
 	data = packet + sizeof(HEADER);
 	qdcount = ntohs(header->qdcount);
 	ancount = ntohs(header->ancount);
-	
+
 	id = ntohs(header->id);
 	id = id & 0xFFFF; /* Kill any sign extension */
-		
+
 	rlen = 0;
 
-	if (q != NULL) 
+	if (q != NULL)
 		q->rcode = header->rcode;
 
 	switch (qr) {
@@ -439,7 +443,7 @@ dns_decode(char *buf, size_t buflen, struct query *q, qr_t qr, char *packet, siz
 			return -1;
 		}
 
-		if (q != NULL) 
+		if (q != NULL)
 			q->id = id;
 
 		/* Read name even if no answer, to give better error message */
@@ -447,14 +451,14 @@ dns_decode(char *buf, size_t buflen, struct query *q, qr_t qr, char *packet, siz
 		CHECKLEN(4);
 		readshort(packet, &data, &type);
 		readshort(packet, &data, &class);
-		
+
 		/* if CHECKLEN okay, then we're sure to have a proper name */
 		if (q != NULL) {
 			/* We only need the first char to check it */
 			q->name[0] = name[0];
 			q->name[1] = '\0';
-		} 
-		
+		}
+
 		if (ancount < 1) {
 			/* DNS errors like NXDOMAIN have ancount=0 and
 			   stop here. CNAME may also have A; MX/SRV may have
@@ -463,7 +467,7 @@ dns_decode(char *buf, size_t buflen, struct query *q, qr_t qr, char *packet, siz
 		}
 
 		/* Here type is still the question type */
-		if (type == T_NULL) {
+		if (type == T_NULL || type == T_PRIVATE) {
 			/* Assume that first answer is what we wanted */
 			readname(packet, packetlen, &data, name, sizeof(name));
 			CHECKLEN(10);
@@ -505,7 +509,7 @@ dns_decode(char *buf, size_t buflen, struct query *q, qr_t qr, char *packet, siz
 			 */
 			char names[250][QUERY_NAME_SIZE];
 			char *rdatastart;
-			short pref;
+			unsigned short pref;
 			int i;
 			int offset;
 
@@ -535,7 +539,7 @@ dns_decode(char *buf, size_t buflen, struct query *q, qr_t qr, char *packet, siz
 					names[pref / 10 - 1][QUERY_NAME_SIZE-1] = '\0';
 				}
 
-				/* always trust rlen, not name encoding */ 
+				/* always trust rlen, not name encoding */
 				data = rdatastart + rlen;
 				CHECKLEN(0);
 			}

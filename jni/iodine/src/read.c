@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2006-2009 Bjorn Andersson <flex@kryo.se>, Erik Ekman <yarrick@kryo.se>
+ * Copyright (c) 2006-2014 Erik Ekman <yarrick@kryo.se>,
+ * 2006-2009 Bjorn Andersson <flex@kryo.se>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -60,7 +61,7 @@ readname_loop(char *packet, int packetlen, char **src, char *dst, size_t length,
 
 			c--;
 		}
-		
+
 		if (len >= length - 1) {
 			break; /* We used up all space */
 		}
@@ -84,15 +85,15 @@ readname(char *packet, int packetlen, char **src, char *dst, size_t length)
 }
 
 int
-readshort(char *packet, char **src, short *dst)
+readshort(char *packet, char **src, unsigned short *dst)
 {
 	unsigned char *p;
 
 	p = (unsigned char *) *src;
 	*dst = (p[0] << 8) | p[1];
 
-	(*src) += sizeof(short);
-	return sizeof(short);
+	(*src) += sizeof(unsigned short);
+	return sizeof(unsigned short);
 }
 
 int
@@ -103,8 +104,8 @@ readlong(char *packet, char **src, uint32_t *dst)
 
 	p = (unsigned char *) *src;
 
-	*dst = ((uint32_t)p[0] << 24) 
-		 | ((uint32_t)p[1] << 16) 
+	*dst = ((uint32_t)p[0] << 24)
+		 | ((uint32_t)p[1] << 16)
 		 | ((uint32_t)p[2] << 8)
 		 | ((uint32_t)p[3]);
 
@@ -115,9 +116,6 @@ readlong(char *packet, char **src, uint32_t *dst)
 int
 readdata(char *packet, char **src, char *dst, size_t len)
 {
-	if (len < 0)
-		return 0;
-
 	memcpy(dst, *src, len);
 
 	(*src) += len;
@@ -165,7 +163,7 @@ putname(char **buf, size_t buflen, const char *host)
 	h = strdup(host);
 	left = buflen;
 	p = *buf;
-	
+
 	word = strtok(h, ".");
 	while(word) {
 		if (strlen(word) > 63 || strlen(word) > left) {
@@ -232,11 +230,8 @@ putlong(char **dst, uint32_t value)
 int
 putdata(char **dst, char *data, size_t len)
 {
-	if (len < 0)
-		return 0;
-
 	memcpy(*dst, data, len);
-	
+
 	(*dst) += len;
 	return len;
 }

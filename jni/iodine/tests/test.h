@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2006-2009 Bjorn Andersson <flex@kryo.se>, Erik Ekman <yarrick@kryo.se>
+ * Copyright (c) 2006-2014 Erik Ekman <yarrick@kryo.se>,
+ * 2006-2009 Bjorn Andersson <flex@kryo.se>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -19,6 +20,7 @@
 
 TCase *test_base32_create_tests();
 TCase *test_base64_create_tests();
+TCase *test_common_create_tests();
 TCase *test_dns_create_tests();
 TCase *test_encoding_create_tests();
 TCase *test_read_create_tests();
@@ -27,11 +29,11 @@ TCase *test_user_create_tests();
 TCase *test_fw_query_create_tests();
 
 char *va_str(const char *, ...);
-	
+
 #if (CHECK_MAJOR_VERSION == 0 && \
 	((CHECK_MINOR_VERSION == 9 && CHECK_MICRO_VERSION < 2) || \
 	 (CHECK_MINOR_VERSION < 9)))
-#define tcase_set_timeout(...) 
+#define tcase_set_timeout(...)
 #endif
 
 #endif

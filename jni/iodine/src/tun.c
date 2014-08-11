@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2006-2009 Bjorn Andersson <flex@kryo.se>, Erik Ekman <yarrick@kryo.se>
+ * Copyright (c) 2006-2014 Erik Ekman <yarrick@kryo.se>,
+ * 2006-2009 Bjorn Andersson <flex@kryo.se>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -24,13 +25,16 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#ifdef WINDOWS32
-#include <winsock2.h>
-#include <winioctl.h>
-#include "windows.h"
+#ifndef IFCONFIGPATH
+#define IFCONFIGPATH "PATH=/sbin:/bin "
+#endif
 
-HANDLE dev_handle;
-struct tun_data data;
+#ifdef WINDOWS32
+#include "windows.h"
+#include <winioctl.h>
+
+static HANDLE dev_handle;
+static struct tun_data data;
 
 static void get_name(char *ifname, int namelen, char *dev_name);
 
@@ -47,8 +51,8 @@ static void get_name(char *ifname, int namelen, char *dev_name);
 #define NET_CFG_INST_ID "NetCfgInstanceId"
 #else
 #include <err.h>
-#include <arpa/inet.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 
 #define TUN_MAX_TRY 50
 #endif
@@ -56,22 +60,25 @@ static void get_name(char *ifname, int namelen, char *dev_name);
 #include "tun.h"
 #include "common.h"
 
-char if_name[250];
+static char if_name[250];
 
-#ifndef WINDOWS32
 #ifdef LINUX
 
 #include <sys/ioctl.h>
 #include <net/if.h>
 #include <linux/if_tun.h>
 
-int 
-open_tun(const char *tun_device) 
+int
+open_tun(const char *tun_device)
 {
 	int i;
 	int tun_fd;
 	struct ifreq ifreq;
+#ifdef ANDROID
+	char *tunnel = "/dev/tun";
+#else
 	char *tunnel = "/dev/net/tun";
+#endif
 
 	if ((tun_fd = open(tunnel, O_RDWR)) < 0) {
 		warn("open_tun: %s: %s", tunnel, strerror(errno));
@@ -80,7 +87,7 @@ open_tun(const char *tun_device)
 
 	memset(&ifreq, 0, sizeof(ifreq));
 
-	ifreq.ifr_flags = IFF_TUN; 
+	ifreq.ifr_flags = IFF_TUN;
 
 	if (tun_device != NULL) {
 		strncpy(ifreq.ifr_name, tun_device, IFNAMSIZ);
@@ -90,6 +97,7 @@ open_tun(const char *tun_device)
 
 		if (ioctl(tun_fd, TUNSETIFF, (void *) &ifreq) != -1) {
 			fprintf(stderr, "Opened %s\n", ifreq.ifr_name);
+			fd_set_close_on_exec(tun_fd);
 			return tun_fd;
 		}
 
@@ -104,6 +112,7 @@ open_tun(const char *tun_device)
 			if (ioctl(tun_fd, TUNSETIFF, (void *) &ifreq) != -1) {
 				fprintf(stderr, "Opened %s\n", ifreq.ifr_name);
 				snprintf(if_name, sizeof(if_name), "dns%d", i);
+				fd_set_close_on_exec(tun_fd);
 				return tun_fd;
 			}
 
@@ -119,49 +128,8 @@ open_tun(const char *tun_device)
 	return -1;
 }
 
-#else /* BSD */
+#elif WINDOWS32
 
-int 
-open_tun(const char *tun_device) 
-{
-	int i;
-	int tun_fd;
-	char tun_name[50];
-
-	if (tun_device != NULL) {
-		snprintf(tun_name, sizeof(tun_name), "/dev/%s", tun_device);
-		strncpy(if_name, tun_device, sizeof(if_name));
-		if_name[sizeof(if_name)-1] = '\0';
-
-		if ((tun_fd = open(tun_name, O_RDWR)) < 0) {
-			warn("open_tun: %s: %s", tun_name, strerror(errno));
-			return -1;
-		}
-
-		fprintf(stderr, "Opened %s\n", tun_name);
-		return tun_fd;
-	} else {
-		for (i = 0; i < TUN_MAX_TRY; i++) {
-			snprintf(tun_name, sizeof(tun_name), "/dev/tun%d", i);
-
-			if ((tun_fd = open(tun_name, O_RDWR)) >= 0) {
-				fprintf(stderr, "Opened %s\n", tun_name);
-				snprintf(if_name, sizeof(if_name), "tun%d", i);
-				return tun_fd;
-			}
-
-			if (errno == ENOENT)
-				break;
-		}
-
-		warn("open_tun: Failed to open tunneling device");
-	}
-
-	return -1;
-}
-
-#endif /* !LINUX */
-#else /* WINDOWS32 */
 static void
 get_device(char *device, int device_len, const char *wanted_dev)
 {
@@ -176,7 +144,7 @@ get_device(char *device, int device_len, const char *wanted_dev)
 		warnx("Error opening registry key " TAP_ADAPTER_KEY );
 		return;
 	}
-	
+
 	while (TRUE) {
 		char name[256];
 		char unit[256];
@@ -214,7 +182,7 @@ get_device(char *device, int device_len, const char *wanted_dev)
 			strncmp(TAP_VERSION_ID_0901, component, strlen(TAP_VERSION_ID_0901)) == 0) {
 			/* We found a TAP32 device, get its NetCfgInstanceId */
 			char iid_string[256] = NET_CFG_INST_ID;
-			
+
 			status = RegQueryValueEx(device_key, iid_string, NULL, &datatype, (LPBYTE) device, (DWORD *) &device_len);
 			if (status != ERROR_SUCCESS || datatype != REG_SZ) {
 				warnx("Error reading registry key %s\\%s on TAP device", unit, iid_string);
@@ -280,7 +248,7 @@ DWORD WINAPI tun_reader(LPVOID arg)
 	OVERLAPPED olpd;
 	int sock;
 
-	sock = open_dns(0, INADDR_ANY);
+	sock = open_dns_from_host("127.0.0.1", 0, AF_INET, 0);
 
 	olpd.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
 
@@ -291,21 +259,22 @@ DWORD WINAPI tun_reader(LPVOID arg)
 		if (!res) {
 			WaitForSingleObject(olpd.hEvent, INFINITE);
 			res = GetOverlappedResult(dev_handle, &olpd, (LPDWORD) &len, FALSE);
-			res = sendto(sock, buf, len, 0, (struct sockaddr*) &(tun->addr), 
-				sizeof(struct sockaddr_in));
+			res = sendto(sock, buf, len, 0, (struct sockaddr*) &(tun->addr),
+				tun->addrlen);
 		}
 	}
 
 	return 0;
 }
 
-int 
-open_tun(const char *tun_device) 
+int
+open_tun(const char *tun_device)
 {
 	char adapter[256];
 	char tapfile[512];
 	int tunfd;
-	in_addr_t local;
+	struct sockaddr_storage localsock;
+	int localsock_len;
 
 	memset(adapter, 0, sizeof(adapter));
 	memset(if_name, 0, sizeof(if_name));
@@ -319,7 +288,7 @@ open_tun(const char *tun_device)
 		}
 		return -1;
 	}
-	
+
 	fprintf(stderr, "Opening device %s\n", if_name);
 	snprintf(tapfile, sizeof(tapfile), "%s%s.tap", TAP_DEVICE_SPACE, adapter);
 	dev_handle = CreateFile(tapfile, GENERIC_WRITE | GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_SYSTEM | FILE_FLAG_OVERLAPPED, NULL);
@@ -330,34 +299,115 @@ open_tun(const char *tun_device)
 
 	/* Use a UDP connection to forward packets from tun,
 	 * so we can still use select() in main code.
-	 * A thread does blocking reads on tun device and 
+	 * A thread does blocking reads on tun device and
 	 * sends data as udp to this socket */
-	
-	local = htonl(0x7f000001); /* 127.0.0.1 */
-	tunfd = open_dns(55353, local);
+
+	localsock_len = get_addr("127.0.0.1", 55353, AF_INET, 0, &localsock);
+	tunfd = open_dns(&localsock, localsock_len);
 
 	data.tun = dev_handle;
-	memset(&(data.addr), 0, sizeof(data.addr));
-	data.addr.sin_family = AF_INET;
-	data.addr.sin_port = htons(55353);
-	data.addr.sin_addr.s_addr = local;
+	memcpy(&(data.addr), &localsock, localsock_len);
+	data.addrlen = localsock_len;
 	CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)tun_reader, &data, 0, NULL);
-	
+
 	return tunfd;
 }
-#endif 
 
-void 
-close_tun(int tun_fd) 
+#else /* BSD and friends */
+
+int
+open_tun(const char *tun_device)
+{
+	int i;
+	int tun_fd;
+	char tun_name[50];
+
+	if (tun_device != NULL) {
+		snprintf(tun_name, sizeof(tun_name), "/dev/%s", tun_device);
+		strncpy(if_name, tun_device, sizeof(if_name));
+		if_name[sizeof(if_name)-1] = '\0';
+
+		if ((tun_fd = open(tun_name, O_RDWR)) < 0) {
+			warn("open_tun: %s: %s", tun_name, strerror(errno));
+			return -1;
+		}
+
+		fprintf(stderr, "Opened %s\n", tun_name);
+		fd_set_close_on_exec(tun_fd);
+		return tun_fd;
+	} else {
+		for (i = 0; i < TUN_MAX_TRY; i++) {
+			snprintf(tun_name, sizeof(tun_name), "/dev/tun%d", i);
+
+			if ((tun_fd = open(tun_name, O_RDWR)) >= 0) {
+				fprintf(stderr, "Opened %s\n", tun_name);
+				snprintf(if_name, sizeof(if_name), "tun%d", i);
+				fd_set_close_on_exec(tun_fd);
+				return tun_fd;
+			}
+
+			if (errno == ENOENT)
+				break;
+		}
+
+		warn("open_tun: Failed to open tunneling device");
+	}
+
+	return -1;
+}
+
+#endif
+
+void
+close_tun(int tun_fd)
 {
 	if (tun_fd >= 0)
 		close(tun_fd);
 }
 
-int 
-write_tun(int tun_fd, char *data, size_t len) 
+#ifdef WINDOWS32
+int
+write_tun(int tun_fd, char *data, size_t len)
 {
-#if defined (FREEBSD) || defined (DARWIN) || defined(NETBSD) || defined(WINDOWS32) || defined(__ANDROID__)
+	DWORD written;
+	DWORD res;
+	OVERLAPPED olpd;
+
+	data += 4;
+	len -= 4;
+
+	olpd.Offset = 0;
+	olpd.OffsetHigh = 0;
+	olpd.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+	res = WriteFile(dev_handle, data, len, &written, &olpd);
+	if (!res && GetLastError() == ERROR_IO_PENDING) {
+		WaitForSingleObject(olpd.hEvent, INFINITE);
+		res = GetOverlappedResult(dev_handle, &olpd, &written, FALSE);
+		if (written != len) {
+			return -1;
+		}
+	}
+	return 0;
+}
+
+ssize_t
+read_tun(int tun_fd, char *buf, size_t len)
+{
+	int bytes;
+	memset(buf, 0, 4);
+
+	bytes = recv(tun_fd, buf + 4, len - 4, 0);
+	if (bytes < 0) {
+		return bytes;
+	} else {
+		return bytes + 4;
+	}
+}
+#else
+int
+write_tun(int tun_fd, char *data, size_t len)
+{
+#if defined (FREEBSD) || defined (DARWIN) || defined(NETBSD) || defined(__ANDROID__)
 	data += 4;
 	len -= 4;
 #else /* !FREEBSD/DARWIN */
@@ -374,47 +424,22 @@ write_tun(int tun_fd, char *data, size_t len)
 #endif /* !LINUX */
 #endif /* FREEBSD */
 
-#ifndef WINDOWS32
 	if (write(tun_fd, data, len) != len) {
 		warn("write_tun");
 		return 1;
 	}
-#else /* WINDOWS32 */
-	{
-		DWORD written;
-		DWORD res;
-		OVERLAPPED olpd;
-
-		olpd.Offset = 0;
-		olpd.OffsetHigh = 0;
-		olpd.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
-		res = WriteFile(dev_handle, data, len, &written, &olpd);
-		if (!res && GetLastError() == ERROR_IO_PENDING) {
-			WaitForSingleObject(olpd.hEvent, INFINITE);
-			res = GetOverlappedResult(dev_handle, &olpd, &written, FALSE);
-			if (written != len) {
-				return -1;
-			}
-		}
-	}
-#endif
 	return 0;
 }
 
 ssize_t
-read_tun(int tun_fd, char *buf, size_t len) 
+read_tun(int tun_fd, char *buf, size_t len)
 {
-#if defined (FREEBSD) || defined (DARWIN) || defined(NETBSD) || defined(WINDOWS32) || defined(__ANDROID__)
-	/* FreeBSD/Darwin/NetBSD/Android-VPN has no header */
+#if defined (FREEBSD) || defined (DARWIN) || defined(NETBSD) || defined(__ANDROID__)
+	/* FreeBSD/Darwin/NetBSD/Android-SDK has no header */
 	int bytes;
 	memset(buf, 0, 4);
-#ifdef WINDOWS32
-	/* Windows needs recv() since it is local UDP socket */
-	bytes = recv(tun_fd, buf + 4, len - 4, 0);
-#else
-	/* The other need read() because fd is not a socket */
+
 	bytes = read(tun_fd, buf + 4, len - 4);
-#endif /*WINDOWS32*/
 	if (bytes < 0) {
 		return bytes;
 	} else {
@@ -424,9 +449,10 @@ read_tun(int tun_fd, char *buf, size_t len)
 	return read(tun_fd, buf, len);
 #endif /* !FREEBSD */
 }
+#endif
 
 int
-tun_setip(const char *ip, const char *remoteip, int netbits)
+tun_setip(const char *ip, const char *other_ip, int netbits)
 {
 	char cmdline[512];
 	int netmask;
@@ -440,6 +466,11 @@ tun_setip(const char *ip, const char *remoteip, int netbits)
 	DWORD ipdata[3];
 	struct in_addr addr;
 	DWORD len;
+#else
+	const char *display_ip;
+#ifndef LINUX
+	struct in_addr netip;
+#endif
 #endif
 
 	netmask = 0;
@@ -461,32 +492,36 @@ tun_setip(const char *ip, const char *remoteip, int netbits)
 		free(tun_config_android.remoteip);
 	}
 	tun_config_android.ip = strdup(ip);
-	tun_config_android.remoteip = strdup(remoteip);
+	tun_config_android.remoteip = strdup(other_ip);
 	tun_config_android.netbits = netbits;
 	return 0;
 #elif !defined(WINDOWS32)
-	snprintf(cmdline, sizeof(cmdline), 
-			"/sbin/ifconfig %s %s %s netmask %s",
+# ifdef FREEBSD
+	display_ip = other_ip; /* FreeBSD wants other IP as second IP */
+# else
+	display_ip = ip;
+# endif
+	snprintf(cmdline, sizeof(cmdline),
+			IFCONFIGPATH "ifconfig %s %s %s netmask %s",
 			if_name,
 			ip,
-#ifdef FREEBSD
-			remoteip, /* FreeBSD wants other IP as second IP */
-#else
-			ip,
-#endif
+			display_ip,
 			inet_ntoa(net));
-	
+
 	fprintf(stderr, "Setting IP of %s to %s\n", if_name, ip);
 #ifndef LINUX
+	netip.s_addr = inet_addr(ip);
+	netip.s_addr = netip.s_addr & net.s_addr;
 	r = system(cmdline);
 	if(r != 0) {
 		return r;
 	} else {
+
 		snprintf(cmdline, sizeof(cmdline),
 				"/sbin/route add %s/%d %s",
-				ip, netbits, ip);
+				inet_ntoa(netip), netbits, ip);
 	}
-	fprintf(stderr, "Adding route %s/%d to %s\n", ip, netbits, ip);
+	fprintf(stderr, "Adding route %s/%d to %s\n", inet_ntoa(netip), netbits, ip);
 #endif
 	return system(cmdline);
 #else /* WINDOWS32 */
@@ -494,13 +529,13 @@ tun_setip(const char *ip, const char *remoteip, int netbits)
 	/* Set device as connected */
 	fprintf(stderr, "Enabling interface '%s'\n", if_name);
 	status = 1;
-	r = DeviceIoControl(dev_handle, TAP_IOCTL_SET_MEDIA_STATUS, &status, 
+	r = DeviceIoControl(dev_handle, TAP_IOCTL_SET_MEDIA_STATUS, &status,
 		sizeof(status), &status, sizeof(status), &len, NULL);
 	if (!r) {
 		fprintf(stderr, "Failed to enable interface\n");
 		return -1;
 	}
-	
+
 	if (inet_aton(ip, &addr)) {
 		ipdata[0] = (DWORD) addr.s_addr;   /* local ip addr */
 		ipdata[1] = net.s_addr & ipdata[0]; /* network addr */
@@ -510,7 +545,7 @@ tun_setip(const char *ip, const char *remoteip, int netbits)
 	}
 
 	/* Tell ip/networkaddr/netmask to device for arp use */
-	r = DeviceIoControl(dev_handle, TAP_IOCTL_CONFIG_TUN, &ipdata, 
+	r = DeviceIoControl(dev_handle, TAP_IOCTL_CONFIG_TUN, &ipdata,
 		sizeof(ipdata), &ipdata, sizeof(ipdata), &len, NULL);
 	if (!r) {
 		fprintf(stderr, "Failed to set interface in TUN mode\n");
@@ -525,7 +560,7 @@ tun_setip(const char *ip, const char *remoteip, int netbits)
 #endif
 }
 
-int 
+int
 tun_setmtu(const unsigned mtu)
 {
 #ifdef __ANDROID__
@@ -535,11 +570,11 @@ tun_setmtu(const unsigned mtu)
 	char cmdline[512];
 
 	if (mtu > 200 && mtu <= 1500) {
-		snprintf(cmdline, sizeof(cmdline), 
-				"/sbin/ifconfig %s mtu %u",
+		snprintf(cmdline, sizeof(cmdline),
+				IFCONFIGPATH "ifconfig %s mtu %u",
 				if_name,
 				mtu);
-		
+
 		fprintf(stderr, "Setting MTU of %s to %u\n", if_name, mtu);
 		return system(cmdline);
 	} else {

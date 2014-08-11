@@ -35,7 +35,6 @@ public class IodineClient {
 
     @SuppressWarnings("UnusedDeclaration")
     public static void log_callback(String message) {
-        Log.d(TAG, "Message: " + message);
         Intent intent = new Intent(ACTION_LOG_MESSAGE);
 
         intent.putExtra(EXTRA_MESSAGE, message);

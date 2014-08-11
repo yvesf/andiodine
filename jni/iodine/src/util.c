@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2006-2009 Bjorn Andersson <flex@kryo.se>, Erik Ekman <yarrick@kryo.se>
+ * Copyright (c) 2006-2014 Erik Ekman <yarrick@kryo.se>,
+ * 2006-2009 Bjorn Andersson <flex@kryo.se>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -25,12 +26,22 @@ get_resolvconf_addr()
 #ifndef WINDOWS32
 	char buf[80];
 	FILE *fp;
-	
+#ifdef ANDROID
+	fp = popen("getprop net.dns1", "r");
+	if (fp == NULL)
+		err(1, "getprop net.dns1 failed");
+	if (fgets(buf, sizeof(buf), fp) == NULL)
+		err(1, "read getprop net.dns1 failed");
+	if (sscanf(buf, "%15s", addr) == 1)
+		rv = addr;
+	pclose(fp);
+#else
+
 	rv = NULL;
 
-	if ((fp = fopen("/etc/resolv.conf", "r")) == NULL) 
+	if ((fp = fopen("/etc/resolv.conf", "r")) == NULL)
 		err(1, "/etc/resolv.conf");
-	
+
 	while (feof(fp) == 0) {
 		fgets(buf, sizeof(buf), fp);
 
@@ -39,8 +50,9 @@ get_resolvconf_addr()
 			break;
 		}
 	}
-	
+
 	fclose(fp);
+#endif
 #else /* !WINDOWS32 */
 	FIXED_INFO  *fixed_info;
 	ULONG       buflen;
@@ -67,3 +79,15 @@ get_resolvconf_addr()
 	return rv;
 }
 
+#ifdef OPENBSD
+void
+socket_setrtable(int fd, int rtable)
+{
+#ifdef SO_RTABLE
+	if (setsockopt (fd, IPPROTO_IP, SO_RTABLE, &rtable, sizeof(rtable)) == -1)
+		err(1, "Failed to set routing table %d", rtable);
+#else
+	fprintf(stderr, "Routing domain support was not available at compile time.\n");
+#endif
+}
+#endif

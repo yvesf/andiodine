@@ -9,7 +9,7 @@ ARCH = `uname -m`
 
 LIBPATH = -L.
 LDFLAGS +=  -lz `sh osflags $(TARGETOS) link` $(LIBPATH)
-CFLAGS += -c -g -Wall -D$(OS) -pedantic `sh osflags $(TARGETOS) cflags`
+CFLAGS += -std=c99 -c -g -Wall -D$(OS) -pedantic `sh osflags $(TARGETOS) cflags`
 
 all: stateos $(CLIENT) $(SERVER)
 
@@ -26,7 +26,7 @@ $(SERVER): $(COMMONOBJS) $(SERVEROBJS)
 	@mkdir -p ../bin
 	@$(CC) $(COMMONOBJS) $(SERVEROBJS) -o $(SERVER) $(LDFLAGS)
 
-.c.o: 
+.c.o:
 	@echo CC $<
 	@$(CC) $(CFLAGS) $< -o $@
 
@@ -43,4 +43,5 @@ base64u.h: base64.h
 clean:
 	@echo "Cleaning src/"
 	@rm -f $(CLIENT){,.exe} $(SERVER){,.exe} *~ *.o *.core base64u.*
+	@rm -rf obj libs #android stuff
 

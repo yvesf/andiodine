@@ -311,7 +311,9 @@ public class IodineVpnService extends VpnService implements Runnable {
             Log.d(TAG, "Set default route");
             b.addRoute("0.0.0.0", 0); // Default Route
         }
-        b.setMtu(mtu);
+        b.setMtu(mtu); // bug https://github.com/yvesf/andiodine/issues/4
+        // the VPN framework fails if mtu < 1280
+        // b.setMtu(1280);
 
         Log.d(TAG, "Build tunnel interface");
         ParcelFileDescriptor parcelFD = b.establish();

@@ -1,4 +1,5 @@
-/* Copyright (c) 2006-2009 Bjorn Andersson <flex@kryo.se>, Erik Ekman <yarrick@kryo.se>
+/* Copyright (c) 2006-2014 Erik Ekman <yarrick@kryo.se>,
+ * 2006-2009 Bjorn Andersson <flex@kryo.se>
  * Copyright (c) 2007 Albert Lee <trisk@acm.jhu.edu>.
  *
  * Permission to use, copy, modify, and distribute this software for any
@@ -39,9 +40,11 @@
 #endif
 #include <termios.h>
 #include <err.h>
-#include <arpa/inet.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #include <syslog.h>
+#include <sys/socket.h>
+#include <netdb.h>
 #endif
 
 #ifdef HAVE_SETCON
@@ -54,11 +57,11 @@
 const unsigned char raw_header[RAW_HDR_LEN] = { 0x10, 0xd1, 0x9e, 0x00 };
 
 /* daemon(3) exists only in 4.4BSD or later, and in GNU libc */
-#if !defined(WINDOWS32) && !(defined(BSD) && (BSD >= 199306)) && !defined(__GLIBC__) && !defined(__ANDROID__)
+#if !defined(ANDROID) && !defined(WINDOWS32) && !(defined(BSD) && (BSD >= 199306)) && !defined(__GLIBC__)
 static int daemon(int nochdir, int noclose)
 {
  	int fd, i;
- 
+
  	switch (fork()) {
  		case 0:
  			break;
@@ -67,15 +70,15 @@ static int daemon(int nochdir, int noclose)
  		default:
  			_exit(0);
  	}
- 
+
  	if (!nochdir) {
  		chdir("/");
  	}
- 
+
  	if (setsid() < 0) {
  		return -1;
  	}
- 	
+
  	if (!noclose) {
  		if ((fd = open("/dev/null", O_RDWR)) >= 0) {
  			for (i = 0; i < 3; i++) {
@@ -111,21 +114,69 @@ check_superuser(void (*usage_fn)(void))
 #endif
 }
 
-int 
-open_dns(int localport, in_addr_t listen_ip) 
+char *
+format_addr(struct sockaddr_storage *sockaddr, int sockaddr_len)
 {
-	struct sockaddr_in addr;
+	static char dst[INET6_ADDRSTRLEN + 1];
+
+	memset(dst, 0, sizeof(dst));
+	if (sockaddr->ss_family == AF_INET && sockaddr_len >= sizeof(struct sockaddr_in)) {
+		getnameinfo((struct sockaddr *)sockaddr, sockaddr_len, dst, sizeof(dst) - 1, NULL, 0, NI_NUMERICHOST);
+	} else if (sockaddr->ss_family == AF_INET6 && sockaddr_len >= sizeof(struct sockaddr_in6)) {
+		struct sockaddr_in6 *addr = (struct sockaddr_in6 *) sockaddr;
+		if (IN6_IS_ADDR_V4MAPPED(&addr->sin6_addr)) {
+			struct in_addr ia;
+			/* Get mapped v4 addr from last 32bit field */
+			memcpy(&ia.s_addr, &addr->sin6_addr.s6_addr[12], sizeof(ia));
+			strcpy(dst, inet_ntoa(ia));
+		} else {
+			getnameinfo((struct sockaddr *)sockaddr, sockaddr_len, dst, sizeof(dst) - 1, NULL, 0, NI_NUMERICHOST);
+		}
+	} else {
+		dst[0] = '?';
+	}
+	return dst;
+}
+
+int
+get_addr(char *host, int port, int addr_family, int flags, struct sockaddr_storage *out)
+{
+	struct addrinfo hints, *addr;
+	int res;
+	char portnum[8];
+
+	memset(portnum, 0, sizeof(portnum));
+	snprintf(portnum, sizeof(portnum) - 1, "%d", port);
+
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = addr_family;
+#if defined(WINDOWS32) || defined(OPENBSD)
+	/* AI_ADDRCONFIG misbehaves on windows, and does not exist in OpenBSD */
+	hints.ai_flags = flags;
+#else
+	hints.ai_flags = AI_ADDRCONFIG | flags;
+#endif
+	hints.ai_socktype = SOCK_DGRAM;
+	hints.ai_protocol = IPPROTO_UDP;
+
+	res = getaddrinfo(host, portnum, &hints, &addr);
+	if (res == 0) {
+		int addrlen = addr->ai_addrlen;
+		/* Grab first result */
+		memcpy(out, addr->ai_addr, addr->ai_addrlen);
+		freeaddrinfo(addr);
+		return addrlen;
+	}
+	return res;
+}
+
+int
+open_dns(struct sockaddr_storage *sockaddr, size_t sockaddr_len)
+{
 	int flag = 1;
 	int fd;
 
-	memset(&addr, 0, sizeof(addr));
-	addr.sin_family = AF_INET;
-	addr.sin_port = htons(localport);
-	/* listen_ip already in network byte order from inet_addr, or 0 */
-	addr.sin_addr.s_addr = listen_ip; 
-
-	if ((fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0) {
-		fprintf(stderr, "got fd %d\n", fd);
+	if ((fd = socket(sockaddr->ss_family, SOCK_DGRAM, IPPROTO_UDP)) < 0) {
 		err(1, "socket");
 	}
 
@@ -138,6 +189,8 @@ open_dns(int localport, in_addr_t listen_ip)
 #ifndef WINDOWS32
 	/* To get destination address from each UDP datagram, see iodined.c:read_dns() */
 	setsockopt(fd, IPPROTO_IP, DSTADDR_SOCKOPT, (const void*) &flag, sizeof(flag));
+
+	fd_set_close_on_exec(fd);
 #endif
 
 #ifdef IP_OPT_DONT_FRAG
@@ -146,12 +199,25 @@ open_dns(int localport, in_addr_t listen_ip)
 	setsockopt(fd, IPPROTO_IP, IP_OPT_DONT_FRAG, (const void*) &flag, sizeof(flag));
 #endif
 
-	if(bind(fd, (struct sockaddr*)&addr, sizeof(addr)) < 0) 
+	if(bind(fd, (struct sockaddr*) sockaddr, sockaddr_len) < 0)
 		err(1, "bind");
 
-	fprintf(stderr, "Opened UDP socket\n");
+	fprintf(stderr, "Opened IPv%d UDP socket\n", sockaddr->ss_family == AF_INET6 ? 6 : 4);
 
 	return fd;
+}
+
+int
+open_dns_from_host(char *host, int port, int addr_family, int flags)
+{
+	struct sockaddr_storage addr;
+	int addrlen;
+
+	addrlen = get_addr(host, port, addr_family, flags, &addr);
+	if (addrlen < 0)
+		return addrlen;
+
+	return open_dns(&addr, addrlen);
 }
 
 void
@@ -167,8 +233,9 @@ do_chroot(char *newroot)
 	if (chroot(newroot) != 0 || chdir("/") != 0)
 		err(1, "%s", newroot);
 
-	seteuid(geteuid());
-	setuid(getuid());
+	if (seteuid(geteuid()) != 0 || setuid(getuid()) != 0) {
+		err(1, "set[e]uid()");
+	}
 #else
 	warnx("chroot not available");
 #endif
@@ -219,14 +286,14 @@ do_detach()
 void
 read_password(char *buf, size_t len)
 {
-	char pwd[80];
+	char pwd[80] = {0};
 #ifndef WINDOWS32
 	struct termios old;
 	struct termios tp;
 
 	tcgetattr(0, &tp);
 	old = tp;
-	
+
 	tp.c_lflag &= (~ECHO);
 	tcsetattr(0, TCSANOW, &tp);
 #else
@@ -236,7 +303,7 @@ read_password(char *buf, size_t len)
 	fprintf(stderr, "Enter password: ");
 	fflush(stderr);
 #ifndef WINDOWS32
-	scanf("%79s", pwd);
+	fscanf(stdin, "%79[^\n]", pwd);
 #else
 	for (i = 0; i < sizeof(pwd); i++) {
 		pwd[i] = getch();
@@ -252,7 +319,7 @@ read_password(char *buf, size_t len)
 	fprintf(stderr, "\n");
 
 #ifndef WINDOWS32
-	tcsetattr(0, TCSANOW, &old);	
+	tcsetattr(0, TCSANOW, &old);
 #endif
 
 	strncpy(buf, pwd, len);
@@ -260,29 +327,75 @@ read_password(char *buf, size_t len)
 }
 
 int
-check_topdomain(char *str)
+check_topdomain(char *str, char **errormsg)
 {
-       int i;
+	int i;
+	int dots = 0;
+	int chunklen = 0;
 
-       if(str[0] == '.') /* special case */
-               return 1;
+	if (strlen(str) < 3) {
+		if (errormsg) *errormsg = "Too short (< 3)";
+		return 1;
+	}
+	if (strlen(str) > 128) {
+		if (errormsg) *errormsg = "Too long (> 128)";
+		return 1;
+	}
 
-       for( i = 0; i < strlen(str); i++) {
-               if( isalpha(str[i]) || isdigit(str[i]) || str[i] == '-' || str[i] == '.' )
-                       continue;
-               else 
-		       return 1;
-       }
-       return 0;
+	if (str[0] == '.') {
+		if (errormsg) *errormsg = "Starts with a dot";
+		return 1;
+	}
+
+	for( i = 0; i < strlen(str); i++) {
+		if(str[i] == '.') {
+			dots++;
+			if (chunklen == 0) {
+				if (errormsg) *errormsg = "Consecutive dots";
+				return 1;
+			}
+			if (chunklen > 63) {
+				if (errormsg) *errormsg = "Too long domain part (> 63)";
+				return 1;
+			}
+			chunklen = 0;
+		} else {
+			chunklen++;
+		}
+		if( (str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z') ||
+				isdigit(str[i]) || str[i] == '-' || str[i] == '.' ) {
+			continue;
+		} else {
+			if (errormsg) *errormsg = "Contains illegal character (allowed: [a-zA-Z0-9-.])";
+			return 1;
+		}
+	}
+
+	if (dots == 0) {
+		if (errormsg) *errormsg = "No dots";
+		return 1;
+	}
+	if (chunklen == 0) {
+		if (errormsg) *errormsg = "Ends with a dot";
+		return 1;
+	}
+	if (chunklen > 63) {
+		if (errormsg) *errormsg = "Too long domain part (> 63)";
+		return 1;
+	}
+
+	return 0;
 }
 
-#if defined(WINDOWS32)
+#if defined(WINDOWS32) || defined(ANDROID)
+#ifndef ANDROID
 int
 inet_aton(const char *cp, struct in_addr *inp)
 {
  inp->s_addr = inet_addr(cp);
  return inp->s_addr != INADDR_ANY;
 }
+#endif
 
 void
 warn(const char *fmt, ...)
@@ -291,45 +404,16 @@ warn(const char *fmt, ...)
 
 	va_start(list, fmt);
 	if (fmt) fprintf(stderr, fmt, list);
+#ifndef ANDROID
 	if (errno == 0) {
-		fprintf(stderr, ": WSA error %d\n", WSAGetLastError()); 
+		fprintf(stderr, ": WSA error %d\n", WSAGetLastError());
 	} else {
 		fprintf(stderr, ": %s\n", strerror(errno));
 	}
-	va_end(list);
-}
 #endif
-
-#ifdef __ANDROID__
-
-void android_printf(const char *fmt, ...)
-{
-    static char buf[1024];
-	va_list list;
-	va_start(list, fmt);
-
-	snprintf(buf,1024,fmt,list);
-
-    android_log_callback(buf);
-
 	va_end(list);
 }
 
-
-void
-warn(const char *fmt, ...)
-{
-	va_list list;
-
-	va_start(list, fmt);
-	if (fmt) fprintf(stderr, fmt, list);
-	if (errno != 0)
-		fprintf(stderr, ": %s\n", strerror(errno));
-	va_end(list);
-}
-#endif
-
-#if defined(WINDOWS32) || defined(__ANDROID__)
 void
 warnx(const char *fmt, ...)
 {
@@ -364,6 +448,23 @@ errx(int eval, const char *fmt, ...)
 }
 #endif
 
+#if defined(__ANDROID__)
+void android_log_callback(const char *);
+static char printf_buf[1024];;
+void android_printf(const char *fmt, ...)
+{
+	va_list list;
+	va_start(list, fmt);
+
+	vsnprintf(printf_buf,1024,fmt,list);
+    android_log_callback(printf_buf);
+
+     __android_log_vprint(ANDROID_LOG_INFO, "Iodine",
+                         fmt, list);
+	va_end(list);
+}
+#endif
+
 
 int recent_seqno(int ourseqno, int gotseqno)
 /* Return 1 if we've seen gotseqno recently (current or up to 3 back).
@@ -379,3 +480,22 @@ int recent_seqno(int ourseqno, int gotseqno)
 	}
 	return 0;
 }
+
+#ifndef WINDOWS32
+/* Set FD_CLOEXEC flag on file descriptor.
+ * This stops it from being inherited by system() calls.
+ */
+void
+fd_set_close_on_exec(int fd)
+{
+	int flags;
+
+	flags = fcntl(fd, F_GETFD);
+	if (flags == -1)
+		err(4, "Failed to get fd flags");
+	flags |= FD_CLOEXEC;
+	if (fcntl(fd, F_SETFD, flags) == -1)
+		err(4, "Failed to set fd flags");
+}
+#endif
+

@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2006-2009 Bjorn Andersson <flex@kryo.se>, Erik Ekman <yarrick@kryo.se>
+ * Copyright (c) 2006-2014 Erik Ekman <yarrick@kryo.se>,
+ * 2006-2009 Bjorn Andersson <flex@kryo.se>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -19,23 +20,22 @@
 #include "encoding.h"
 
 int
-build_hostname(char *buf, size_t buflen, 
-		const char *data, const size_t datalen, 
+build_hostname(char *buf, size_t buflen,
+		const char *data, const size_t datalen,
 		const char *topdomain, struct encoder *encoder, int maxlen)
 {
-	int encsize;
 	size_t space;
 	char *b;
 
-	space = MIN(maxlen, buflen) - strlen(topdomain) - 8;
+	space = MIN((size_t)maxlen, buflen) - strlen(topdomain) - 8;
 	/* 8 = 5 max header length + 1 dot before topdomain + 2 safety */
 
 	if (!encoder->places_dots())
 		space -= (space / 57); /* space for dots */
 
 	memset(buf, 0, buflen);
-	
-	encsize = encoder->encode(buf, &space, data, datalen);
+
+	encoder->encode(buf, &space, data, datalen);
 
 	if (!encoder->places_dots())
 		inline_dotify(buf, buflen);
@@ -45,7 +45,7 @@ build_hostname(char *buf, size_t buflen,
 
 	/* move b back one step to see if the dot is there */
 	b--;
-	if (*b != '.') 
+	if (*b != '.')
 		*++b = '.';
 	b++;
 	/* move b ahead of the string so we can copy to it */
@@ -63,7 +63,7 @@ unpack_data(char *buf, size_t buflen, char *data, size_t datalen, struct encoder
 	return enc->decode(buf, &buflen, data, datalen);
 }
 
-int 
+int
 inline_dotify(char *buf, size_t buflen)
 {
 	unsigned dots;
@@ -101,7 +101,7 @@ inline_dotify(char *buf, size_t buflen)
 	return total;
 }
 
-int 
+int
 inline_undotify(char *buf, size_t len)
 {
 	unsigned pos;
@@ -124,7 +124,7 @@ inline_undotify(char *buf, size_t len)
 		*writer++ = *reader++;
 		pos++;
 	}
-	
+
 	/* return new length of string */
 	return len - dots;
 }

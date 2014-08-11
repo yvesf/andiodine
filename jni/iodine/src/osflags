@@ -17,17 +17,26 @@ link)
 			echo '-lws2_32 -liphlpapi';
 		;;
 		Linux)
-			[ -e /usr/include/selinux/selinux.h ] && echo '-lselinux';
+			FLAGS="";
+			[ -e /usr/include/selinux/selinux.h ] && FLAGS="$FLAGS -lselinux";
+			[ -e /usr/include/systemd/sd-daemon.h ] && FLAGS="$FLAGS -lsystemd-daemon";
+			echo $FLAGS;
 		;;
 	esac
 	;;
 cflags)
 	case $1 in
+		windows32)
+			echo '-DWINVER=0x0501';
+		;;
 		BeOS)
 			echo '-Dsocklen_t=int';
 		;;
 		Linux)
-			[ -e /usr/include/selinux/selinux.h ] && echo '-DHAVE_SETCON';
+			FLAGS="-D_GNU_SOURCE"
+			[ -e /usr/include/selinux/selinux.h ] && FLAGS="$FLAGS -DHAVE_SETCON";
+			[ -e /usr/include/systemd/sd-daemon.h ] && FLAGS="$FLAGS -DHAVE_SYSTEMD";
+			echo $FLAGS;
 		;;
 	esac
 ;;

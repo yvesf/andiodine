@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2006-2009 Bjorn Andersson <flex@kryo.se>, Erik Ekman <yarrick@kryo.se>
+ * Copyright (c) 2006-2014 Erik Ekman <yarrick@kryo.se>,
+ * 2006-2009 Bjorn Andersson <flex@kryo.se>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -32,6 +33,7 @@
 #else
 #include <grp.h>
 #include <pwd.h>
+#include <netdb.h>
 #endif
 
 #include "common.h"
@@ -51,10 +53,16 @@ static char *__progname;
 #define PASSWORD_ENV_VAR "IODINE_PASS"
 
 static void
-sighandler(int sig) 
+sighandler(int sig)
 {
 	client_stop();
 }
+
+#if defined(__GNUC__) || defined(__clang__)
+/* mark as no return to help some compilers to avoid warnings
+ * about use of uninitialized variables */
+static void usage() __attribute__((noreturn));
+#endif
 
 static void
 usage() {
@@ -75,7 +83,7 @@ help() {
 			"[-P password] [-m maxfragsize] [-M maxlen] [-T type] [-O enc] [-L 0|1] [-I sec] "
 			"[-z context] [-F pidfile] [nameserver] topdomain\n", __progname);
 	fprintf(stderr, "Options to try if connection doesn't work:\n");
-	fprintf(stderr, "  -T force dns type: NULL, TXT, SRV, MX, CNAME, A (default: autodetect)\n");
+	fprintf(stderr, "  -T force dns type: NULL, PRIVATE, TXT, SRV, MX, CNAME, A (default: autodetect)\n");
 	fprintf(stderr, "  -O force downstream encoding for -T other than NULL: Base32, Base64, Base64u,\n");
 	fprintf(stderr, "     Base128, or (only for TXT:) Raw  (default: autodetect)\n");
 	fprintf(stderr, "  -I max interval between requests (default 4 sec) to prevent DNS timeouts\n");
@@ -101,8 +109,9 @@ help() {
 
 static void
 version() {
+
 	fprintf(stderr, "iodine IP over DNS tunneling client\n");
-	fprintf(stderr, "version: 0.6.0-rc1 from 2010-02-13\n");
+	fprintf(stderr, "version: 0.7.0 from 2014-06-16\n");
 
 	exit(0);
 }
@@ -110,8 +119,9 @@ version() {
 int
 main(int argc, char **argv)
 {
-	char *nameserv_addr;
+	char *nameserv_host;
 	char *topdomain;
+	char *errormsg;
 #ifndef WINDOWS32
 	struct passwd *pw;
 #endif
@@ -132,9 +142,16 @@ main(int argc, char **argv)
 	int lazymode;
 	int selecttimeout;
 	int hostname_maxlen;
+#ifdef OPENBSD
+	int rtable = 0;
+#endif
+	struct sockaddr_storage nameservaddr;
+	int nameservaddr_len;
+	int nameserv_family;
 
-	nameserv_addr = NULL;
+	nameserv_host = NULL;
 	topdomain = NULL;
+	errormsg = NULL;
 #ifndef WINDOWS32
 	pw = NULL;
 #endif
@@ -154,6 +171,7 @@ main(int argc, char **argv)
 	lazymode = 1;
 	selecttimeout = 4;
 	hostname_maxlen = 0xFF;
+	nameserv_family = AF_UNSPEC;
 
 #ifdef WINDOWS32
 	WSAStartup(req_version, &wsa_data);
@@ -161,7 +179,7 @@ main(int argc, char **argv)
 
 	srand((unsigned) time(NULL));
 	client_init();
-	
+
 #if !defined(BSD) && !defined(__GLIBC__)
 	__progname = strrchr(argv[0], '/');
 	if (__progname == NULL)
@@ -170,8 +188,14 @@ main(int argc, char **argv)
 		__progname++;
 #endif
 
-	while ((choice = getopt(argc, argv, "vfhru:t:d:P:m:M:F:T:O:L:I:")) != -1) {
+	while ((choice = getopt(argc, argv, "46vfhru:t:d:R:P:m:M:F:T:O:L:I:")) != -1) {
 		switch(choice) {
+		case '4':
+			nameserv_family = AF_INET;
+			break;
+		case '6':
+			nameserv_family = AF_INET6;
+			break;
 		case 'v':
 			version();
 			/* NOTREACHED */
@@ -185,6 +209,7 @@ main(int argc, char **argv)
 			break;
 		case 'r':
 			raw_mode = 0;
+			break;
 		case 'u':
 			username = optarg;
 			break;
@@ -194,12 +219,17 @@ main(int argc, char **argv)
 		case 'd':
 			device = optarg;
 			break;
+#ifdef OPENBSD
+		case 'R':
+			rtable = atoi(optarg);
+			break;
+#endif
 		case 'P':
 			strncpy(password, optarg, sizeof(password));
 			password[sizeof(password)-1] = 0;
-			
+
 			/* XXX: find better way of cleaning up ps(1) */
-			memset(optarg, 0, strlen(optarg)); 
+			memset(optarg, 0, strlen(optarg));
 			break;
 		case 'm':
 			autodetect_frag_size = 0;
@@ -217,12 +247,13 @@ main(int argc, char **argv)
 			break;
 		case 'F':
 			pidfile = optarg;
-			break;    
+			break;
 		case 'T':
-			set_qtype(optarg);
+			if (client_set_qtype(optarg))
+				errx(5, "Invalid query type '%s'", optarg);
 			break;
 		case 'O':       /* not -D, is Debug in server */
-			set_downenc(optarg);
+			client_set_downenc(optarg);
 			break;
 		case 'L':
 			lazymode = atoi(optarg);
@@ -243,7 +274,7 @@ main(int argc, char **argv)
 			/* NOTREACHED */
 		}
 	}
-	
+
 	check_superuser(usage);
 
 	argc -= optind;
@@ -251,11 +282,11 @@ main(int argc, char **argv)
 
 	switch (argc) {
 	case 1:
-		nameserv_addr = get_resolvconf_addr();
+		nameserv_host = get_resolvconf_addr();
 		topdomain = strdup(argv[0]);
 		break;
 	case 2:
-		nameserv_addr = argv[0];
+		nameserv_host = argv[0];
 		topdomain = strdup(argv[1]);
 		break;
 	default:
@@ -269,22 +300,21 @@ main(int argc, char **argv)
 		/* NOTREACHED */
 	}
 
-	if (nameserv_addr) {
-		client_set_nameserver(nameserv_addr, DNS_PORT);
+	if (nameserv_host) {
+		nameservaddr_len = get_addr(nameserv_host, DNS_PORT, nameserv_family, 0, &nameservaddr);
+		if (nameservaddr_len < 0) {
+			errx(1, "Cannot lookup nameserver '%s': %s ",
+				nameserv_host, gai_strerror(nameservaddr_len));
+		}
+		client_set_nameserver(&nameservaddr, nameservaddr_len);
 	} else {
 		warnx("No nameserver found - not connected to any network?\n");
 		usage();
 		/* NOTREACHED */
-	}	
+	}
 
-	if (strlen(topdomain) <= 128) {
-		if(check_topdomain(topdomain)) {
-			warnx("Topdomain contains invalid characters.\n");
-			usage();
-			/* NOTREACHED */
-		}
-	} else {
-		warnx("Use a topdomain max 128 chars long.\n");
+	if(check_topdomain(topdomain, &errormsg)) {
+		warnx("Invalid topdomain: %s", errormsg);
 		usage();
 		/* NOTREACHED */
 	}
@@ -293,7 +323,7 @@ main(int argc, char **argv)
 	client_set_lazymode(lazymode);
 	client_set_topdomain(topdomain);
 	client_set_hostname_maxlen(hostname_maxlen);
-	
+
 	if (username != NULL) {
 #ifndef WINDOWS32
 		if ((pw = getpwnam(username)) == NULL) {
@@ -303,51 +333,55 @@ main(int argc, char **argv)
 		}
 #endif
 	}
-	
+
 	if (strlen(password) == 0) {
 		if (NULL != getenv(PASSWORD_ENV_VAR))
 			snprintf(password, sizeof(password), "%s", getenv(PASSWORD_ENV_VAR));
 		else
 			read_password(password, sizeof(password));
 	}
-	
+
 	client_set_password(password);
 
 	if ((tun_fd = open_tun(device)) == -1) {
 		retval = 1;
 		goto cleanup1;
 	}
-	if ((dns_fd = open_dns(0, INADDR_ANY)) == -1) {
+	if ((dns_fd = open_dns_from_host(NULL, 0, nameservaddr.ss_family, AI_PASSIVE)) < 0) {
 		retval = 1;
 		goto cleanup2;
 	}
+#ifdef OPENBSD
+	if (rtable > 0)
+		socket_setrtable(dns_fd, rtable);
+#endif
 
 	signal(SIGINT, sighandler);
 	signal(SIGTERM, sighandler);
 
 	fprintf(stderr, "Sending DNS queries for %s to %s\n",
-		topdomain, nameserv_addr);
+		topdomain, format_addr(&nameservaddr, nameservaddr_len));
 
 	if (client_handshake(dns_fd, raw_mode, autodetect_frag_size, max_downstream_frag_size)) {
 		retval = 1;
 		goto cleanup2;
 	}
-	
+
 	if (client_get_conn() == CONN_RAW_UDP) {
 		fprintf(stderr, "Sending raw traffic directly to %s\n", client_get_raw_addr());
 	}
 
 	fprintf(stderr, "Connection setup complete, transmitting data.\n");
 
-	if (foreground == 0) 
+	if (foreground == 0)
 		do_detach();
-	
+
 	if (pidfile != NULL)
 		do_pidfile(pidfile);
 
 	if (newroot != NULL)
 		do_chroot(newroot);
-	
+
 	if (username != NULL) {
 #ifndef WINDOWS32
 		gid_t gids[1];

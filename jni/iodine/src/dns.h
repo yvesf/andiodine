@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2006-2009 Bjorn Andersson <flex@kryo.se>, Erik Ekman <yarrick@kryo.se>
+ * Copyright (c) 2006-2014 Erik Ekman <yarrick@kryo.se>,
+ * 2006-2009 Bjorn Andersson <flex@kryo.se>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -31,9 +32,5 @@ int dns_encode_ns_response(char *buf, size_t buflen, struct query *q, char *topd
 int dns_encode_a_response(char *buf, size_t buflen, struct query *q);
 unsigned short dns_get_id(char *packet, size_t packetlen);
 int dns_decode(char *, size_t, struct query *, qr_t, char *, size_t);
-
-#ifdef __ANDROID__
-#include "dns_android.h"
-#endif
 
 #endif /* _DNS_H_ */
