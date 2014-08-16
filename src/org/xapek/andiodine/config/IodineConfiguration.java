@@ -124,4 +124,9 @@ public class IodineConfiguration {
 	public ContentValues getContentValues() {
 		return v;
 	}
+
+	@Override
+	public String toString() {
+		return "[IodineConfiguration name=" + getName() + "]";
+	}
 }

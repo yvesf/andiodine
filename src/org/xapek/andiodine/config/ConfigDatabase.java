@@ -66,7 +66,6 @@ public class ConfigDatabase extends SQLiteOpenHelper {
         long id = writableDatabase.insertOrThrow(TABLE_NAME_CONF, null, config);
         writableDatabase.close();
         config.put(COLUMN_CONF_ID, id);
-
         Log.d(TAG, "Insert id=" + id);
     }
 
@@ -77,7 +76,6 @@ public class ConfigDatabase extends SQLiteOpenHelper {
         int rows = writableDatabase.update(TABLE_NAME_CONF, config, COLUMN_CONF_ID + " = ?",
                 new String[]{config.getAsString(COLUMN_CONF_ID)});
         writableDatabase.close();
-        Log.d(TAG, config.toString());
         Log.d(TAG, "Update rows=" + rows);
         return rows;
     }
@@ -96,11 +94,11 @@ public class ConfigDatabase extends SQLiteOpenHelper {
         SQLiteDatabase readableDatabase = getReadableDatabase();
         Cursor query = readableDatabase.query(TABLE_NAME_CONF, null, COLUMN_CONF_ID + " = ?",
                 new String[]{id.toString()}, null, null, null);
-        assert query.isLast();
         query.moveToFirst();
         DatabaseUtils.cursorRowToContentValues(query, v);
-        Log.d(TAG, "Selected: " + v.toString());
-        return new IodineConfiguration(v);
+        IodineConfiguration iodineConfiguration = new IodineConfiguration(v);
+        Log.d(TAG, "Selected: " + iodineConfiguration);
+		return iodineConfiguration;
     }
 
     public List<IodineConfiguration> selectAll() throws SQLException {
