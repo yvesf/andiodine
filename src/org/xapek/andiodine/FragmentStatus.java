@@ -21,19 +21,19 @@ public class FragmentStatus extends Fragment {
     private TextView mStatus;
     private TextView mLogmessages;
     private ScrollView mScrollview;
-    private Button mCancel;
+    private Button mClose;
 
     private final BroadcastReceiver broadcastReceiverStatusUpdates = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "Got intent: " + intent);
             if (IodineVpnService.ACTION_STATUS_ERROR.equals(intent.getAction())) {
-                new AlertDialog.Builder(FragmentStatus.this.getActivity())//
-                        .setIcon(R.drawable.error) //
-                        .setTitle(intent.getStringExtra(IodineVpnService.EXTRA_ERROR_MESSAGE)) //
-                        .setMessage(mLogmessages.getText()) //
-                        .create() //
-                        .show();
+            	new AlertDialog.Builder(FragmentStatus.this.getActivity())//
+					.setIcon(R.drawable.error)	//
+					.setTitle("Error") //
+					.setMessage(intent.getStringExtra(IodineVpnService.EXTRA_ERROR_MESSAGE)) //
+					.create() //
+					.show();
             } else if (IodineVpnService.ACTION_STATUS_CONNECT.equals(intent.getAction())) {
                 mStatus.setText("Connect");
             } else if (IodineVpnService.ACTION_STATUS_CONNECTED.equals(intent.getAction())) {
@@ -61,8 +61,8 @@ public class FragmentStatus extends Fragment {
         mStatus = (TextView) getActivity().findViewById(R.id.status_message);
         mLogmessages = (TextView) getActivity().findViewById(R.id.status_logmessages);
         mScrollview = (ScrollView) getActivity().findViewById(R.id.status_scrollview);
-        mCancel = (Button) getActivity().findViewById(R.id.status_cancel);
-        mCancel.setOnClickListener(new View.OnClickListener() {
+        mClose = (Button) getActivity().findViewById(R.id.status_cancel);
+        mClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 requestDisconnect();

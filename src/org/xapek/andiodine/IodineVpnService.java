@@ -11,6 +11,7 @@ import android.util.Log;
 import org.xapek.andiodine.config.ConfigDatabase;
 import org.xapek.andiodine.config.IodineConfiguration;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -151,7 +152,10 @@ public class IodineVpnService extends VpnService implements Runnable {
     }
 
     private void shutdown() {
-        setStatus(ACTION_STATUS_DISCONNECT, mConfiguration.getId(), null);
+    	if (mConfiguration != null)
+    		setStatus(ACTION_STATUS_DISCONNECT, mConfiguration.getId(), null);
+    	else
+    		setStatus(ACTION_STATUS_IDLE, null, null);
 
         if (mThread != null) {
             mThread.interrupt();
@@ -221,7 +225,7 @@ public class IodineVpnService extends VpnService implements Runnable {
                 case 0:
                     Log.d(TAG, "Handshake successful");
                     setStatus(ACTION_STATUS_CONNECTED, currentConfigurationId, null);
-                    runTunnel();
+                    runTunnel(); // this blocks until connection is closed
                     setStatus(ACTION_STATUS_IDLE, null, null);
                     break;
                 case 1:
@@ -311,12 +315,22 @@ public class IodineVpnService extends VpnService implements Runnable {
             Log.d(TAG, "Set default route");
             b.addRoute("0.0.0.0", 0); // Default Route
         }
-        b.setMtu(mtu); // bug https://github.com/yvesf/andiodine/issues/4
-        // the VPN framework fails if mtu < 1280
-        // b.setMtu(1280);
+        b.setMtu(mtu);
 
-        Log.d(TAG, "Build tunnel interface");
-        ParcelFileDescriptor parcelFD = b.establish();
+		Log.d(TAG, "Build tunnel interface");
+		ParcelFileDescriptor parcelFD;
+		try {
+			parcelFD = b.establish();
+		} catch (Exception e) {
+			if (e.getMessage().contains("fwmark") || e.getMessage().contains("iptables")) {
+				// bug https://github.com/yvesf/andiodine/issues/4
+				throw new IodineVpnException(
+						"Error while creating interface, please check issue #4 at https://github.com/yvesf/andiodine/issues/4");
+			} else {
+				throw new IodineVpnException("Error while creating interface: "
+						+ e.getMessage());
+			}
+		}
 
         protect(IodineClient.getDnsFd());
 
@@ -324,7 +338,13 @@ public class IodineVpnService extends VpnService implements Runnable {
 
         setStatus(ACTION_STATUS_CONNECTED, mConfiguration.getId(), null);
 
-        Log.d(TAG, "Tunnel active");
-        IodineClient.tunnel(tun_fd);
-    }
+		Log.d(TAG, "Tunnel active");
+		IodineClient.tunnel(tun_fd);
+		try {
+			ParcelFileDescriptor.adoptFd(tun_fd).close();
+		} catch (IOException e) {
+			throw new IodineVpnException(
+					"Failed to close fd after tunnel exited");
+		}
+	}
 }
