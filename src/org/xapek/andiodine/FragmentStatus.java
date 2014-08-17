@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +31,16 @@ public class FragmentStatus extends Fragment {
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "Got intent: " + intent);
             if (IodineVpnService.ACTION_STATUS_ERROR.equals(intent.getAction())) {
+            	final TextView message = new TextView(context);
+            	final String stringMessage = intent.getStringExtra(IodineVpnService.EXTRA_ERROR_MESSAGE);
+				final SpannableString s = new SpannableString(stringMessage);
+            	Linkify.addLinks(s, Linkify.WEB_URLS);
+            	message.setText(s);
+            	message.setMovementMethod(LinkMovementMethod.getInstance());
             	new AlertDialog.Builder(FragmentStatus.this.getActivity())//
 					.setIcon(R.drawable.error)	//
 					.setTitle("Error") //
-					.setMessage(intent.getStringExtra(IodineVpnService.EXTRA_ERROR_MESSAGE)) //
+					.setView(message)
 					.create() //
 					.show();
             } else if (IodineVpnService.ACTION_STATUS_CONNECT.equals(intent.getAction())) {

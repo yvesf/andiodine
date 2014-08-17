@@ -323,9 +323,8 @@ public class IodineVpnService extends VpnService implements Runnable {
 			parcelFD = b.establish();
 		} catch (Exception e) {
 			if (e.getMessage().contains("fwmark") || e.getMessage().contains("iptables")) {
-				// bug https://github.com/yvesf/andiodine/issues/4
 				throw new IodineVpnException(
-						"Error while creating interface, please check issue #4 at https://github.com/yvesf/andiodine/issues/4");
+						"Error while creating interface, please check issue #9 at https://github.com/yvesf/andiodine/issues/9");
 			} else {
 				throw new IodineVpnException("Error while creating interface: "
 						+ e.getMessage());
