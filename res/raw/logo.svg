@@ -15,8 +15,11 @@
    width="1000"
    height="1000"
    id="svg2"
-   inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="logo.svg">
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="/home/yvesf/vcs/andiodine-github/res/drawable/logo.png"
+   inkscape:export-xdpi="11.52"
+   inkscape:export-ydpi="11.52">
   <metadata
      id="metadata82">
     <rdf:RDF>
@@ -25,6 +28,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -37,17 +41,17 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1916"
-     inkscape:window-height="1180"
+     inkscape:window-width="1436"
+     inkscape:window-height="880"
      id="namedview80"
      showgrid="false"
-     inkscape:zoom="0.236"
-     inkscape:cx="-309.15823"
-     inkscape:cy="-43.472837"
+     inkscape:zoom="0.6675088"
+     inkscape:cx="478.53622"
+     inkscape:cy="487.65456"
      inkscape:window-x="0"
      inkscape:window-y="18"
      inkscape:window-maximized="0"
-     inkscape:current-layer="g3243-6" />
+     inkscape:current-layer="svg2" />
   <defs
      id="defs6">
     <circle
@@ -59,145 +63,140 @@
        sodipodi:cy="0"
        sodipodi:rx="30"
        sodipodi:ry="30"
-       style="fill:#b7c6cb;stroke:none" />
+       style="fill:#fafafa;stroke:#2f2f2f" />
   </defs>
+  <circle
+     d="m 200,0 c 0,110.45695 -89.54305,200 -200,200 -110.45695,0 -200,-89.54305 -200,-200 0,-110.45695 89.54305,-200 200,-200 110.45695,0 200,89.54305 200,200 z"
+     r="200"
+     id="circle3227-5"
+     cx="0"
+     cy="0"
+     sodipodi:cx="0"
+     sodipodi:cy="0"
+     sodipodi:rx="200"
+     sodipodi:ry="200"
+     style="fill:#ffffff;fill-opacity:1;stroke:#343434;stroke-width:2.26129237;stroke-miterlimit:4;stroke-dasharray:none"
+     transform="matrix(0.944522,0,0,0.94201149,-300,-300)" />
   <g
-     style="display:inline"
-     id="g3225-7"
-     transform="matrix(0.89905744,0,0,0.94208582,-25.711286,-29.3741)">
-    <circle
-       transform="matrix(0.87892157,0,0,0.83654869,-305.08475,-287.26247)"
-       style="fill:#f6ffec;stroke:#343434;stroke-width:10;fill-opacity:1"
-       sodipodi:ry="200"
-       sodipodi:rx="200"
-       sodipodi:cy="0"
-       sodipodi:cx="0"
-       cy="0"
-       cx="0"
-       id="circle3227-5"
-       r="200"
-       d="m 200,0 c 0,110.45695 -89.54305,200 -200,200 -110.45695,0 -200,-89.54305 -200,-200 0,-110.45695 89.54305,-200 200,-200 110.45695,0 200,89.54305 200,200 z" />
+     id="g3229-2"
+     transform="matrix(0.93986331,0,0,0.98484463,-298.58417,-403.20625)">
     <g
-       transform="matrix(0.86112107,0,0,0.86112107,-303.56771,-377.84524)"
-       id="g3229-2">
+       id="g3231-9"
+       style="fill:#a4c639">
       <g
-         style="fill:#a4c639"
-         id="g3231-9">
-        <g
-           id="use3233-3"
-           style="stroke:#ffffff;stroke-width:7.19999981"
-           transform="scale(-1,1)">
-          <rect
-             id="rect3571"
-             x="14"
-             y="-86"
-             width="13"
-             height="86"
-             transform="matrix(0.87461971,0.48480962,-0.48480962,0.87461971,0,0)"
-             rx="6.5"
-             style="stroke:none" />
-          <rect
-             x="-143"
-             y="41"
-             width="48"
-             height="133"
-             rx="24"
-             id="rect3573"
-             style="stroke:none" />
-          <rect
-             x="-58"
-             y="138"
-             width="48"
-             height="133"
-             rx="24"
-             id="use3575"
-             style="stroke:none" />
-        </g>
-        <g
-           style="stroke:#ffffff;stroke-width:7.19999981"
-           id="g3235-5">
-          <rect
-             style="stroke:none"
-             rx="6.5"
-             transform="matrix(0.87461971,0.48480962,-0.48480962,0.87461971,0,0)"
-             height="86"
-             width="13"
-             y="-86"
-             x="14"
-             id="rect3237-7" />
-          <rect
-             style="stroke:none"
-             id="rect3239-4"
-             rx="24"
-             height="133"
-             width="48"
-             y="41"
-             x="-143" />
-          <rect
-             x="-58"
-             y="138"
-             width="48"
-             height="133"
-             rx="24"
-             id="use3241-5"
-             style="stroke:none" />
-        </g>
-        <g
-           id="g3243-6">
-          <ellipse
-             d="m 91,41 c 0,46.391919 -40.742088,84 -91,84 -50.257912,0 -91,-37.608081 -91,-84 0,-46.391919 40.742088,-84 91,-84 50.257912,0 91,37.608081 91,84 z"
-             sodipodi:ry="84"
-             sodipodi:rx="91"
-             sodipodi:cy="41"
-             sodipodi:cx="0"
-             cx="0"
-             cy="41"
-             rx="91"
-             ry="84"
-             id="ellipse3245-2"
-             style="fill:#a4c639;fill-opacity:1;stroke:#a4c639;stroke-opacity:1" />
-          <path
-             style=""
-             d="M 447.9375 430.875 C 439.93814 430.875 433.28525 436.60888 431.4375 444.375 L 571.28125 444.375 C 569.43246 436.61046 562.77955 430.875 554.78125 430.875 L 447.9375 430.875 z M 430.90625 451 L 430.90625 560.6875 C 430.90625 570.57501 438.50158 578.53125 447.9375 578.53125 L 554.78125 578.53125 C 564.21717 578.53125 571.8125 570.57501 571.8125 560.6875 L 571.8125 451 L 430.90625 451 z "
-             transform="matrix(1.2916604,0,0,1.2326657,-647.5919,-511.14118)"
-             id="rect3247-7" />
-          <path
-             inkscape:connector-curvature="0"
-             style="fill:#ffffff;stroke:#ffffff;stroke-width:7.04677343;display:inline"
-             d="M -90.99955,40.88152 H 90.999549"
-             id="path3251-2" />
-        </g>
-        <g
-           style="fill:#ffffff;stroke:#ffffff;stroke-width:7.19999981;display:inline"
-           id="g3249-3"
-           transform="translate(-0.049281,4.3465664)">
-          <circle
-             d="m -38,0 c 0,2.209139 -1.790861,4 -4,4 -2.209139,0 -4,-1.790861 -4,-4 0,-2.209139 1.790861,-4 4,-4 2.209139,0 4,1.790861 4,4 z"
-             sodipodi:ry="4"
-             sodipodi:rx="4"
-             sodipodi:cy="0"
-             sodipodi:cx="-42"
-             cy="0"
-             cx="-42"
-             r="4"
-             id="circle3253-6" />
-          <circle
-             d="m 46,0 c 0,2.209139 -1.790861,4 -4,4 -2.209139,0 -4,-1.790861 -4,-4 0,-2.209139 1.790861,-4 4,-4 2.209139,0 4,1.790861 4,4 z"
-             sodipodi:ry="4"
-             sodipodi:rx="4"
-             sodipodi:cy="0"
-             sodipodi:cx="42"
-             cy="0"
-             cx="42"
-             r="4"
-             id="circle3255-6" />
-        </g>
+         transform="scale(-1,1)"
+         style="stroke:#ffffff;stroke-width:7.19999981"
+         id="use3233-3">
+        <rect
+           style="stroke:none"
+           rx="6.5"
+           transform="matrix(0.87461971,0.48480962,-0.48480962,0.87461971,0,0)"
+           height="86"
+           width="13"
+           y="-86"
+           x="14"
+           id="rect3571" />
+        <rect
+           style="stroke:none"
+           id="rect3573"
+           rx="24"
+           height="133"
+           width="48"
+           y="41"
+           x="-143" />
+        <rect
+           style="stroke:none"
+           id="use3575"
+           rx="24"
+           height="133"
+           width="48"
+           y="138"
+           x="-58" />
+      </g>
+      <g
+         id="g3235-5"
+         style="stroke:#ffffff;stroke-width:7.19999981">
+        <rect
+           id="rect3237-7"
+           x="14"
+           y="-86"
+           width="13"
+           height="86"
+           transform="matrix(0.87461971,0.48480962,-0.48480962,0.87461971,0,0)"
+           rx="6.5"
+           style="stroke:none" />
+        <rect
+           x="-143"
+           y="41"
+           width="48"
+           height="133"
+           rx="24"
+           id="rect3239-4"
+           style="stroke:none" />
+        <rect
+           style="stroke:none"
+           id="use3241-5"
+           rx="24"
+           height="133"
+           width="48"
+           y="138"
+           x="-58" />
+      </g>
+      <g
+         id="g3243-6">
+        <ellipse
+           style="fill:#a4c639;fill-opacity:1;stroke:#a4c639;stroke-opacity:1"
+           id="ellipse3245-2"
+           ry="84"
+           rx="91"
+           cy="41"
+           cx="0"
+           sodipodi:cx="0"
+           sodipodi:cy="41"
+           sodipodi:rx="91"
+           sodipodi:ry="84"
+           d="m 91,41 c 0,46.391919 -40.742088,84 -91,84 -50.257912,0 -91,-37.608081 -91,-84 0,-46.391919 40.742088,-84 91,-84 50.257912,0 91,37.608081 91,84 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="rect3247-7"
+           transform="matrix(1.2916604,0,0,1.2326657,-647.5919,-511.14118)"
+           d="m 447.9375,430.875 c -7.99936,0 -14.65225,5.73388 -16.5,13.5 l 139.84375,0 c -1.84879,-7.76454 -8.5017,-13.5 -16.5,-13.5 l -106.84375,0 z M 430.90625,451 l 0,109.6875 c 0,9.88751 7.59533,17.84375 17.03125,17.84375 l 106.84375,0 c 9.43592,0 17.03125,-7.95624 17.03125,-17.84375 l 0,-109.6875 -140.90625,0 z" />
+        <path
+           id="path3251-2"
+           d="M -90.99955,40.88152 H 90.999549"
+           style="fill:#ffffff;stroke:#ffffff;stroke-width:7.04677343;display:inline"
+           inkscape:connector-curvature="0" />
+      </g>
+      <g
+         transform="translate(-0.049281,4.3465664)"
+         id="g3249-3"
+         style="fill:#ffffff;stroke:#ffffff;stroke-width:7.19999981;display:inline">
+        <circle
+           id="circle3253-6"
+           r="4"
+           cx="-42"
+           cy="0"
+           sodipodi:cx="-42"
+           sodipodi:cy="0"
+           sodipodi:rx="4"
+           sodipodi:ry="4"
+           d="m -38,0 c 0,2.209139 -1.790861,4 -4,4 -2.209139,0 -4,-1.790861 -4,-4 0,-2.209139 1.790861,-4 4,-4 2.209139,0 4,1.790861 4,4 z" />
+        <circle
+           id="circle3255-6"
+           r="4"
+           cx="42"
+           cy="0"
+           sodipodi:cx="42"
+           sodipodi:cy="0"
+           sodipodi:rx="4"
+           sodipodi:ry="4"
+           d="m 46,0 c 0,2.209139 -1.790861,4 -4,4 -2.209139,0 -4,-1.790861 -4,-4 0,-2.209139 1.790861,-4 4,-4 2.209139,0 4,1.790861 4,4 z" />
       </g>
     </g>
   </g>
   <g
      id="g4283"
-     transform="translate(0,-8.73212)">
+     transform="matrix(1.0380709,0,0,1.0380709,11.421268,11.421265)">
     <circle
        transform="matrix(0.73071782,0,0,0.73071782,-300,-291.26788)"
        id="shell_1"
@@ -218,7 +217,7 @@
        x="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_1_shell_1"
        xlink:href="#electron_0_shell_1"
@@ -227,7 +226,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <circle
        transform="matrix(0.67170146,0,0,0.67170146,-300,-291.26788)"
        id="shell_2"
@@ -248,7 +247,7 @@
        x="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_1_shell_2"
        xlink:href="#electron_0_shell_2"
@@ -257,7 +256,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_2_shell_2"
        xlink:href="#electron_0_shell_2"
@@ -266,7 +265,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_3_shell_2"
        xlink:href="#electron_0_shell_2"
@@ -275,7 +274,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_4_shell_2"
        xlink:href="#electron_0_shell_2"
@@ -284,7 +283,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_5_shell_2"
        xlink:href="#electron_0_shell_2"
@@ -293,7 +292,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_6_shell_2"
        xlink:href="#electron_0_shell_2"
@@ -302,7 +301,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_7_shell_2"
        xlink:href="#electron_0_shell_2"
@@ -311,7 +310,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <circle
        transform="matrix(0.67170146,0,0,0.67170146,-300,-291.26788)"
        id="shell_3"
@@ -332,7 +331,7 @@
        x="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_1_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -341,7 +340,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_2_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -350,7 +349,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_3_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -359,7 +358,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_4_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -368,7 +367,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_5_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -377,7 +376,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_6_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -386,7 +385,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_7_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -395,7 +394,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_8_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -404,7 +403,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_9_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -413,7 +412,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_10_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -422,7 +421,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_11_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -431,7 +430,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_12_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -440,7 +439,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_13_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -449,7 +448,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_14_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -458,7 +457,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_15_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -467,7 +466,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_16_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -476,7 +475,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#00d7d7;fill-opacity:1;stroke:#000000;stroke-width:8" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_17_shell_3"
        xlink:href="#electron_0_shell_3"
@@ -485,7 +484,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <circle
        transform="matrix(0.67170146,0,0,0.67170146,-300,-291.26788)"
        id="shell_4"
@@ -506,7 +505,7 @@
        x="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_1_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -515,7 +514,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_2_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -524,7 +523,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:9.6332534;stroke-miterlimit:4;stroke-dasharray:none" />
     <use
        id="electron_3_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -533,7 +532,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_4_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -542,7 +541,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_5_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -551,7 +550,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_6_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -560,7 +559,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_7_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -569,7 +568,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_8_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -578,7 +577,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_9_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -587,7 +586,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_10_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -596,7 +595,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_11_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -605,7 +604,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_12_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -614,7 +613,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_13_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -623,7 +622,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_14_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -632,7 +631,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_15_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -641,7 +640,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_16_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -650,7 +649,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_17_shell_4"
        xlink:href="#electron_0_shell_4"
@@ -659,7 +658,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <circle
        transform="matrix(0.67170146,0,0,0.67170146,-300,-291.26788)"
        id="shell_5"
@@ -673,9 +672,10 @@
        d="M 700,0 C 700,386.59932 386.59932,700 0,700 -386.59932,700 -700,386.59932 -700,0 c 0,-386.59932 313.40068,-700 700,-700 386.59932,0 700,313.40068 700,700 z"
        style="fill:none;stroke:#77868b;stroke-width:8" />
     <a
-       id="a4147">
+       id="a4147"
+       style="fill:none;stroke:none;fill-opacity:1">
       <use
-         style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1"
+         style="fill:none;fill-opacity:1;stroke:none;stroke-width:8"
          height="1600"
          width="1600"
          x="0"
@@ -692,7 +692,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_2_shell_5"
        xlink:href="#electron_0_shell_5"
@@ -701,7 +701,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_3_shell_5"
        xlink:href="#electron_0_shell_5"
@@ -710,7 +710,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_4_shell_5"
        xlink:href="#electron_0_shell_5"
@@ -719,7 +719,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_5_shell_5"
        xlink:href="#electron_0_shell_5"
@@ -728,7 +728,7 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
     <use
        id="electron_6_shell_5"
        xlink:href="#electron_0_shell_5"
@@ -737,6 +737,6 @@
        y="0"
        width="1600"
        height="1600"
-       style="fill:#ff0000;stroke:#ff0000;stroke-width:8;fill-opacity:1" />
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:8" />
   </g>
 </svg>
