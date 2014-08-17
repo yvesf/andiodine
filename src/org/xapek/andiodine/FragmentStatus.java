@@ -57,8 +57,10 @@ public class FragmentStatus extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (IodineClient.ACTION_LOG_MESSAGE.equals(intent.getAction())) {
-                mLogmessages.append("\n");
-                mLogmessages.append(intent.getStringExtra(IodineClient.EXTRA_MESSAGE));
+            	final String newLogEntry = intent.getStringExtra(IodineClient.EXTRA_MESSAGE);
+                if (!".".equals(newLogEntry)) // Suppress newline for progress indicator'.'
+                	mLogmessages.append("\n");
+				mLogmessages.append(newLogEntry);
                 mScrollview.fullScroll(View.FOCUS_DOWN);
             }
         }
