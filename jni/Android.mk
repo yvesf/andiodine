@@ -16,6 +16,16 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
+$(LOCAL_PATH)/iodine/src/base64u.c: $(LOCAL_PATH)/iodine/src/base64.c $(LOCAL_PATH)/iodine/src/base64u.h
+	@echo Making $@
+	@echo '/* No use in editing, produced by Makefile! */' > $@
+	@sed -e 's/\([Bb][Aa][Ss][Ee]64\)/\1u/g ; s/0123456789+/0123456789_/' < $< >> $@
+
+$(LOCAL_PATH)/iodine/src/base64u.h: $(LOCAL_PATH)/iodine/src/base64.h
+	@echo Making $@
+	@echo '/* No use in editing, produced by Makefile! */' > $@
+	@sed -e 's/\([Bb][Aa][Ss][Ee]64\)/\1u/g ; s/0123456789+/0123456789_/' < $< >> $@
+
 LOCAL_MODULE    := iodine-client
 LOCAL_LDLIBS := -lz -llog
 LOCAL_CFLAGS := -Wall
