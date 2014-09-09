@@ -188,6 +188,7 @@ public class IodineVpnService extends VpnService implements Runnable {
     }
 
     private void sendStatus() {
+    	Log.d(TAG, "Send status: " + currentActionStatus);
         if (currentActionStatus != null) {
             Intent intent = new Intent(currentActionStatus);
 

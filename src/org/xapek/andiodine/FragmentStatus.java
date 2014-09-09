@@ -46,7 +46,9 @@ public class FragmentStatus extends Fragment {
             } else if (IodineVpnService.ACTION_STATUS_CONNECT.equals(intent.getAction())) {
                 mStatus.setText("Connect");
             } else if (IodineVpnService.ACTION_STATUS_CONNECTED.equals(intent.getAction())) {
-                mStatus.setText("Connected");
+				mStatus.setText("Connected: " + IodineClient.getIp() + '/'
+						+ IodineClient.getNetbits() + " MTU: "
+						+ IodineClient.getMtu() + '\n');
             } else if (IodineVpnService.ACTION_STATUS_DISCONNECT.equals(intent.getAction())) {
                 mStatus.setText("Disconnect");
             }

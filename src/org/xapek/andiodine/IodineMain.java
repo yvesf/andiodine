@@ -39,7 +39,8 @@ public class IodineMain extends Activity {
                 ft.replace(R.id.main_fragment_status, fragmentList);
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
-            } else if (IodineVpnService.ACTION_STATUS_CONNECT.equals(intent.getAction())) {
+            } else if (IodineVpnService.ACTION_STATUS_CONNECT.equals(intent.getAction()) 
+            		|| IodineVpnService.ACTION_STATUS_CONNECTED.equals(intent.getAction())) {
                 // Switch to Status Fragment
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.main_fragment_status, fragmentStatus);
@@ -57,12 +58,6 @@ public class IodineMain extends Activity {
 
         mConfigDatabase = new ConfigDatabase(this);
 
-        IntentFilter intentFilterStatusUpdates = new IntentFilter();
-        intentFilterStatusUpdates.addAction(IodineVpnService.ACTION_STATUS_CONNECT);
-        intentFilterStatusUpdates.addAction(IodineVpnService.ACTION_STATUS_ERROR);
-        intentFilterStatusUpdates.addAction(IodineVpnService.ACTION_STATUS_IDLE);
-        registerReceiver(broadcastReceiverStatusUpdates, intentFilterStatusUpdates);
-
         startService(new Intent(this, IodineVpnService.class));
     }
 
@@ -73,8 +68,27 @@ public class IodineMain extends Activity {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onResume() {
+    	super.onResume();
+    	IntentFilter intentFilterStatusUpdates = new IntentFilter();
+        intentFilterStatusUpdates.addAction(IodineVpnService.ACTION_STATUS_CONNECT);
+        intentFilterStatusUpdates.addAction(IodineVpnService.ACTION_STATUS_CONNECTED);
+        intentFilterStatusUpdates.addAction(IodineVpnService.ACTION_STATUS_ERROR);
+        intentFilterStatusUpdates.addAction(IodineVpnService.ACTION_STATUS_IDLE);
+        registerReceiver(broadcastReceiverStatusUpdates, intentFilterStatusUpdates);
+        
+        Log.d(TAG, "Request CONTROL_UPDATE");
+        sendBroadcast(new Intent(IodineVpnService.ACTION_CONTROL_UPDATE));
+    }
+    
+    @Override
+    protected void onPause() {
         unregisterReceiver(broadcastReceiverStatusUpdates);
+    	super.onPause();
+    }
+    
+    @Override
+    protected void onDestroy() {
         mConfigDatabase.close();
         super.onDestroy();
     }
@@ -89,14 +103,10 @@ public class IodineMain extends Activity {
                     .setCancelable(true)//
                     .create() //
                     .show();
+            scanner.close();
         } else if (item.getItemId() == R.id.menu_main_add) {
             startActivity(new Intent(this, IodinePref.class));
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    private void vpnServiceDisconnect() {
-        sendBroadcast(new Intent(IodineVpnService.ACTION_CONTROL_DISCONNECT));
     }
 }
