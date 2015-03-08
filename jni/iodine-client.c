@@ -212,4 +212,3 @@ JNIEXPORT jstring JNICALL Java_org_xapek_andiodine_IodineClient_getPropertyNetDn
 	__system_property_get("net.dns1", value);
 	return (*env)->NewStringUTF(env, value);
 }
-

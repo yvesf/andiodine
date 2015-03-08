@@ -6,6 +6,13 @@ auf Android
   - (german)[Anwenderdokumentation](doc/anwenderdoku.html) [(PDF)](doc/anwenderdoku.pdf)
   - (german)[Entwicklerdokumentation](doc/entwicklerdoku.html) [(PDF)](doc/entwicklerdoku.pdf)
 
+# Building
+
+``` bash
+(cd jni && ndk-build)
+gradle build
+```
+
 # Authors and License
 Android Iodine Copyright (c) 2013 Yves Fischer <yvesf+andiodine@xapek.org>
 Same license as iodine.
@@ -28,4 +35,3 @@ PERFORMANCE OF THIS SOFTWARE.
 
 MD5 implementation by L. Peter Deutsch (license and source in src/md5.[ch])
 Copyright (C) 1999, 2000, 2002 Aladdin Enterprises.  All rights reserved.
-
