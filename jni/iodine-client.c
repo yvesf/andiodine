@@ -85,7 +85,7 @@ JNIEXPORT jint JNICALL Java_org_xapek_andiodine_IodineClient_getDnsFd(
 
 JNIEXPORT jint JNICALL Java_org_xapek_andiodine_IodineClient_connect(
 		JNIEnv *env, jclass klass, jstring j_nameserv_addr, jstring j_topdomain, jboolean j_raw_mode, jboolean j_lazy_mode,
-		jstring j_password) {
+		jstring j_password, jint j_request_hostname_size, jint j_response_fragment_size) {
 
 	// XXX strdup leaks
 	const char *__p_nameserv_addr = (*env)->GetStringUTFChars(env,
@@ -109,14 +109,14 @@ JNIEXPORT jint JNICALL Java_org_xapek_andiodine_IodineClient_connect(
 	strncpy(passwordField, p_password, 32);
 	(*env)->ReleaseStringUTFChars(env, j_password, p_password);
 
-    tun_config_android.request_disconnect = 0;
+	tun_config_android.request_disconnect = 0;
 
 	int selecttimeout = 2; // original: 4
 	int lazy_mode;
-	int hostname_maxlen = 0xFF;
+	int hostname_maxlen = j_request_hostname_size;
 	int raw_mode;
-	int autodetect_frag_size = 1;
-	int max_downstream_frag_size = 3072;
+	int autodetect_frag_size = j_response_fragment_size == 0 ? 1 : 0;
+	int max_downstream_frag_size = j_response_fragment_size;
 
 	if (j_raw_mode) {
 		raw_mode = 1;

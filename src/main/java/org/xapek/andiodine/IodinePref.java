@@ -73,6 +73,11 @@ public class IodinePref extends org.xapek.andiodine.preferences.PreferenceActivi
         addPreference(ConfigDatabase.COLUMN_CONF_RAW_MODE, "Raw Mode", R.string.pref_help_raw, false);
         // Default Route
         addPreference(ConfigDatabase.COLUMN_CONF_DEFAULT_ROUTE, "Default Route", R.string.pref_help_default_route, true);
+
+        addPreference(ConfigDatabase.COLUMN_CONF_REQUEST_HOSTNAME_SIZE,
+            "Request Hostname Size", R.string.pref_request_hostname_size, "255");
+        addPreference(ConfigDatabase.COLUMN_CONF_RESPONSE_FRAGMENT_SIZE,
+            "Response Fragment Size", R.string.pref_response_fragment_size, "0");
     }
 
     @Override

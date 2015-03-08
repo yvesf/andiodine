@@ -125,6 +125,22 @@ public class IodineConfiguration {
 		return v;
 	}
 
+	public int getRequestHostnameSize() {
+		return v.getAsInteger(ConfigDatabase.COLUMN_CONF_REQUEST_HOSTNAME_SIZE);
+	}
+
+	public void setRequestHostnameSize(int requestHostnameFragmentSize) {
+		v.put(ConfigDatabase.COLUMN_CONF_REQUEST_HOSTNAME_SIZE, requestHostnameFragmentSize);
+	}
+
+	public int getResponseFragmentSize() {
+		return v.getAsInteger(ConfigDatabase.COLUMN_CONF_RESPONSE_FRAGMENT_SIZE);
+	}
+
+	public void setResponseFragmentSize(int responseFragmentSize) {
+		v.put(ConfigDatabase.COLUMN_CONF_RESPONSE_FRAGMENT_SIZE, responseFragmentSize);
+	}
+
 	@Override
 	public String toString() {
 		return "[IodineConfiguration name=" + getName() + "]";
