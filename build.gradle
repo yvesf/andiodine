@@ -1,0 +1,33 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.1.3'
+    }
+}
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 15
+    buildToolsVersion "21.1.2"
+
+    sourceSets.main {
+        jniLibs.srcDir 'libs'
+    }
+
+    productFlavors {
+        arm {
+            ndk {
+                abiFilters "armeabi"
+            }
+        }
+        x86 {
+            ndk {
+                abiFilter "x86"
+            }
+        }
+    }
+}

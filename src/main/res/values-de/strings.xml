@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="app_name">AndIodine</string>
+    <string name="app_about">Über</string>
+
+    <string-array name="pref_entries_dnstype">
+        <item>automatisch</item>
+        <item>NULL</item>
+        <item>TXT</item>
+        <item>SRV</item>
+        <item>MX</item>
+        <item>CNAME</item>
+        <item>A</item>
+    </string-array>
+    <string-array name="pref_entries_nameserver_mode">
+        <item>Netzstandard</item>
+        <item>Brauch</item>
+        <item>Tunnel-Endpunkt</item>
+    </string-array>
+
+    <string name="main_description_add_account">Konto hinzufügen</string>
+    <string name="pref_description_cancel">Rückgängig Machen</string>
+    <string name="configitem_description_close">Schließen Tunnel</string>
     <string name="pref_text_password_label">Passwort</string>
     <string name="pref_text_topdomain_label">Tunnel Toplevel Domain</string>
     <string name="pref_text_tunnel_nameserver_label">Tunnel Nameserver</string>
@@ -28,7 +49,12 @@
     <string name="vpnservice_error_unknown_error_string">Unbekannter Fehler. Grund: %s</string>
     <string name="idle">Leerlauf</string>
     <string name="warning">Warnung</string>
+    <string name="error">Fehler</string>
     <string name="configitem_description_manage">Konfiguriere dieses Verbindungsprofil</string>
     <string name="pref_title">Verbindungseinstellungen</string>
+    <string name="main_create_tunnel">Erstellen Sie DNS-Tunnel von Configuration Namen %s</string>
+    <string name="fragment_list_add">Neuer Kunde</string>
+    <string name="main_about">Über</string>
+    <string name="pref_delete">Löschen</string>
 
 </resources>

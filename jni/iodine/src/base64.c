@@ -90,7 +90,7 @@ base64_reverse_init()
 	}
 }
 
-static int 
+static int
 base64_encode(char *buf, size_t *buflen, const void *data, size_t size)
 /*
  * Fills *buf with max. *buflen characters, encoding size bytes of *data.

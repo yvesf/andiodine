@@ -1,4 +1,6 @@
+/.gradle
 /bin
+/build
 /jni/iodine/src/*.o
 /jni/iodine/bin
 /obj
