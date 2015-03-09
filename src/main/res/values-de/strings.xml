@@ -20,8 +20,8 @@
     </string-array>
 
     <string name="main_description_add_account">Konto hinzufügen</string>
-    <string name="pref_description_cancel">Rückgängig Machen</string>
-    <string name="configitem_description_close">Schließen Tunnel</string>
+    <string name="pref_description_cancel">Abbrechen</string>
+    <string name="configitem_description_close">Tunnel schliessen</string>
     <string name="pref_text_password_label">Passwort</string>
     <string name="pref_text_topdomain_label">Tunnel Toplevel Domain</string>
     <string name="pref_text_tunnel_nameserver_label">Tunnel Nameserver</string>
@@ -52,8 +52,8 @@
     <string name="error">Fehler</string>
     <string name="configitem_description_manage">Konfiguriere dieses Verbindungsprofil</string>
     <string name="pref_title">Verbindungseinstellungen</string>
-    <string name="main_create_tunnel">Erstellen Sie DNS-Tunnel von Configuration Namen %s</string>
-    <string name="fragment_list_add">Neuer Kunde</string>
+    <string name="main_create_tunnel">Erstelle DNS-Tunnel von Konfiguration %s</string>
+    <string name="fragment_list_add">Neues Konto</string>
     <string name="main_about">Über</string>
     <string name="pref_delete">Löschen</string>
 
