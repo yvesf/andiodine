@@ -39,8 +39,8 @@
     <string name="pref_help_nameserver">IP-Adresse eine speziellen Nameserver der gesetzt werden soll wenn Nameserver Modus = Custom ist.</string>
     <string name="pref_help_request_type">Typ der DNS Abfragen. Standardmäßig wird die beste Request type automatisch ausgewählt.</string>
     <string name="pref_help_default_route">Legt fest ob die Default Route gesetzt wird nachdem die Verbindung aufgebaut wurde</string>
-    <string name="pref_request_hostname_size">Maximale Größe des Upstream-Hostnamen. Die zulässigen Werte liegen zwischen 100 und 255. Der Standardwert ist 255. verkleinern, wenn Sie finden, einige DNS-Relais beantworten, um in voller Länge Anfragen unzuverlässig geben sehr unterschiedlichen Ergebnisse der Fragmentgröße autoprobe.</string>
-    <string name="pref_response_fragment_size">Antwort Fragmentgröße. Autoprobing, wenn auf 0 gesetzt, die ein Standardwert ist.</string>
+    <string name="pref_request_hostname_size">Maximale Größe des Upstream-Hostnamen. Die zulässigen Werte liegen zwischen 100 und 255. Der Standardwert ist 255. Verkleinere den Wert wenn der DNS Relay unzuverlässig reagiert.</string>
+    <string name="pref_response_fragment_size">Maximale Größe des Antwortfragments. Autoprobing, wenn auf 0 gesetzt, dies ist der Standardwert.</string>
     <string name="enable">Aktivieren</string>
     <string name="vpnservice_error_configuration_incomplete">Konfiguration ist unvollständig</string>
     <string name="vpnservice_error_already_running">Kann das VPN nicht starten, es läuft bereits.</string>
