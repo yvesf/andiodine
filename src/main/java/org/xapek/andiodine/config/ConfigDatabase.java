@@ -30,6 +30,8 @@ public class ConfigDatabase extends SQLiteOpenHelper {
     static public final String COLUMN_CONF_LAZY_MODE = "lazy_mode";
     static public final String COLUMN_CONF_DEFAULT_ROUTE = "default_route";
     static public final String COLUMN_CONF_REQUEST_TYPE = "request_type";
+    static public final String COLUMN_CONF_REQUEST_HOSTNAME_SIZE = "request_hostname_size";
+    static public final String COLUMN_CONF_RESPONSE_FRAGMENT_SIZE = "response_fragment_size";
 
     private static final String createStmt = "CREATE TABLE " + TABLE_NAME_CONF + " (" + //
             COLUMN_CONF_ID + " INTEGER PRIMARY KEY," + //
@@ -43,7 +45,9 @@ public class ConfigDatabase extends SQLiteOpenHelper {
             COLUMN_CONF_RAW_MODE + " INTEGER," + // Boolean stored as 1=true / 0=false
             COLUMN_CONF_LAZY_MODE + " INTEGER," + //
             COLUMN_CONF_DEFAULT_ROUTE + " INTEGER," + //
-            COLUMN_CONF_REQUEST_TYPE + " TEXT" + //
+            COLUMN_CONF_REQUEST_TYPE + " TEXT," + //
+            COLUMN_CONF_REQUEST_HOSTNAME_SIZE + " INTEGER," + //
+            COLUMN_CONF_RESPONSE_FRAGMENT_SIZE + " INTEGER" + //
             ");";
 
     public ConfigDatabase(Context context) {

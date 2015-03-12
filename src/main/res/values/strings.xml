@@ -60,6 +60,12 @@
         (returning CNAME). Note that SRV, MX and A may/will cause additional lookups by "smart" caching nameservers to
         get an actual IP address, which may either slow down or fail completely.
     </string>
+    <string name="pref_request_hostname_size">Maximum size of upstream hostnames. Valid values are from 100 to 255.
+        Default is 255. Decrease if you find some DNS relays answer to full-length queries unreliably giving widely
+        varying results of fragment size autoprobe.
+    </string>
+    <string name="pref_response_fragment_size">Response fragment size. Autoprobed when set to 0 which is a default.
+    </string>
     <string name="enable">Enable</string>
     <string name="vpnservice_error_configuration_incomplete">Configuration is incomplete</string>
     <string name="vpnservice_error_already_running">Cannot start VPN Service, VPN-Thread is already running</string>
