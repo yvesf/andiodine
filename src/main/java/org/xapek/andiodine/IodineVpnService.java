@@ -209,21 +209,21 @@ public class IodineVpnService extends VpnService implements Runnable {
             Log.d(TAG, "VPN Thread enter");
             setStatus(ACTION_STATUS_CONNECT, mConfiguration.getId(), null);
 
-            String tunnelNamesver = IodineClient.getPropertyNetDns1();
-            if (tunnelNamesver == "") {
+            String tunnelNameserver = IodineClient.getPropertyNetDns1();
+            if (tunnelNameserver == "") {
                 Log.e(TAG, "No valid IPv4 name servers detected. Aborting...");
                 return;
             }
-            Log.d(TAG, "using name server: " + tunnelNamesver);
+            Log.d(TAG, "using name server: " + tunnelNameserver);
             if (!"".equals(mConfiguration.getTunnelNameserver())) {
-                tunnelNamesver = mConfiguration.getTunnelNameserver();
+                tunnelNameserver = mConfiguration.getTunnelNameserver();
             }
             String password = "";
             if (!"".equals(mConfiguration.getPassword())) {
                 password = mConfiguration.getPassword();
             }
 
-            int ret = IodineClient.connect(tunnelNamesver, mConfiguration.getTopDomain(), mConfiguration.getRawMode(),
+            int ret = IodineClient.connect(tunnelNameserver, mConfiguration.getTopDomain(), mConfiguration.getRawMode(),
                     mConfiguration.getLazyMode(), password, mConfiguration.getRequestHostnameSize(),
                     mConfiguration.getResponseFragmentSize());
 
