@@ -4,6 +4,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <netdb.h>
+#include <stdio.h>
 
 #include <jni.h>
 
@@ -17,6 +18,7 @@
 #define IODINE_CLIENT_CLASS "org/xapek/andiodine/IodineClient"
 #define IODINE_CLIENT_CLASS_LOG_CALLBACK "log_callback"
 #define IODINE_CLIENT_CLASS_LOG_CALLBACK_SIG "(Ljava/lang/String;)V"
+#define MAX_DNS_PROPERTIES 4
 
 static int dns_fd;
 
@@ -208,7 +210,15 @@ JNIEXPORT jint JNICALL Java_org_xapek_andiodine_IodineClient_getMtu(JNIEnv *env,
 // String IodineClient.getPropertyNetDns1
 JNIEXPORT jstring JNICALL Java_org_xapek_andiodine_IodineClient_getPropertyNetDns1(
 		JNIEnv *env, jclass klass) {
-	char value[PROP_VALUE_MAX];
-	__system_property_get("net.dns1", value);
-	return (*env)->NewStringUTF(env, value);
+    struct sockaddr_in sa;
+	for (int i = 1; i <= MAX_DNS_PROPERTIES; i++) {
+        char prop_name[PROP_NAME_MAX];
+        char dns[PROP_VALUE_MAX];
+        snprintf(prop_name, sizeof(prop_name), "net.dns%d", i);
+        __system_property_get(prop_name, dns);
+        if (inet_pton(AF_INET, dns, &(sa.sin_addr)) == 1) {
+            return (*env)->NewStringUTF(env, dns);
+        }
+    }
+	return (*env)->NewStringUTF(env, "");
 }
