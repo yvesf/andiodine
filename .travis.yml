@@ -1,7 +1,13 @@
 language: android
+
 jdk:
 - oraclejdk8
+
 android:
   components:
     - build-tools-21.1.2
     - android-15
+
+before_install:
+- git clone https://github.com/urho3d/android-ndk.git $HOME/android-ndk-root
+- export ANDROID_NDK_HOME=$HOME/android-ndk-root
