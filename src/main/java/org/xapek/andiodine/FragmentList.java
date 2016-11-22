@@ -123,7 +123,7 @@ public class FragmentList extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mConfigDatabase = new ConfigDatabase(getActivity());
-        mListView = (ListView) getActivity().findViewById(R.id.list_view);
+        mListView = (ListView) getView().findViewById(R.id.list_view);
         mAdapter = new IodineConfigurationAdapter();
         mListView.setAdapter(mAdapter);
 
@@ -133,6 +133,7 @@ public class FragmentList extends Fragment {
 
         setHasOptionsMenu(true); //activate onCreateOptionsMenu
     }
+
 
     @Override
     public void onDestroy() {
