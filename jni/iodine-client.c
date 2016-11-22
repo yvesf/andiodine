@@ -211,7 +211,8 @@ JNIEXPORT jint JNICALL Java_org_xapek_andiodine_IodineClient_getMtu(JNIEnv *env,
 JNIEXPORT jstring JNICALL Java_org_xapek_andiodine_IodineClient_getPropertyNetDns1(
 		JNIEnv *env, jclass klass) {
 	struct sockaddr_in sa;
-	for (int i = 1; i <= MAX_DNS_PROPERTIES; i++) {
+	int i;
+	for (i = 1; i <= MAX_DNS_PROPERTIES; i++) {
 		char prop_name[PROP_NAME_MAX];
 		char dns[PROP_VALUE_MAX];
 		snprintf(prop_name, sizeof(prop_name), "net.dns%d", i);
