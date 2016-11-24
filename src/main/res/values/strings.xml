@@ -75,6 +75,7 @@
     <string name="vpnservice_error_unknown_error_code">Unknown Error. Code %d</string>
     <string name="vpnservice_error_unknown_error_string">Unknown Error. Reason: %s</string>
     <string name="vpnservice_error_dns_detect_failed">No valid IPv4 name servers detected</string>
+    <string name="vpnservice_error_create_interface_string">Failed to create tunnel network device</string>
     <string name="idle">Idle</string>
     <string name="warning">Warning</string>
     <string name="error">Error</string>

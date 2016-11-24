@@ -50,6 +50,7 @@
     <string name="vpnservice_error_unknown_error_code">Unbekannter Fehler. Kode %d</string>
     <string name="vpnservice_error_unknown_error_string">Unbekannter Fehler. Grund: %s</string>
     <string name="vpnservice_error_dns_detect_failed">Es wurden keine gültigen IPv4-Nameserver erkannt</string>
+    <string name="vpnservice_error_create_interface_string">Das Tunnel-Netzwerkgerät konnte nicht erstellt werden</string>
     <string name="idle">Leerlauf</string>
     <string name="warning">Warnung</string>
     <string name="error">Fehler</string>

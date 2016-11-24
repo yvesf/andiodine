@@ -255,7 +255,7 @@ public class IodineVpnService extends VpnService implements Runnable {
         } catch (IllegalStateException e) {
             String errorMessage = "IllegalStateException";
             if (e.getMessage().contains("Cannot create interface")) {
-                errorMessage = "Failed to create tunnel network device";
+                errorMessage = getString(R.string.vpnservice_error_create_interface_string);
             } else {
                 e.printStackTrace();
             }
