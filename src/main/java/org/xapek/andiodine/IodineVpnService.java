@@ -1,10 +1,16 @@
 package org.xapek.andiodine;
 
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.LinkProperties;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.net.VpnService;
+import android.os.Build;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
@@ -12,8 +18,10 @@ import org.xapek.andiodine.config.ConfigDatabase;
 import org.xapek.andiodine.config.IodineConfiguration;
 
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 
 public class IodineVpnService extends VpnService implements Runnable {
     private class IodineVpnException extends Exception {
@@ -203,13 +211,53 @@ public class IodineVpnService extends VpnService implements Runnable {
         }
     }
 
+    @TargetApi(21)
+    private Network getActiveNetwork() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo defaultNetworkInfo = cm.getActiveNetworkInfo();
+        for (Network n : cm.getAllNetworks()) {
+            NetworkInfo info = cm.getNetworkInfo(n);
+            if (info.getType() == defaultNetworkInfo.getType() &&
+                    info.getSubtype() == defaultNetworkInfo.getSubtype() &&
+                    info.isConnected()) {
+                return n;
+            }
+        }
+        return null;
+    }
+
     @Override
     public void run() {
         try {
             Log.d(TAG, "VPN Thread enter");
             setStatus(ACTION_STATUS_CONNECT, mConfiguration.getId(), null);
 
-            String tunnelNameserver = IodineClient.getPropertyNetDns1();
+            String tunnelNameserver = "";
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ConnectivityManager cm =
+                        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                Network activeNetwork = getActiveNetwork();
+                if (activeNetwork == null) {
+                    String errorMessage = getString(R.string.vpnservice_error_no_active_network);
+                    setStatus(ACTION_STATUS_ERROR, mConfiguration.getId(), errorMessage);
+                    Log.e(TAG, "No active network. Aborting...");
+                    return;
+                }
+                LinkProperties prop = cm.getLinkProperties(activeNetwork);
+                List<InetAddress> servers = prop.getDnsServers();
+                for (InetAddress candidate : servers) {
+                    Log.d(TAG, "detected dns server: " + candidate);
+                    if (candidate instanceof Inet4Address) {
+                        tunnelNameserver = candidate.getHostAddress();
+                        break;
+                    }
+                }
+            } else {
+                tunnelNameserver = IodineClient.getPropertyNetDns1();
+            }
+
             if (tunnelNameserver.isEmpty()) {
                 String errorMessage = getString(R.string.vpnservice_error_dns_detect_failed);
                 setStatus(ACTION_STATUS_ERROR, mConfiguration.getId(), errorMessage);
