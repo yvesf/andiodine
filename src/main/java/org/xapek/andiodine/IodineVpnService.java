@@ -19,11 +19,11 @@ public class IodineVpnService extends VpnService implements Runnable {
     private class IodineVpnException extends Exception {
         private static final long serialVersionUID = 32487871521160156L;
 
-        public IodineVpnException(String message, Throwable e) {
+        IodineVpnException(String message, Throwable e) {
             super(message, e);
         }
 
-        public IodineVpnException(String message) {
+        IodineVpnException(String message) {
             super(message);
         }
     }
