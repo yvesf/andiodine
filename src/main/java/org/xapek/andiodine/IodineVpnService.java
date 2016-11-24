@@ -114,7 +114,7 @@ public class IodineVpnService extends VpnService implements Runnable {
 
                 mConfiguration = configDatabase.selectById(configurationId);
                 if (mConfiguration == null) {
-                    setStatus(ACTION_STATUS_ERROR, mConfiguration.getId(),
+                    setStatus(ACTION_STATUS_ERROR, configurationId,
                             getString(R.string.vpnservice_error_configuration_incomplete));
                     return;
                 }
