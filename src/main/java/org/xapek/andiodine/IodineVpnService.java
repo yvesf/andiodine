@@ -211,6 +211,8 @@ public class IodineVpnService extends VpnService implements Runnable {
 
             String tunnelNameserver = IodineClient.getPropertyNetDns1();
             if (tunnelNameserver.isEmpty()) {
+                String errorMessage = getString(R.string.vpnservice_error_dns_detect_failed);
+                setStatus(ACTION_STATUS_ERROR, mConfiguration.getId(), errorMessage);
                 Log.e(TAG, "No valid IPv4 name servers detected. Aborting...");
                 return;
             }
