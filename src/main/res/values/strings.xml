@@ -74,6 +74,7 @@
     <string name="vpnservice_error_handshake_failed">Handshake failed</string>
     <string name="vpnservice_error_unknown_error_code">Unknown Error. Code %d</string>
     <string name="vpnservice_error_unknown_error_string">Unknown Error. Reason: %s</string>
+    <string name="vpnservice_error_dns_detect_failed">No valid IPv4 name servers detected</string>
     <string name="idle">Idle</string>
     <string name="warning">Warning</string>
     <string name="error">Error</string>
@@ -84,5 +85,6 @@
     <string name="fragment_list_add">New Account</string>
     <string name="main_about">About</string>
     <string name="pref_delete">Delete</string>
+
 
 </resources>
