@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.VpnService;
+import android.net.wifi.WifiManager;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
@@ -131,10 +132,15 @@ public class IodineVpnService extends VpnService implements Runnable {
 
     private String currentMessage = null;
 
+    private WifiManager.MulticastLock ml;
+
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        ml = wifi.createMulticastLock(TAG);
+        ml.acquire();
 
         configDatabase = new ConfigDatabase(this);
 
@@ -178,6 +184,10 @@ public class IodineVpnService extends VpnService implements Runnable {
         instance = null;
         configDatabase.close();
         unregisterReceiver(broadcastReceiver);
+        if (ml != null && ml.isHeld()) {
+            ml.release();
+        }
+
     }
 
     private void setStatus(String ACTION_STATUS, Long configurationId, String message) {
