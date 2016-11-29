@@ -87,7 +87,8 @@ JNIEXPORT jint JNICALL Java_org_xapek_andiodine_IodineClient_getDnsFd(
 
 JNIEXPORT jint JNICALL Java_org_xapek_andiodine_IodineClient_connect(
 		JNIEnv *env, jclass klass, jstring j_nameserv_addr, jstring j_topdomain, jboolean j_raw_mode, jboolean j_lazy_mode,
-		jstring j_password, jint j_request_hostname_size, jint j_response_fragment_size) {
+		jstring j_password, jint j_request_hostname_size, jint j_response_fragment_size,
+		jstring j_request_type) {
 
 	// XXX strdup leaks
 	const char *__p_nameserv_addr = (*env)->GetStringUTFChars(env,
@@ -105,11 +106,21 @@ JNIEXPORT jint JNICALL Java_org_xapek_andiodine_IodineClient_connect(
 	(*env)->ReleaseStringUTFChars(env, j_topdomain, __p_topdomain);
 	__android_log_print(ANDROID_LOG_ERROR, "iodine", "Topdomain from vm: %s", p_topdomain);
 
+	// extract password parameter
 	const char *p_password = (*env)->GetStringUTFChars(env, j_password, NULL);
 	char passwordField[33];
 	memset(passwordField, 0, 33);
 	strncpy(passwordField, p_password, 32);
 	(*env)->ReleaseStringUTFChars(env, j_password, p_password);
+
+	// extract request type parameter
+	const char *p_requestType = (*env)->GetStringUTFChars(env, j_request_type, NULL);
+	char requestTypeField[8];
+	memset(requestTypeField, 0, 8);
+	strncpy(requestTypeField, p_requestType, 7);
+	(*env)->ReleaseStringUTFChars(env, j_request_type, p_requestType);
+	__android_log_print(ANDROID_LOG_ERROR, "iodine", "Request Type from vm: %s", requestTypeField);
+
 
 	tun_config_android.request_disconnect = 0;
 
@@ -140,6 +151,7 @@ JNIEXPORT jint JNICALL Java_org_xapek_andiodine_IodineClient_connect(
 	client_set_topdomain(p_topdomain);
 	client_set_hostname_maxlen(hostname_maxlen);
 	client_set_password(passwordField);
+	client_set_qtype(requestTypeField);
 
 	if ((dns_fd = open_dns_from_host(NULL, 0, AF_INET, AI_PASSIVE)) == -1) {
 		printf("Could not open dns socket: %s", strerror(errno));

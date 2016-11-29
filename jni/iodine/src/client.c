@@ -187,6 +187,9 @@ client_set_qtype(char *qtype)
 		do_qtype = T_SRV;
 	else if (!strcasecmp(qtype, "TXT"))
 		do_qtype = T_TXT;
+	// Added for Andiodine:
+	else
+		do_qtype = T_UNSET;
 	return (do_qtype == T_UNSET);
 }
 
