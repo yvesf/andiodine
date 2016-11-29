@@ -16,6 +16,8 @@ tests/gen
 
 # Android Studio
 .idea
+*.iml
+.externalNativeBuild
 
 # ant
 out
