@@ -9,7 +9,8 @@ public class IodineClient {
     public static native int getDnsFd();
 
     public static native int connect(String nameserv_addr, String topdomain, boolean raw_mode, boolean lazy_mode,
-                                     String password, int request_hostname_size, int response_fragment_size);
+                                     String password, int request_hostname_size, int response_fragment_size,
+                                     String request_type);
 
     public static native String getIp();
 
