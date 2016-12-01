@@ -1,20 +1,26 @@
-Dies ist eine Portierung von iodine (http://code.kryo.se/iodine/)
-auf Android
+![Logo](src/main/res/drawabe/logo.png)
+
+This is a port of iodine (http://code.kryo.se/iodine/) to the Android VPN Framework.
+It doesn't require "root" on the phone.
 
 # Documentation
 
-  - (german)[Anwenderdokumentation](doc/anwenderdoku.html) [(PDF)](doc/anwenderdoku.pdf)
-  - (german)[Entwicklerdokumentation](doc/entwicklerdoku.html) [(PDF)](doc/entwicklerdoku.pdf)
+The following two documents exist in German language only:
+  - [Anwenderdokumentation](doc/anwenderdoku.pdf)
+  - [Entwicklerdokumentation](doc/entwicklerdoku.pdf)
 
 # Building
 
+Requires the Android SDK and NDK to be installed.
+
 ``` bash
-(cd jni && ndk-build)
-gradle build
+./gradlew build
 ```
 
+Then find the APK files in folder `build/outputs/apk/`
+
 # Authors and License
-Android Iodine Copyright (c) 2013 Yves Fischer <yvesf+andiodine@xapek.org>
+Android Iodine Copyright (c) 2016 Yves Fischer <yvesf+andiodine@xapek.org> and contributors
 Same license as iodine.
 
 Iodine Copyright (c) 2006-2009 Bjorn Andersson <flex@kryo.se>, Erik Ekman <yarrick@kryo.se>
