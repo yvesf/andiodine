@@ -1,4 +1,4 @@
-![Logo](src/main/res/drawabe/logo.png)
+![Logo](src/main/res/drawable/logo.png)
 
 This is a port of iodine (http://code.kryo.se/iodine/) to the Android VPN Framework.
 It doesn't require "root" on the phone.
