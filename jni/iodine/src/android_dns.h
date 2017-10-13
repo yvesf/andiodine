@@ -1,6 +1,8 @@
 
 #ifndef __FIX_ANDROID_H__
 #define __FIX_ANDROID_H__
+#include <arpa/nameser.h>
+#ifndef _ARPA_NAMESER_COMPAT_
 
 typedef struct {
 	unsigned id :16;
@@ -36,4 +38,5 @@ typedef struct {
 #define T_TXT		16
 #define T_SRV		33
 
-#endif
+#endif //_ARPA_NAMESER_COMPAT_
+#endif //__FIX_ANDROID_H__
