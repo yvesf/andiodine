@@ -21,7 +21,7 @@
 
     <string name="main_description_add_account">Konto hinzufügen</string>
     <string name="pref_description_cancel">Abbrechen</string>
-    <string name="configitem_description_close">Tunnel schliessen</string>
+    <string name="configitem_description_close">Tunnel schließen</string>
     <string name="pref_text_password_label">Passwort</string>
     <string name="pref_text_topdomain_label">Tunnel Toplevel Domain</string>
     <string name="pref_text_tunnel_nameserver_label">Tunnel Nameserver</string>
@@ -62,7 +62,16 @@
     <string name="main_about">Über</string>
     <string name="pref_delete">Löschen</string>
     <string name="close">Schließen</string>
-    <string name="connect">Verbinden</string>
-    <string name="disconnect">Ausschalten</string>
+    <string name="connect">Verbinden...</string>
+    <string name="disconnect">Ausschalten...</string>
+    <string name="pref_text_response_fragment_size_label">Maximale Größe des Antwortfragments</string>
+    <string name="pref_text_name_label_short">Name</string>
+    <string name="pref_text_nameserver_label">Nameserver</string>
+    <string name="pref_text_tunnel_nameserver_label_or_empty">Tunnel Nameserver (oder leer)</string>
+    <string name="pref_text_request_type_label">Typ der DNS Abfragen</string>
+    <string name="pref_text_request_hostname_size_label">Maximale Größe des Upstream-Hostnamen</string>
+    <string name="pref_text_lazy_mode_label">Lazy mode</string>
+    <string name="pref_text_default_route_label">Standardroute</string>
+    <string name="vpnservice_connected_with_info">Verbindung: %1$s/%2$d MTU: %3$d</string>
 
 </resources>

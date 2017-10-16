@@ -23,11 +23,20 @@
     <string name="pref_description_cancel">Cancel</string>
     <string name="configitem_description_close">Close Tunnel</string>
     <string name="pref_text_password_label">Password</string>
-    <string name="pref_text_topdomain_label">Tunnel Toplevel Domain</string>
+    <string name="pref_text_topdomain_label">Tunnel Top Domain</string>
+    <string name="pref_text_nameserver_label">Nameserver</string>
     <string name="pref_text_tunnel_nameserver_label">Tunnel Nameserver</string>
+    <string name="pref_text_tunnel_nameserver_label_or_empty">Tunnel Nameserver (or empty)</string>
     <string name="pref_text_nameserver_mode_label">Nameserver Mode</string>
     <string name="pref_text_nameserver_address_label">Nameserver Address</string>
     <string name="pref_text_name_label">Configuration Profile Name</string>
+    <string name="pref_text_name_label_short">Name</string>
+    <string name="pref_text_request_type_label">Request Type</string>
+    <string name="pref_text_lazy_mode_label">Lazy mode</string>
+    <string name="pref_text_raw_mode_label" translatable="false">Raw Mode</string>
+    <string name="pref_text_default_route_label">Default Route</string>
+    <string name="pref_text_request_hostname_size_label">Request Hostname Size</string>
+    <string name="pref_text_response_fragment_size_label">Response Fragment Size</string>
     <string name="pref_text_use_default_nameserver">Use default Nameserver for tunneling</string>
     <string name="pref_help_name">Name for this configuration.</string>
     <string name="pref_help_topdomain">The dns traffic will be sent as queries for subdomains under _topdomain_. This is
@@ -82,14 +91,15 @@
     <string name="error">Error</string>
     <string name="configitem_description_manage">Configure this Connection Profile</string>
     <string name="pref_title">Connection Configuration</string>
-    <string name="pref_help_default_route">Set default Route for the tunnel device</string>
+    <string name="pref_help_default_route">Set default Route for the tunnel device. \nThis means that all the Internet traffic on your device will be redirected through the tunnel.</string>
     <string name="main_create_tunnel">Create DNS Tunnel from Configuration named %s</string>
     <string name="fragment_list_add">New Account</string>
     <string name="main_about">About</string>
     <string name="pref_delete">Delete</string>
     <string name="close">Close</string>
-    <string name="connect">Connect</string>
-    <string name="disconnect">Disconnect</string>
+    <string name="connect">Connecting...</string>
+    <string name="disconnect">Disconnecting...</string>
+    <string name="vpnservice_connected_with_info">Connected: %1$s/%2$d MTU: %3$d</string>
 
 
 </resources>

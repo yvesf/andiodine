@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 public class FragmentStatus extends Fragment {
     public static final String TAG = "FRAGMENT_STATUS";
 
@@ -31,24 +33,25 @@ public class FragmentStatus extends Fragment {
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "Got intent: " + intent);
             if (IodineVpnService.ACTION_STATUS_ERROR.equals(intent.getAction())) {
-            	final TextView message = new TextView(context);
-            	final String stringMessage = intent.getStringExtra(IodineVpnService.EXTRA_ERROR_MESSAGE);
-				final SpannableString s = new SpannableString(stringMessage);
-            	Linkify.addLinks(s, Linkify.WEB_URLS);
-            	message.setText(s);
-            	message.setMovementMethod(LinkMovementMethod.getInstance());
-            	new AlertDialog.Builder(FragmentStatus.this.getActivity())//
-					.setIcon(R.drawable.error)	//
-					.setTitle("Error") //
-					.setView(message)
-					.create() //
-					.show();
+                final TextView message = new TextView(context);
+                final String stringMessage = intent.getStringExtra(IodineVpnService.EXTRA_ERROR_MESSAGE);
+                final SpannableString s = new SpannableString(stringMessage);
+                Linkify.addLinks(s, Linkify.WEB_URLS);
+                message.setText(s);
+                message.setMovementMethod(LinkMovementMethod.getInstance());
+                new AlertDialog.Builder(FragmentStatus.this.getActivity())//
+                        .setIcon(R.drawable.error)    //
+                        .setTitle(R.string.error) //
+                        .setView(message)
+                        .create() //
+                        .show();
             } else if (IodineVpnService.ACTION_STATUS_CONNECT.equals(intent.getAction())) {
                 mStatus.setText(R.string.connect);
             } else if (IodineVpnService.ACTION_STATUS_CONNECTED.equals(intent.getAction())) {
-				mStatus.setText("Connected: " + IodineClient.getIp() + '/'
-						+ IodineClient.getNetbits() + " MTU: "
-						+ IodineClient.getMtu() + '\n');
+                mStatus.setText(String.format(Locale.getDefault(), getString(R.string.vpnservice_connected_with_info),
+                        IodineClient.getIp(),
+                        IodineClient.getNetbits(),
+                        IodineClient.getMtu()));
             } else if (IodineVpnService.ACTION_STATUS_DISCONNECT.equals(intent.getAction())) {
                 mStatus.setText(R.string.disconnect);
             }
@@ -59,10 +62,10 @@ public class FragmentStatus extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (IodineClient.ACTION_LOG_MESSAGE.equals(intent.getAction())) {
-            	final String newLogEntry = intent.getStringExtra(IodineClient.EXTRA_MESSAGE);
+                final String newLogEntry = intent.getStringExtra(IodineClient.EXTRA_MESSAGE);
                 if (!".".equals(newLogEntry)) // Suppress newline for progress indicator'.'
-                	mLogmessages.append("\n");
-				mLogmessages.append(newLogEntry);
+                    mLogmessages.append("\n");
+                mLogmessages.append(newLogEntry);
                 mScrollview.fullScroll(View.FOCUS_DOWN);
             }
         }
