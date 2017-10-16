@@ -37,7 +37,7 @@
 
         <Button
                 android:drawableLeft="@drawable/cancel"
-                android:text="Close"
+                android:text="@string/close"
                 android:id="@+id/status_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

@@ -48,8 +48,8 @@
         hostname. This argument is optional, and if not specified the default system Nameserver will be used.
     </string>
     <string name="pref_help_password">This field is optional. Only the first 32 characters will be used</string>
-    <string name="pref_help_nameserver_mode">Source of the Nameserver to use for name resolution while tunnel is
-        active
+    <string name="pref_help_nameserver_mode">Source of the Nameserver to use for name resolution while the tunnel is
+        active.
     </string>
     <string name="pref_help_nameserver">Custom Nameserver IP-Address to set if Nameserver-mode is "Custom"</string>
     <string name="pref_help_request_type">DNS request type override. By default, autodetection will probe for working
@@ -68,7 +68,7 @@
     </string>
     <string name="enable">Enable</string>
     <string name="vpnservice_error_configuration_incomplete">Configuration is incomplete</string>
-    <string name="vpnservice_error_already_running">Cannot start VPN Service, VPN-Thread is already running</string>
+    <string name="vpnservice_error_already_running">Can\'t start VPN Service, VPN-Thread is already running</string>
     <string name="vpnservice_error_thread_exited">VPN Thread exited unexpected</string>
     <string name="vpnservice_error_cant_open_dnssocket">Can\'t open DNS Socket</string>
     <string name="vpnservice_error_handshake_failed">Handshake failed</string>
@@ -87,6 +87,9 @@
     <string name="fragment_list_add">New Account</string>
     <string name="main_about">About</string>
     <string name="pref_delete">Delete</string>
+    <string name="close">Close</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
 
 
 </resources>

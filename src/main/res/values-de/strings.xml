@@ -61,5 +61,8 @@
     <string name="fragment_list_add">Neues Konto</string>
     <string name="main_about">Über</string>
     <string name="pref_delete">Löschen</string>
+    <string name="close">Schließen</string>
+    <string name="connect">Verbinden</string>
+    <string name="disconnect">Ausschalten</string>
 
 </resources>
