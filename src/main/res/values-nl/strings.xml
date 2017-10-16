@@ -21,14 +21,14 @@
     <string name="configitem_description_close">Sluit tunnel</string>
     <string name="configitem_description_manage">Configureer dit verbindingsprofiel</string>
     <string name="enable">Activeer</string>
-    <string name="error">Foutmelding</string>
+    <string name="error">Fout</string>
     <string name="fragment_list_add">Nieuwe Account</string>
     <string name="main_about">Over</string>
     <string name="main_create_tunnel">Maak een DNS-Tunnel van configuratie %s</string>
     <string name="main_description_add_account">Voeg een account toe</string>
     <string name="pref_delete">Verwijder</string>
     <string name="pref_description_cancel">Annuleer</string>
-    <string name="pref_help_default_route">Stel de standaard route in voor de tunnel</string>
+    <string name="pref_help_default_route">Leidt al het dataverkeer om door de tunnel.</string>
     <string name="pref_help_lazy">Gebruik de luie modus voor hoger snelheid en mindere vertraging. Een klein gedeelte van de DNS relays lijkt verkeer dat op de luie modus verzonden is niet te kunnen verwerken, wat er toe kan leiden dat er (bijna) dataverkeer aankomt.</string>
     <string name="pref_help_name">De naam van de configuratie.</string>
     <string name="pref_help_nameserver">Een aangepaste adres van een Naamserver als de naamserver als de naamservermodus op \"aangepast\" staat.</string>
@@ -40,7 +40,7 @@
     <string name="pref_help_request_type">Aangepast DNS request type. Normaal probeert Iodine automatisch het DNS request type met de hoogste bandbreedte te vinden en te gebruiken. Echter blijkt de DNS relay in sommige gevallen limieten op te leggen, waardoor andere DNS types onverwacht meer bandbreedte kunnen dragen. Als dat het geval is kunt u deze optie gebruiken om een ander type te selecteren. Van de meeste bandbreedte naar de minste zijn dit de ondersteunde DNS types: NULL, TXT, SRV, MX, CNAME en A.</string>
     <string name="pref_help_topdomain">Het DNS verkeer zal als aanvragen van de subdomeinen onder _topdomain_ worden verzonden. Normaal gesproken is dit uw eigen domein. Gebruik een korte domeinnaam voor een hogere bandbreedte. Indien de gekozen nameserver die van Iodine is, kan elk tomdomein gekozen worden zolang hetzelfde domein op de server en de cliënt gekozen wordt.</string>
     <string name="pref_help_tunnel_nameserver">De naamserver die gebruikt moet worden om het DNS verkeer door te sturen. Dit kan in principe elke naamserver zijn of de Iodined draaiende server indien die zonder omwegen bereikbaar is. Er kan zowel een IP adres als een hostname worden ingevuld. Het is niet verplicht dit in te vullen en indien dit niet wordt ingevuld, zal de standaard naamserver worden gebruikt.</string>
-    <string name="pref_request_hostname_size">De maximale lengte van de opgevraagde (upstream) hostnamen. Vul een waarde van 100 to 255 in. De standaardinstelling is 255. Verminder A.U.B. deze waarde indien de DNS relay\'s onbetrouwbaar antwoord geven op volledige aanvragen, omdat de automatische detectie van de \"Downstream size\" anders niet betrouwbaar werkt.</string>
+    <string name="pref_request_hostname_size">De maximale lengte van de opgevraagde (upstream) hostnamen. Vul een waarde van 100 to 255 in. De standaardinstelling is 255. Verminder A.U.B. deze waarde indien de DNS relay\'s onbetrouwbaar antwoord geven op volledige aanvragen, omdat de automatische detectie van de Antwoord Grootte anders niet betrouwbaar werkt.</string>
     <string name="pref_response_fragment_size">De grootte van de antwoorden. Wordt automatisch gedetecteerd wanneer 0 is ingevuld, wat normaal gesproken het geval is.</string>
     <string name="pref_text_password_label">Wachtwoord</string>
     <string name="pref_text_name_label">Configuatieprofiel Naam</string>
@@ -60,7 +60,17 @@
     <string name="vpnservice_error_unknown_error_code">Onbekende fout. Code %d</string>
     <string name="vpnservice_error_unknown_error_string">Onbekende fout. Reden: %s</string>
     <string name="warning">Waarschuwing</string>
-    <string name="connect">Verbind</string>
-    <string name="disconnect">Verbreek verbinding</string>
+    <string name="connect">Verbinden...</string>
+    <string name="disconnect">Verbinding verbreken...</string>
     <string name="pref_help_nameserver_mode">De Naamserver die moet worden gebruikt voor het opvragen van domeinnamen als de tunnel actief is.</string>
+    <string name="pref_text_lazy_mode_label">Luie modus</string>
+    <string name="pref_text_name_label_short">Naam</string>
+    <string name="pref_text_nameserver_label">Naamserver</string>
+    <string name="pref_text_request_hostname_size_label">Opgevraagde Hostnaam Grootte</string>
+    <string name="pref_text_request_type_label">DNS opvraagtype</string>
+    <string name="pref_text_response_fragment_size_label">Antwoord Grootte</string>
+    <string name="pref_text_tunnel_nameserver_label_or_empty">Tunnel Naamserver (optioneel)</string>
+    <string name="pref_text_default_route_label">Standaard Route</string>
+    <string name="vpnservice_connected_with_info">Verbonden: %1$s/%2$d MTE: %3$d</string>
+
 </resources>
