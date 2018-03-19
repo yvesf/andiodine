@@ -26,7 +26,7 @@ android {
         }
         x86 {
             ndk {
-                abiFilter "x86"
+                abiFilters "x86"
             }
         }
     }
