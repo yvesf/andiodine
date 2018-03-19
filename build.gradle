@@ -29,6 +29,11 @@ android {
                 abiFilters "x86"
             }
         }
+        fat {
+            ndk {
+                abiFilters "x86", "armeabi"
+            }
+        }
     }
     externalNativeBuild {
         ndkBuild {
