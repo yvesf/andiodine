@@ -1,5 +1,13 @@
 ![Logo](src/main/res/drawable/logo.png)
 
+# 301 Moved Permanently
+
+Due to recent changes to the github platform this project has moved to [gitlab.com](https://gitlab.com/andiodine) for hosting.
+
+[![](moved-to-gitlab.png)](https://gitlab.com/andiodine/andiodine)
+
+# Old description
+
 This is a port of iodine (http://code.kryo.se/iodine/) to the Android VPN Framework.
 It doesn't require "root" on the phone.  
 Downloads are available on [F-droid](https://f-droid.org/packages/org.xapek.andiodine/).
